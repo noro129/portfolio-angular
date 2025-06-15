@@ -1,0 +1,78 @@
+.container{
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color-1);
+    color: var(--color-1);
+
+    .menu-button{
+        cursor: pointer;
+        width: 40px; height: 40px;
+        position: absolute;
+        top: 10px;
+        left: 50%; 
+        transform: translateX(-50%);
+        border: 1px solid var(--color-1);
+        border-radius: 2px;
+        opacity: .7;
+
+        .dash{
+            position: absolute; top: 50%; left: 0; transform: translateY(-50%) translateX(5%);
+            width: 90%;
+            height: 5px;
+            border-radius: 2px;
+            background-color: var(--color-1);
+
+            &::after, &::before{
+                content: "";
+                position: absolute;
+                left: 0;
+                width: 100%; height: 100%;
+                border: inherit;
+                background-color: inherit;
+            }
+
+            &::after{
+                top: 10px;
+            }
+
+            &::before{
+                bottom: 10px;
+            }
+        }
+
+        &:hover{
+            box-shadow: 0 0 5px var(--color-1);
+        }
+    }
+
+    .date-time{
+        width: 100%;
+        position: absolute;
+        bottom: 10px;
+        text-align: center;
+
+        .time,.date{
+            width: 100%;
+            padding-bottom: 5px;
+        }
+
+        .date{
+            padding-top: 10px;
+            border-top: 2px solid var(--bg-color-2);
+        }
+    }
+
+    .menu{
+        position: absolute;
+        left: 0;top: 5px;
+        width: 200px;
+        min-height: 30vh;
+        background-color: var(--bg-color-2);
+        z-index: -1;
+        transition: transform .1s linear;
+    }
+
+    .show-menu{
+        transform: translateX(-110%);
+    }
+}
