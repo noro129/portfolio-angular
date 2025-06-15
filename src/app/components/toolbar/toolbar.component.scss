@@ -6,21 +6,19 @@
 
     .menu-button{
         cursor: pointer;
-        width: 40px; height: 40px;
+        width: 40px; height: 25px;
         position: absolute;
-        top: 10px;
+        top: 15px;
         left: 50%; 
         transform: translateX(-50%);
-        border: 1px solid var(--color-1);
-        border-radius: 2px;
-        opacity: .7;
 
         .dash{
-            position: absolute; top: 50%; left: 0; transform: translateY(-50%) translateX(5%);
+            position: absolute; top: 0; left: 0; transform: translateX(5%);
             width: 90%;
             height: 5px;
             border-radius: 2px;
             background-color: var(--color-1);
+            opacity: .9;
 
             &::after, &::before{
                 content: "";
@@ -33,15 +31,20 @@
 
             &::after{
                 top: 10px;
+                opacity: .7;
             }
 
             &::before{
-                bottom: 10px;
+                top: 20px;
+                opacity: .5;
             }
         }
 
         &:hover{
-            box-shadow: 0 0 5px var(--color-1);
+            .dash, .dash::after, .dash::before{
+                box-shadow: 0 0 10px var(--color-1);
+            }
+            
         }
     }
 
@@ -64,15 +67,95 @@
 
     .menu{
         position: absolute;
-        left: 0;top: 5px;
-        width: 200px;
+        left: 0;top: 0;
+        transform: translateX(-105%) translateY(-105%);
+        width: 250px;
         min-height: 30vh;
         background-color: var(--bg-color-2);
-        z-index: -1;
-        transition: transform .1s linear;
+        opacity: 0;
+
+        .main-buttons{
+            background-color: var(--bg-color-1);
+            width: 100%;
+            height: 45px;
+            position: relative;
+
+            .user{
+                cursor: default;
+                position: absolute;
+                top: 10%;
+                left: 5px;
+                height: 80%;
+                min-width: max-content;
+
+                &:hover{
+                    opacity: .8;
+                }
+
+                .user-logo{
+                    position: absolute;
+                    left: 5px; top: 15%;
+                    height: 70%;
+                }
+
+                .user-info{
+                    position: absolute;
+                    transform: translateX(35px);
+                    width: max-content;
+                    height: max-content;
+                    font-family: sans-serif;
+
+                    .user-fullname{
+                        font-weight: bolder;
+                        font-size: 1em;
+                    }
+
+                    .user-occupation{
+                        font-size: .9em;
+                        opacity: .8;
+                    }
+                }
+
+                &:hover{
+                    background-color: var(--bg-color-2);
+                }
+            }
+
+            .power-buttons{
+                position: absolute;
+                right: 0; top: 0;
+                height: 100%;
+                min-width: max-content;
+                display: flex;
+                flex-direction: row;
+                column-gap: 2px;
+                flex-wrap: nowrap;
+                padding-right: 10px;
+
+                .button{
+                    cursor: pointer;
+                    transition: opacity .2s linear;
+
+                    &:hover{
+                        opacity: .6;
+                    }
+                }
+
+                .power-off-button{
+                    height: 50%;
+                    margin-top: 50%;
+
+                    .poweroff-logo{
+                        height: 100%;
+                    }
+                }
+            }
+        }
     }
 
     .show-menu{
-        transform: translateX(-110%);
+        transform: translateX(-105%) translateY(5px);
+        opacity: 1;
+        transition: transform .3s linear, opacity .4s .1s linear;
     }
 }

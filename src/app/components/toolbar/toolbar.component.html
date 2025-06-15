@@ -11,5 +11,20 @@
         </div>
     </div>
     <div class="menu" [ngClass]="{'show-menu' : showMenu}">
+        <div class="main-buttons">
+            <div class="user" title="user">
+                <img class="user-logo" src="./user.png" alt="user logo"/>
+                <span class="user-info">
+                    <p class="user-fullname">{{fullName}}</p>
+                    <p class="user-occupation">{{occupation}}</p>
+                </span>
+            </div>
+            <div class="power-buttons">
+                <div class="power-off-button button" (click)="powerOff()" title="power off">
+                    <img src="./poweroff.png" alt="power off button" class="poweroff-logo"/>
+                </div>
+            </div>
+        </div>
+        <div class="menu-items"></div>
     </div>
 </div>

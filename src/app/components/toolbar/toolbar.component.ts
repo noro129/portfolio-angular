@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss'
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
+  readonly fullName = "Oussama Errazi";
+  readonly occupation = "software engineer";
   dateDay = "12";
   dateMonth = "06";
   dateYear = "2025";
@@ -36,9 +38,17 @@ export class ToolbarComponent implements OnInit {
       1000
     );
   }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
   
 
   menuToggle(){
     this.showMenu = !this.showMenu;
+  }
+
+  powerOff() {
+    window.close();
   }
 }
