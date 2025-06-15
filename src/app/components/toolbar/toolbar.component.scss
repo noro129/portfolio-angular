@@ -55,13 +55,19 @@
         text-align: center;
 
         .time,.date{
+            cursor: default;
             width: 100%;
             padding-bottom: 5px;
         }
 
+        .time{
+            padding-top: 5px;
+            border-top: 1px solid var(--color-1);
+            border-bottom: 1px solid var(--color-1);
+        }
+
         .date{
             padding-top: 10px;
-            border-top: 2px solid var(--bg-color-2);
         }
     }
 
