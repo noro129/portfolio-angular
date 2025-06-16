@@ -11,8 +11,8 @@
 </div>
 <div class="apps">
     <div *ngFor="let column of arrayOfSize(gridColumns)" class="column">
-        <div *ngFor="let row of arrayOfSize(gridRows)" class="row">
-            <span *ngIf="applicationsMatrix.get(column + row*gridColumns)" class="app-wrapper" (click)="appFocus(column + row*gridColumns)" [ngClass]="{'focused' : applicationsMatrix.get(column + row*gridColumns)?.focused, 'not-focused' : !applicationsMatrix.get(column + row*gridColumns)?.focused}">
+        <div *ngFor="let row of arrayOfSize(gridRows)" class="row" (click)="appFocus(column + row*gridColumns)">
+            <span *ngIf="applicationsMatrix.get(column + row*gridColumns)" class="app-wrapper" [ngClass]="{'focused' : applicationsMatrix.get(column + row*gridColumns)?.focused, 'not-focused' : !applicationsMatrix.get(column + row*gridColumns)?.focused}">
                 <img src="{{applicationsMatrix.get(column + row*gridColumns)?.icon}}" alt="" class="icon">
                 <p class="name">{{applicationsMatrix.get(column + row*gridColumns)?.name}}</p>
             </span>

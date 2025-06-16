@@ -10,7 +10,7 @@ import { AppType } from '../../models/AppType';
   styleUrl: './desktop.component.scss'
 })
 export class DesktopComponent implements OnInit{
-  gridColumns = 22;
+  gridColumns = 21;
   gridRows = 10;
   readonly applications : Application[] = [
       {
@@ -27,14 +27,14 @@ export class DesktopComponent implements OnInit{
         'type' : AppType.Folder,
         'icon' : './question-mark.png',
         'xPosition' : 1,
-        'yPosition' : 0 
+        'yPosition' : 0
       },
       {
         'id' : 2,
         'name' : 'WhoAmI',
         'type' : AppType.Application,
         'icon' : './question-mark.png',
-        'xPosition' : 1,
+        'xPosition' : 2,
         'yPosition' : 0 
       },
       {
@@ -42,7 +42,7 @@ export class DesktopComponent implements OnInit{
         'name' : 'CMD',
         'type' : AppType.Application,
         'icon' : './command-line.png',
-        'xPosition' : 2,
+        'xPosition' : 3,
         'yPosition' : 0 
       },
       {
@@ -79,10 +79,9 @@ export class DesktopComponent implements OnInit{
   }
 
   appFocus(index : number) {
-    let app = this.applicationsMatrix.get(index);
-    if (app) {
-      app.focused = true;
-      this.applicationsMatrix.set(index, { ...app });
+    for(let [key, app] of this.applicationsMatrix){
+      app.focused = (index === key);
+      this.applicationsMatrix.set(key, { ...app });
     }
   }
 }
