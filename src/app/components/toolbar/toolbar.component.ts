@@ -16,6 +16,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   time = "12:09";
   showMenu = false;
   private interval : any;
+  menuItems:any = null;
   
 
 
@@ -37,6 +38,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       },
       1000
     );
+
+    this.menuItems = [];
   }
 
   ngOnDestroy(): void {
