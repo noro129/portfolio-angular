@@ -2,10 +2,11 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Application } from '../../models/Application';
 import { AppType } from '../../models/AppType';
+import { FolderComponent } from "../folder/folder.component";
 
 @Component({
   selector: 'app-desktop',
-  imports: [NgFor, NgIf, NgClass],
+  imports: [NgFor, NgIf, NgClass, FolderComponent],
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })

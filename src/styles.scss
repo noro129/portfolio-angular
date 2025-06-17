@@ -6,6 +6,7 @@
 
     --color-1 : #fefbf1;
     --color-2 :rgb(0, 61, 41);
+    --color-3 : #caccce;
 
     --color-1-light : #fefbf109;
 
@@ -17,6 +18,7 @@
 *,*::after,*::before{
     margin: 0; padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 body{

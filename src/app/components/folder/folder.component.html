@@ -1,1 +1,28 @@
-<p>folder works!</p>
+<div class="container" [ngStyle]="{'top': positionY+'px', 'left': positionX+'px'}">
+    <div class="header">
+        <div class="title">
+            <img src="{{iconLogo}}" alt="logo" class="icon-logo">
+            <p class="name">{{name}}</p>
+        </div>
+
+        <div class="control-buttons">
+            <div class="hide" text="hide">&gt;</div>
+            <div class="close" text="close">X</div>
+        </div>
+    </div>
+
+
+    <div class="body">
+        <div class="left-panel">
+            <div *ngFor="let folder of foldersStructure" class="folders">
+                <span class="folder-name"><span class="folder">{{folder.name}}</span><span class="show-sub-folders-button" *ngIf="folder.subContent.length != 0">&gt;</span></span>
+                <span *ngIf="folder.subContent.length != 0">
+                    <div *ngFor="let subfolder of folder.subContent">
+                        <span class="sub-folder-name" [ngClass]="{'opened-folder' : name === subfolder.name}">{{subfolder.name}}</span>
+                    </div>
+                </span>
+            </div>
+        </div>
+        <div class="content"></div>
+    </div>
+</div>
