@@ -1,10 +1,10 @@
-<div class="container" [ngStyle]="{'top': positionY+'px', 'left': positionX+'px'}">
+<div class="container" [ngStyle]="{'top': positionY+'px', 'left': positionX+'px'}" #folderTab>
     <div class="header">
         <div class="title">
             <img src="{{iconLogo}}" alt="logo" class="icon-logo">
             <p class="name">{{name}}</p>
         </div>
-
+        <span class="dragging-bar" (mousedown)="startDrag($event)"></span>
         <div class="control-buttons">
             <div class="hide" text="hide">&gt;</div>
             <div class="close" text="close">X</div>
