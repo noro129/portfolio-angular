@@ -21,7 +21,7 @@
         column-gap: 5px;
         justify-content: center;
         align-items: center;
-        transition: opacity 0.3s linear, transform 0.3s linear;
+        transition: none;
 
         &:not(:nth-of-type(1)){
             opacity: 0;
@@ -68,5 +68,6 @@
     .expanded{
         opacity: 1 !important;
         transform: translateX(0) !important;
+        transition: opacity 0.3s linear, transform 0.3s linear;
     }
 }

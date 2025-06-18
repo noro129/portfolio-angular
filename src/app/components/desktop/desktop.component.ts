@@ -70,6 +70,21 @@ export class DesktopComponent implements OnInit{
     'name' : "folder 2",
     'hidden' : true,
     'icon' : "./folder.png"
+  },
+  {
+    'name' : "folder 2",
+    'hidden' : true,
+    'icon' : "./folder.png"
+  },
+  {
+    'name' : "folder 2",
+    'hidden' : true,
+    'icon' : "./folder.png"
+  },
+  {
+    'name' : "folder 2",
+    'hidden' : true,
+    'icon' : "./folder.png"
   }], 
   [
     {
