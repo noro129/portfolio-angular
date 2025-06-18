@@ -1,0 +1,72 @@
+.instances-container{
+    position: absolute;
+    overflow: hidden;
+    transition: transform .3s linear, max-height .3s linear;
+    transform: translateY(0);
+    display: flex;
+    flex-direction: column-reverse;
+    flex-shrink: 0;
+    row-gap: 5px;
+    max-height: 24px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid var(--color-1);
+
+    .instance{
+        width: 200px;
+        min-height: 24px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        column-gap: 5px;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s linear, transform 0.3s linear;
+
+        &:not(:nth-of-type(1)){
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .icon{
+            min-height: 20px;
+            width: 20px;
+        }
+
+        .instance-name{
+            cursor: default;
+            width: 100px;
+            text-align: left;
+        }
+
+        .hide,.close{
+            cursor: pointer;
+            max-height: 24px;
+            width: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            &:hover{
+                background-color: var(--color-1-lighter);
+            }
+        }
+
+        .hide{
+            font-size: 30px;
+        }
+
+        
+    }
+
+
+    .hidden-instance{
+        background-color: var(--color-1-light);
+    }
+
+    .expanded{
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+    }
+}

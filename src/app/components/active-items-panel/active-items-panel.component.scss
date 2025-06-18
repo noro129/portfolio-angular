@@ -1,0 +1,19 @@
+.container{
+    position: absolute; bottom: 0; left: 0;
+    width: 100%;
+    min-height: max-content;
+    height: 30px;
+    padding-left: 20px;
+    background-color: var(--color-1-lighter);
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    .stack-item{
+        z-index: 99;
+        height: 24px; width: 200px;
+        color: var(--color-1);
+    }
+}

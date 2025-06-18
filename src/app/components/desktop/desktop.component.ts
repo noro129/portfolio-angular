@@ -2,11 +2,15 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Application } from '../../models/Application';
 import { AppType } from '../../models/AppType';
-import { FolderComponent } from "../folder/folder.component";
+//import { FolderComponent } from "../folder/folder.component";
+import { ActiveItemsPanelComponent } from "../active-items-panel/active-items-panel.component";
+import { OpenInstance } from '../../models/OpenInstance';
 
 @Component({
   selector: 'app-desktop',
-  imports: [NgFor, NgIf, NgClass, FolderComponent],
+  imports: [NgFor, NgIf, NgClass, 
+    //FolderComponent, 
+    ActiveItemsPanelComponent],
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })
@@ -56,6 +60,24 @@ export class DesktopComponent implements OnInit{
       }
   ];
   applicationsMatrix = new Map<number, AppsObject>();
+  stacksList : OpenInstance[][] = [
+    [{
+    'name' : "folder 1",
+    'hidden' : true,
+    'icon' : "./folder.png"
+  },
+  {
+    'name' : "folder 2",
+    'hidden' : true,
+    'icon' : "./folder.png"
+  }], 
+  [
+    {
+    'name' : "hello",
+    'hidden' : false,
+    'icon' : "./folder.png"
+  }
+  ]];
 
   arrayOfSize(length : number) : number[] {
     return Array.from({ length }, (_, i) => i);

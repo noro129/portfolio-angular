@@ -1,0 +1,11 @@
+<div class="instances-container" #instancesStack
+    (mouseenter)="hoverStart($event)"
+    (mouseleave)="hoverEnd($event)"
+    >
+    <div *ngFor="let item of stack; index as i" class="instance" [ngClass]="{'hidden-instance' : item.hidden, 'expanded' : expand}" [ngStyle]="{'transition-delay' : (i*0.3)+'s'}">
+        <img src="{{item.icon}}" alt="icon" class="icon"/>
+        <p class="instance-name">{{i}} {{item.name}}</p>
+        <div class="hide">{{item.hidden ? '&#9652;' : '&#9662;'}}</div>
+        <div class="close">X</div>
+    </div>
+</div>
