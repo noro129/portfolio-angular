@@ -1,7 +1,7 @@
 .instances-container{
     position: absolute;
     overflow: hidden;
-    transition: transform .3s linear, max-height .3s linear;
+    transition: transform .3s linear, min-height .3s linear;
     transform: translateY(0);
     display: flex;
     flex-direction: column-reverse;
@@ -9,8 +9,8 @@
     row-gap: 5px;
     max-height: 24px;
     width: 200px;
-    border-radius: 5px;
     border: 1px solid var(--color-1);
+    min-height: 24px;
 
     .instance{
         width: 200px;
