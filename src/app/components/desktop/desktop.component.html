@@ -21,20 +21,7 @@
     </div>
 </div>
 
-<span #foldersManager><app-folder
-    [name]="'Projects'"
-    [iconLogo]="'./folder.png'"
-    [positionX]="250"
-    [positionY]="150"
-    />
-
-    <app-folder
-    [name]="'Experience'"
-    [iconLogo]="'./folder.png'"
-    [positionX]="300"
-    [positionY]="200"
-    />
-</span>
+<ng-container #foldersManager></ng-container>
 
 
 <app-active-items-panel [stacksMap]="stacksMap"></app-active-items-panel>

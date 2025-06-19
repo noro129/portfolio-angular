@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { Application } from '../../models/Application';
 import { AppType } from '../../models/AppType';
 import { FolderComponent } from "../folder/folder.component";
@@ -15,7 +15,7 @@ import { OpenInstance } from '../../models/OpenInstance';
   styleUrl: './desktop.component.scss'
 })
 export class DesktopComponent implements OnInit{
-  @ViewChild("foldersManager") foldersManager = ElementRef<HTMLElement>;
+  @ViewChild("foldersManager" ,{ read: ViewContainerRef, static: true }) foldersManager!: ViewContainerRef;
   XOffsetfolderPosition = 250;
   YOffsetfolderPosition = 150;
   gridColumns = 21;
@@ -75,16 +75,19 @@ export class DesktopComponent implements OnInit{
       if(!app.focused) continue;
       if(app.type === AppType.Folder) {
         if(this.stacksMap.has(AppType.Folder.toString())){
-          this.stacksMap.get(AppType.Folder.toString())?.push({ name : app.name, hidden : false, icon : "./folder.png"});
+          this.stacksMap.get(AppType.Folder.toString())?.unshift({ name : app.name, hidden : false, icon : "./folder.png"});
         } else {
           this.stacksMap.set(AppType.Folder.toString(), [{ name : app.name, hidden : false, icon : "./folder.png"}]);
         }
+        //TODO: open folder 
+        this.addFolder(app.name, app.icon);
       } else {
         if(this.stacksMap.has(app.name)){
-          this.stacksMap.get(app.name)?.push({ name : app.name, hidden : false, icon : app.icon});
+          this.stacksMap.get(app.name)?.unshift({ name : app.name, hidden : false, icon : app.icon});
         } else {
           this.stacksMap.set(app.name, [{ name : app.name, hidden : false, icon : app.icon}]);
         }
+        //TODO: open app
       }
     }
   }
@@ -110,6 +113,19 @@ export class DesktopComponent implements OnInit{
       app.focused = (index === key);
       this.applicationsMatrix.set(key, { ...app });
     }
+  }
+
+
+  addFolder(name: string, iconLogo: string) {
+    const newFolder = this.foldersManager.createComponent(FolderComponent);
+    newFolder.instance.name = name;
+    newFolder.instance.positionX = this.XOffsetfolderPosition;
+    newFolder.instance.positionY = this.YOffsetfolderPosition;
+    newFolder.instance.iconLogo = iconLogo;
+
+
+    this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
+    this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
   }
 }
 
