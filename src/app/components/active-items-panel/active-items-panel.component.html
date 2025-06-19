@@ -1,6 +1,8 @@
 <div class="container">
-    <app-instances-stack 
-    *ngFor="let stack of stacksList" 
-    [stack]="stack" class="stack-item"
-    ></app-instances-stack>
+    <ng-container *ngIf="stacksMap">
+        <app-instances-stack 
+        *ngFor="let stack of getValues()" 
+        [stack]="stack" class="stack-item"
+        ></app-instances-stack>
+    </ng-container>
 </div>

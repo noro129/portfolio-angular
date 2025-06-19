@@ -10,7 +10,7 @@ import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 })
 export class InstancesStackComponent {
   @ViewChild("instancesStack") instancesStack !: ElementRef<HTMLDivElement>;
-  @Input() stack :OpenInstance[] = [];
+  @Input() stack !:OpenInstance[];
   expand = false;
 
   hoverStart(event : MouseEvent) {

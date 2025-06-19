@@ -1,20 +1,23 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Application } from '../../models/Application';
 import { AppType } from '../../models/AppType';
-//import { FolderComponent } from "../folder/folder.component";
+import { FolderComponent } from "../folder/folder.component";
 import { ActiveItemsPanelComponent } from "../active-items-panel/active-items-panel.component";
 import { OpenInstance } from '../../models/OpenInstance';
 
 @Component({
   selector: 'app-desktop',
   imports: [NgFor, NgIf, NgClass, 
-    //FolderComponent, 
+    FolderComponent, 
     ActiveItemsPanelComponent],
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })
 export class DesktopComponent implements OnInit{
+  @ViewChild("foldersManager") foldersManager = ElementRef<HTMLElement>;
+  XOffsetfolderPosition = 250;
+  YOffsetfolderPosition = 150;
   gridColumns = 21;
   gridRows = 10;
   readonly applications : Application[] = [
@@ -60,44 +63,31 @@ export class DesktopComponent implements OnInit{
       }
   ];
   applicationsMatrix = new Map<number, AppsObject>();
-  stacksList : OpenInstance[][] = [
-    [{
-    'name' : "folder 1",
-    'hidden' : true,
-    'icon' : "./folder.png"
-  },
-  {
-    'name' : "folder 2",
-    'hidden' : true,
-    'icon' : "./folder.png"
-  },
-  {
-    'name' : "folder 2",
-    'hidden' : true,
-    'icon' : "./folder.png"
-  },
-  {
-    'name' : "folder 2",
-    'hidden' : true,
-    'icon' : "./folder.png"
-  },
-  {
-    'name' : "folder 2",
-    'hidden' : true,
-    'icon' : "./folder.png"
-  }], 
-  [
-    {
-    'name' : "hello",
-    'hidden' : false,
-    'icon' : "./folder.png"
-  }
-  ]];
+  stacksMap = new Map<string, OpenInstance[]>;
 
   arrayOfSize(length : number) : number[] {
     return Array.from({ length }, (_, i) => i);
   }
 
+  @HostListener('document:keydown.enter', ['$event'])
+  handleEnterKey(event : KeyboardEvent) {
+    for(let [key, app] of this.applicationsMatrix) {
+      if(!app.focused) continue;
+      if(app.type === AppType.Folder) {
+        if(this.stacksMap.has(AppType.Folder.toString())){
+          this.stacksMap.get(AppType.Folder.toString())?.push({ name : app.name, hidden : false, icon : "./folder.png"});
+        } else {
+          this.stacksMap.set(AppType.Folder.toString(), [{ name : app.name, hidden : false, icon : "./folder.png"}]);
+        }
+      } else {
+        if(this.stacksMap.has(app.name)){
+          this.stacksMap.get(app.name)?.push({ name : app.name, hidden : false, icon : app.icon});
+        } else {
+          this.stacksMap.set(app.name, [{ name : app.name, hidden : false, icon : app.icon}]);
+        }
+      }
+    }
+  }
 
   ngOnInit(): void {
     for(let appIndex = 0; appIndex<this.applications.length; appIndex++) {
@@ -113,7 +103,6 @@ export class DesktopComponent implements OnInit{
         'focused' : false
       });
     }
-
   }
 
   appFocus(index : number) {

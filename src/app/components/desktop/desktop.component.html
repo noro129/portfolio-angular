@@ -1,6 +1,6 @@
 <div class="wave-container">
     <svg class="wave wave1" viewBox="0 0 1440 320" preserveAspectRatio="none">
-        <path fill="#444" d="M0,160 C360,240 1080,80 1440,160 L1440,320 L0,320 Z"></path>
+        <path fill="#4447" d="M0,160 C360,240 1080,80 1440,160 L1440,320 L0,320 Z"></path>
     </svg>
     <svg class="wave wave2" viewBox="0 0 1440 320" preserveAspectRatio="none">
         <path fill="#333" d="M0,200 C360,100 1080,300 1440,200 L1440,320 L0,320 Z"></path>
@@ -21,11 +21,20 @@
     </div>
 </div>
 
-<!--<app-folder
+<span #foldersManager><app-folder
     [name]="'Projects'"
     [iconLogo]="'./folder.png'"
     [positionX]="250"
     [positionY]="150"
-    />-->
+    />
 
-<app-active-items-panel [stacksList]="stacksList"></app-active-items-panel>
+    <app-folder
+    [name]="'Experience'"
+    [iconLogo]="'./folder.png'"
+    [positionX]="300"
+    [positionY]="200"
+    />
+</span>
+
+
+<app-active-items-panel [stacksMap]="stacksMap"></app-active-items-panel>
