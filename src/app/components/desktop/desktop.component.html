@@ -11,8 +11,10 @@
 </div>
 <div class="apps">
     <div *ngFor="let column of arrayOfSize(gridColumns)" class="column">
-        <div *ngFor="let row of arrayOfSize(gridRows)" class="row" (click)="appFocus(column + row*gridColumns)"
-                (dragover)="onDragOver($event)"
+        <div *ngFor="let row of arrayOfSize(gridRows)" 
+                class="row" (click)="appFocus(column + row*gridColumns)"
+                [ngClass]="{'empty-position' : hoveringNeighbour(column + row*gridColumns)}"
+                (dragover)="onDragOver($event, row, column)"
                 (drop)="onDrop($event, column + row*gridColumns)">
             <span *ngIf="applicationsMatrix.get(column + row*gridColumns) as app" 
                         class="app-wrapper" 

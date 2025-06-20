@@ -65,6 +65,7 @@ export class DesktopComponent implements OnInit{
   applicationsMatrix = new Map<number, AppsObject>();
   stacksMap = new Map<string, OpenInstance[]>;
   draggedIndex =-1;
+  hoveredAppPosition = {'row' : -1, 'column' : -1};
 
   constructor() {
     this.gridColumns = window.innerWidth / 100;
@@ -139,14 +140,19 @@ export class DesktopComponent implements OnInit{
     event.dataTransfer?.setData('plain/text', key.toString());
   }
 
-  onDragOver(event : DragEvent) {
+  onDragOver(event : DragEvent, row : number, column : number) {
     event.preventDefault();
+    this.hoveredAppPosition = {'row' : row, 'column' : column};
   }
 
 
   onDrop(event : DragEvent, key : number) {
     event.preventDefault();
-    if(this.draggedIndex === -1 || key === this.draggedIndex) return;
+    if(this.draggedIndex === -1 || key === this.draggedIndex) {
+      this.draggedIndex = -1;
+      this.hoveredAppPosition = {'row' : -1, 'column' : -1};
+      return;
+    }
     const draggedApp = this.applicationsMatrix.get(this.draggedIndex);
 
     if(draggedApp) {
@@ -159,6 +165,28 @@ export class DesktopComponent implements OnInit{
       }
       
     }
+    this.draggedIndex = -1;
+    this.hoveredAppPosition = {'row' : -1, 'column' : -1};
+  }
+
+  hoveringNeighbour(key : number) : boolean{
+    if(this.hoveredAppPosition.row === -1) return false;
+    const row = this.hoveredAppPosition.row, column = this.hoveredAppPosition.column;
+    return this.isSameKey(key, row, column) ||
+           this.isSameKey(key, row, column-1) ||
+           this.isSameKey(key, row, column+1) || 
+
+           this.isSameKey(key, row-1, column) ||
+           this.isSameKey(key, row-1, column-1) ||
+           this.isSameKey(key, row-1, column+1) ||
+
+           this.isSameKey(key, row+1, column-1) ||
+           this.isSameKey(key, row+1, column+1) ||
+           this.isSameKey(key, row+1, column);
+  }
+
+  isSameKey(key : number, row : number, column : number) : boolean {
+    return row<this.gridRows && row>=0 && column>=0 && column<this.gridColumns && key === row*this.gridColumns + column;
   }
 }
 
