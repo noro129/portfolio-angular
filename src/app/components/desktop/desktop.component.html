@@ -11,10 +11,17 @@
 </div>
 <div class="apps">
     <div *ngFor="let column of arrayOfSize(gridColumns)" class="column">
-        <div *ngFor="let row of arrayOfSize(gridRows)" class="row" (click)="appFocus(column + row*gridColumns)">
-            <span *ngIf="applicationsMatrix.get(column + row*gridColumns)" class="app-wrapper" [ngClass]="{'focused' : applicationsMatrix.get(column + row*gridColumns)?.focused, 'not-focused' : !applicationsMatrix.get(column + row*gridColumns)?.focused}">
-                <img src="{{applicationsMatrix.get(column + row*gridColumns)?.icon}}" alt="" class="icon">
-                <p class="name">{{applicationsMatrix.get(column + row*gridColumns)?.name}}</p>
+        <div *ngFor="let row of arrayOfSize(gridRows)" class="row" (click)="appFocus(column + row*gridColumns)"
+                (dragover)="onDragOver($event)"
+                (drop)="onDrop($event, column + row*gridColumns)">
+            <span *ngIf="applicationsMatrix.get(column + row*gridColumns) as app" 
+                        class="app-wrapper" 
+                    draggable="true"
+                    (dragstart)="onDragStart($event, column + row*gridColumns)"
+                    
+                    [ngClass]="{'focused' : app?.focused, 'not-focused' : !app?.focused}">
+                <img src="{{app?.icon}}" alt="" class="icon">
+                <p class="name">{{app?.name}}</p>
             </span>
             
         </div>

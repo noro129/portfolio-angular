@@ -58,12 +58,18 @@ export class DesktopComponent implements OnInit{
         'name' : 'Dr. Trash',
         'type' : AppType.Application,
         'icon' : './trash-can.png',
-        'xPosition' : this.gridRows-1,
-        'yPosition' : this.gridColumns-1
+        'xPosition' : 4,
+        'yPosition' : 0
       }
   ];
   applicationsMatrix = new Map<number, AppsObject>();
   stacksMap = new Map<string, OpenInstance[]>;
+  draggedIndex =-1;
+
+  constructor() {
+    this.gridColumns = window.innerWidth / 100;
+    this.gridRows = window.innerHeight / 100;
+  }
 
   arrayOfSize(length : number) : number[] {
     return Array.from({ length }, (_, i) => i);
@@ -126,6 +132,33 @@ export class DesktopComponent implements OnInit{
 
     this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
     this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
+  }
+
+  onDragStart(event : DragEvent, key : number) {
+    this.draggedIndex = key;
+    event.dataTransfer?.setData('plain/text', key.toString());
+  }
+
+  onDragOver(event : DragEvent) {
+    event.preventDefault();
+  }
+
+
+  onDrop(event : DragEvent, key : number) {
+    event.preventDefault();
+    if(this.draggedIndex === -1 || key === this.draggedIndex) return;
+    const draggedApp = this.applicationsMatrix.get(this.draggedIndex);
+
+    if(draggedApp) {
+      const dragTo = this.applicationsMatrix.get(key);
+      this.applicationsMatrix.set(key, draggedApp);
+      if(dragTo) {
+        this.applicationsMatrix.set(this.draggedIndex, dragTo);
+      } else {
+        this.applicationsMatrix.delete(this.draggedIndex);
+      }
+      
+    }
   }
 }
 
