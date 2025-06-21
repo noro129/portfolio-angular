@@ -86,7 +86,6 @@ export class DesktopComponent implements OnInit{
         } else {
           this.stacksMap.set(AppType.Folder.toString(), [{ name : app.name, hidden : false, icon : "./folder.png"}]);
         }
-        //TODO: open folder 
         this.addFolder(app.name, app.icon);
       } else {
         if(this.stacksMap.has(app.name)){
@@ -119,6 +118,16 @@ export class DesktopComponent implements OnInit{
     for(let [key, app] of this.applicationsMatrix){
       app.focused = (index === key);
       this.applicationsMatrix.set(key, { ...app });
+    }
+  }
+
+  open(index : number) {
+    if(this.applicationsMatrix.has(index)) {
+      const toOpen = this.applicationsMatrix.get(index);
+      if(toOpen?.type === AppType.Folder) this.addFolder(toOpen.name, toOpen.icon);
+      else {
+        //TODO: open APP
+      }
     }
   }
 
