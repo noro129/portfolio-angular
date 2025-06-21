@@ -1,5 +1,7 @@
 import { NgClass } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { MenuItem } from '../../models/MenuItem';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,6 +10,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
+  @ViewChild("menuItemsManager") menuItemsManager !: ElementRef<HTMLDivElement>;
+
   readonly fullName = "Oussama Errazi";
   readonly occupation = "software engineer";
   dateDay = "12";
@@ -16,11 +20,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   time = "12:09";
   showMenu = false;
   private interval : any;
-  menuItems:any = null;
+  menuItems!: MenuItem[];
   
-
+  constructor(private http : HttpClient, private renderer : Renderer2) {}
 
   ngOnInit(): void {
+    this.http.get<MenuItem[]>("./menu-items.json").subscribe({
+      next: (response) =>{
+        this.menuItems = response;
+        this.fillTheMenu(this.menuItemsManager.nativeElement, this.menuItems, 0);
+      }
+    });
     this.interval = setInterval(
       ()=>{
         const now = new Date();
@@ -39,13 +49,50 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       1000
     );
 
-    this.menuItems = [];
   }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
   }
-  
+
+  fillTheMenu(el: HTMLDivElement, menuItems : MenuItem[] , leftMargin : number) {
+    if(!menuItems) return;
+    for(let menuItem of menuItems) {
+      const container = this.renderer.createElement("div");
+      this.renderer.addClass(container, "item");
+      const spanItem = this.renderer.createElement("span");
+      const spanTextContent = this.renderer.createText(menuItem.item_name);
+      this.renderer.addClass(spanItem, "item-name");
+      this.renderer.setStyle(spanItem, "margin-left", `${leftMargin}px`);
+      this.renderer.appendChild(spanItem, spanTextContent);
+      this.renderer.appendChild(container, spanItem);
+      if(menuItem.content) {
+        const subItemsContainerDiv = this.renderer.createElement("div");
+        this.renderer.addClass(subItemsContainerDiv, "sub-items-content");
+        this.fillTheMenu(subItemsContainerDiv, menuItem.content, leftMargin+10);
+        this.renderer.appendChild(container, subItemsContainerDiv);
+        const revealButton = this.renderer.createElement("span");
+        const revealIcon = this.renderer.createText("▼");
+        this.renderer.addClass(revealButton, "reveal-hide-button");
+        this.renderer.appendChild(revealButton, revealIcon);
+        this.renderer.appendChild(spanItem, revealButton);
+
+        this.renderer.listen(revealButton, 'click', () => {
+          if(revealButton.textContent === '▼') {
+            this.renderer.setProperty(revealButton, 'textContent', '▲');
+            this.renderer.setStyle(subItemsContainerDiv, 'max-height', `${menuItem.content.length*25}px`);
+          } else {
+            this.renderer.setProperty(revealButton, 'textContent', '▼');
+            this.renderer.setStyle(subItemsContainerDiv, 'max-height', '0');
+          }
+        })
+      } else {
+        this.renderer.setStyle(spanItem, 'cursor', 'pointer');
+      }
+      this.renderer.appendChild(el, container);
+    }
+    console.log(el);
+  }
 
   menuToggle(){
     this.showMenu = !this.showMenu;
