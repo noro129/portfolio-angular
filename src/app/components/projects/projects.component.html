@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="project">
+        <app-project [projectName]="projectBefore.project" [projectDescription]="projectBefore.description"/>
+    </div>
+    <div class="project">
+        <app-project [projectName]="project.project" [projectDescription]="project.description"/>
+    </div>
+    <div class="project">
+        <app-project [projectName]="projectAfter.project" [projectDescription]="projectAfter.description"/>
+    </div>
+    
+    <span class="slide toLeft" (click)="toLeft()">◄</span>
+    <span class="slide toRight" (click)="toRight()">►</span>
+</div>

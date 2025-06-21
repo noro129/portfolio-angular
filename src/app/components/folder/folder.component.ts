@@ -2,10 +2,11 @@ import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FolderStructure } from '../../models/FolderStructure';
+import { ProjectsComponent } from "../projects/projects.component";
 
 @Component({
   selector: 'app-folder',
-  imports: [NgStyle, NgClass, NgFor, NgIf],
+  imports: [NgStyle, NgClass, NgFor, NgIf, ProjectsComponent],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.scss'
 })

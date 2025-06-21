@@ -120,5 +120,9 @@
                 }
             }
         }
+
+        .content{
+            position: absolute; top: 0; left: 150px; width: calc(100% - 150px); height: 100%;
+        }
     }
 }
