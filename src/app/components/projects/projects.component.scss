@@ -71,42 +71,4 @@
     .slide-right{
         transform: translateX(0);
     }
-
-
-    .bubbles{
-        z-index: -1;
-        display: block; width: 50%; height: 40%;
-        position: absolute; bottom: 0; right: 0;
-
-        .bubble{
-            width: 150px; height: 150px;
-            border-radius: 150px;
-            position: absolute;
-            opacity: .6;
-        }
-
-        .bubble1{ 
-            top: -90px; right: -30px;
-            background-color: var(--color-2);
-        }
-
-        .bubble2{
-            bottom: 10px; right: 0px;
-            background-color: var(--bg-color-1);
-        }
-
-        .bubble3{ 
-            bottom: -10px; right: 120px;
-            background-color: var(--color-1-light);
-        }
-    }
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) scale(1);
-    }
-    50% {
-        transform: translateY(-20px) scale(1.05);
-    }
 }
