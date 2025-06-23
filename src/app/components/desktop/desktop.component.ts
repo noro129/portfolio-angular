@@ -124,7 +124,14 @@ export class DesktopComponent implements OnInit{
   open(index : number) {
     if(this.applicationsMatrix.has(index)) {
       const toOpen = this.applicationsMatrix.get(index);
-      if(toOpen?.type === AppType.Folder) this.addFolder(toOpen.name, toOpen.icon);
+      if(toOpen?.type === AppType.Folder) {
+        this.addFolder(toOpen.name, toOpen.icon);
+        if(this.stacksMap.has(AppType.Folder.toString())){
+          this.stacksMap.get(AppType.Folder.toString())?.unshift({ name : toOpen.name, hidden : false, icon : "./folder.png"});
+        } else {
+          this.stacksMap.set(AppType.Folder.toString(), [{ name : toOpen.name, hidden : false, icon : "./folder.png"}]);
+        }
+      }
       else {
         //TODO: open APP
       }
