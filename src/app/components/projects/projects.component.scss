@@ -5,10 +5,12 @@
     flex-direction: row;
     column-gap: 0;
     position: relative;
+    overflow: hidden;
 
     .project{
         height: 100%;
         min-width: 100%;
+        transform: translateX(-100%);
     }
 
     .slide{
@@ -34,5 +36,17 @@
 
     .toLeft{
         left: 0;
+    }
+
+    .slide-left, .slide-right{
+        transition: transform .5s linear;
+    }
+
+    .slide-left{
+        transform: translateX(-200%);
+    }
+
+    .slide-right{
+        transform: translateX(0);
     }
 }

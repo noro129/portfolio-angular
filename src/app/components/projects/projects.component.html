@@ -1,12 +1,12 @@
 <div class="container">
-    <div class="project">
-        <app-project [projectName]="projectBefore.project" [projectDescription]="projectBefore.description"/>
+    <div class="project" [ngClass]="{'slide-right' : slideRight}">
+        <app-project [projectName]="projects[projectBeforeIndex].project" [projectDescription]="projects[projectBeforeIndex].description"/>
     </div>
-    <div class="project">
-        <app-project [projectName]="project.project" [projectDescription]="project.description"/>
+    <div class="project" [ngClass]="{'slide-left' : slideLeft, 'slide-right' : slideRight}">
+        <app-project [projectName]="projects[projectIndex].project" [projectDescription]="projects[projectIndex].description"/>
     </div>
-    <div class="project">
-        <app-project [projectName]="projectAfter.project" [projectDescription]="projectAfter.description"/>
+    <div class="project" [ngClass]="{'slide-left' : slideLeft}">
+        <app-project [projectName]="projects[projectAfterIndex].project" [projectDescription]="projects[projectAfterIndex].description"/>
     </div>
     
     <span class="slide toLeft" (click)="toLeft()">◄</span>
