@@ -6,7 +6,7 @@ import { NgClass, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-projects',
-  imports: [ProjectComponent, NgClass],
+  imports: [ProjectComponent, NgClass, NgFor],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
@@ -14,6 +14,7 @@ export class ProjectsComponent implements OnInit {
   projects!: Project[];
   projectBeforeIndex!:number;
   projectIndex!:number;
+  projectCarouselIndex!:number;
   projectAfterIndex!:number;
   slideLeft = false;
   slideRight = false;
@@ -25,6 +26,7 @@ export class ProjectsComponent implements OnInit {
       next: (response) => {
         this.projects = response;
         this.projectIndex = 0;
+        this.projectCarouselIndex = 0;
         this.projectBeforeIndex = this.projects.length-1;
         if(this.projects.length !=0) {
           this.projectAfterIndex = 1;
@@ -39,6 +41,7 @@ export class ProjectsComponent implements OnInit {
   toLeft() {
     if(this.slideLeft || this.slideRight) return;
     this.slideLeft=true;
+    this.projectCarouselIndex = this.projectAfterIndex;
     setTimeout(()=>{
       this.slideLeft=false;
 
@@ -54,6 +57,7 @@ export class ProjectsComponent implements OnInit {
   toRight() {
     if(this.slideLeft || this.slideRight) return;
     this.slideRight=true;
+    this.projectCarouselIndex = this.projectBeforeIndex;
     setTimeout(()=>{
       this.slideRight=false;
 
