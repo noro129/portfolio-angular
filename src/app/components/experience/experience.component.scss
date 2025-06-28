@@ -1,0 +1,32 @@
+.container{
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 5px;
+    row-gap: 5px;
+    padding: 10px;
+
+    .file{
+        width: 90px; height: 130px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: center;
+        padding: 2px;
+
+        .file-icon{
+            height: 60%; width: 90%;
+        }
+
+        .company-name{
+            font-size: .8em;
+            text-align: center;
+            width: 100%;
+        }
+
+        &:hover{
+            background-color: var(--color-1-lighter);
+        }
+    }
+}
