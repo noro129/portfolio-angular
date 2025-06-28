@@ -18,13 +18,14 @@
                 <span class="folder-name"><span class="folder">{{folder.name}}</span><span class="show-sub-folders-button" *ngIf="folder.subContent.length != 0">&gt;</span></span>
                 <span *ngIf="folder.subContent.length != 0">
                     <div *ngFor="let subfolder of folder.subContent">
-                        <span class="sub-folder-name" [ngClass]="{'opened-folder' : name === subfolder.name}">{{subfolder.name}}</span>
+                        <span class="sub-folder-name" [ngClass]="{'opened-folder' : name === subfolder.name}" (click)="changeFolder(subfolder.name)">{{subfolder.name}}</span>
                     </div>
                 </span>
             </div>
         </div>
         <div class="content">
             <app-projects *ngIf="name === 'Projects'"></app-projects>
+            <app-experience *ngIf="name === 'Experience'"/>
         </div>
     </div>
 </div>

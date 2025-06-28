@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FolderStructure } from '../../models/FolderStructure';
 import { ProjectsComponent } from "../projects/projects.component";
+import { ExperienceComponent } from "../experience/experience.component";
 
 @Component({
   selector: 'app-folder',
-  imports: [NgStyle, NgClass, NgFor, NgIf, ProjectsComponent],
+  imports: [NgStyle, NgClass, NgFor, NgIf, ProjectsComponent, ExperienceComponent],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.scss'
 })
@@ -56,5 +57,11 @@ export class FolderComponent implements OnInit, AfterViewInit{
     el.style.left = `${event.clientX - this.xOffset}px`;
     el.style.top = `${event.clientY - this.yOffset}px`;
 
+  }
+
+  // change the openend instance name in stack manager as well
+  changeFolder(folderName : string) {
+    if(folderName === this.name) return;
+    this.name = folderName;
   }
 }
