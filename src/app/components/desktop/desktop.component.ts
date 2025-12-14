@@ -76,8 +76,8 @@ export class DesktopComponent implements OnInit{
     return Array.from({ length }, (_, i) => i);
   }
 
-  @HostListener('document:keydown.enter', ['$event'])
-  handleEnterKey(event : KeyboardEvent) {
+  @HostListener('document:keydown.enter')
+  handleEnterKey() {
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       if(app.type === AppType.Folder) {
