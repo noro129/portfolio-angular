@@ -6,6 +6,6 @@
         <img src="{{item.icon}}" alt="icon" class="icon"/>
         <p class="instance-name">{{item.name}}</p>
         <div class="hide">{{item.hidden ? '&#9652;' : '&#9662;'}}</div>
-        <div class="close">X</div>
+        <div class="close" (click)="close(i)">X</div>
     </div>
 </div>

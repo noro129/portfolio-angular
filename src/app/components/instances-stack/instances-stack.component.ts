@@ -11,6 +11,8 @@ import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 export class InstancesStackComponent {
   @ViewChild("instancesStack") instancesStack !: ElementRef<HTMLDivElement>;
   @Input() stack !:OpenInstance[];
+  @Input() stackIndex !:number;
+  @Input() removeStackElement!: (i: number, j: number)=> void;
   expand = false;
 
   hoverStart(event : MouseEvent) {
@@ -25,8 +27,11 @@ export class InstancesStackComponent {
   hoverEnd(event : MouseEvent) {
     this.expand = false;
     const el = this.instancesStack.nativeElement;
-    console.log("shrink")
     el.style.minHeight = "24px";
     el.style.transform = `translateY(0)`;
+  }
+
+  close(index : number) {
+    this.removeStackElement(this.stackIndex, index);
   }
 }

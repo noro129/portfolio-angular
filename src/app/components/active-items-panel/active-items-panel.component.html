@@ -1,8 +1,10 @@
 <div class="container">
     <ng-container *ngIf="stacksMap">
         <app-instances-stack 
-        *ngFor="let stack of getValues()" 
+        *ngFor="let stack of getValues(), index as i" 
         [stack]="stack" class="stack-item"
+        [stackIndex]="i"
+        [removeStackElement]="removeStackElement"
         ></app-instances-stack>
     </ng-container>
 </div>

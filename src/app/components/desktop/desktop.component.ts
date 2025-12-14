@@ -138,6 +138,20 @@ export class DesktopComponent implements OnInit{
     }
   }
 
+  removeItem = (keyI : number, itemI : number)  => {
+    var i =-1;
+    for( const [key, val] of this.stacksMap) {
+      i++;
+      if(i == keyI) {
+        val.splice(itemI, 1);
+        if(val.length == 0) this.stacksMap.delete(key);
+        return;
+      }
+    }
+    // this.stacksMap.get(key)?.splice(itemI, 1);
+    // 
+    // console.log(key, itemI);
+  }
 
   addFolder(name: string, iconLogo: string) {
     const newFolder = this.foldersManager.createComponent(FolderComponent);
