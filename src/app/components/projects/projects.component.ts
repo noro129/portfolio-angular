@@ -51,7 +51,7 @@ export class ProjectsComponent implements OnInit {
         this.projectAfterIndex = (this.projectAfterIndex+1)%this.projects.length;
         this.projectBeforeIndex = temp;
       }
-    }, 300);
+    }, 500);
   }
 
   toRight() {
