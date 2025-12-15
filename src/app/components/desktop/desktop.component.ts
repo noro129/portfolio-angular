@@ -143,14 +143,13 @@ export class DesktopComponent implements OnInit{
     for( const [key, val] of this.stacksMap) {
       i++;
       if(i == keyI) {
+        
         val.splice(itemI, 1);
+        if(key === AppType.Folder.toString()) this.removeFolder(itemI);
         if(val.length == 0) this.stacksMap.delete(key);
         return;
       }
     }
-    // this.stacksMap.get(key)?.splice(itemI, 1);
-    // 
-    // console.log(key, itemI);
   }
 
   addFolder(name: string, iconLogo: string) {
@@ -163,6 +162,10 @@ export class DesktopComponent implements OnInit{
 
     this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
     this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
+  }
+
+  removeFolder(index : number) {
+    this.foldersManager.remove(index);
   }
 
   onDragStart(event : DragEvent, key : number) {
