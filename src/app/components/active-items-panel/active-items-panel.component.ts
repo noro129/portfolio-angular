@@ -11,11 +11,7 @@ import { OpenInstance } from '../../models/OpenInstance';
 })
 export class ActiveItemsPanelComponent {
   @Input() stacksMap !: Map<string, OpenInstance[]>;
-  @Input() removeItem !: (keyI : string, i : string) => void;
-
-  getValues() {
-    return Array.from(this.stacksMap.values());
-  }
+  @Input() removeItem !: (key : string, itemId : string) => void;
 
   removeStackElement = (stackId : string, itemId: string) => {
     this.removeItem(stackId, itemId);

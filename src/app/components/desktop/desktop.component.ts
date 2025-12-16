@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, HostListener, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ViewContainerRef, EmbeddedViewRef } from '@angular/core';
 import { Application } from '../../models/Application';
 import { AppType } from '../../models/AppType';
 import { FolderComponent } from "../folder/folder.component";
@@ -82,18 +82,19 @@ export class DesktopComponent implements OnInit{
   handleEnterKey() {
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
+      const uuid = crypto.randomUUID();
       if(app.type === AppType.Folder) {
         if(this.stacksMap.has(AppType.Folder.toString())){
-          this.stacksMap.get(AppType.Folder.toString())?.unshift({ id : crypto.randomUUID(), name : app.name, hidden : false, icon : "./folder.png"});
+          this.stacksMap.get(AppType.Folder.toString())?.unshift({ id : uuid, name : app.name, hidden : false, icon : "./folder.png"});
         } else {
-          this.stacksMap.set(AppType.Folder.toString(), [{ id : crypto.randomUUID(), name : app.name, hidden : false, icon : "./folder.png"}]);
+          this.stacksMap.set(AppType.Folder.toString(), [{ id : uuid, name : app.name, hidden : false, icon : "./folder.png"}]);
         }
-        this.addFolder(app.name, app.icon);
+        this.addFolder(uuid, app.name, app.icon);
       } else {
         if(this.stacksMap.has(app.name)){
-          this.stacksMap.get(app.name)?.unshift({ id : crypto.randomUUID(), name : app.name, hidden : false, icon : app.icon});
+          this.stacksMap.get(app.name)?.unshift({ id : uuid, name : app.name, hidden : false, icon : app.icon});
         } else {
-          this.stacksMap.set(app.name, [{ id : crypto.randomUUID(), name : app.name, hidden : false, icon : app.icon}]);
+          this.stacksMap.set(app.name, [{ id : uuid, name : app.name, hidden : false, icon : app.icon}]);
         }
         //TODO: open app
       }
@@ -134,12 +135,14 @@ export class DesktopComponent implements OnInit{
   open(index : number) {
     if(this.applicationsMatrix.has(index)) {
       const toOpen = this.applicationsMatrix.get(index);
+      const uuid = crypto.randomUUID();
       if(toOpen?.type === AppType.Folder) {
-        this.addFolder(toOpen.name, toOpen.icon);
+        
+        this.addFolder(uuid, toOpen.name, toOpen.icon);
         if(this.stacksMap.has(AppType.Folder.toString())){
-          this.stacksMap.get(AppType.Folder.toString())?.unshift({ id : crypto.randomUUID(), name : toOpen.name, hidden : false, icon : "./folder.png"});
+          this.stacksMap.get(AppType.Folder.toString())?.unshift({ id : uuid, name : toOpen.name, hidden : false, icon : "./folder.png"});
         } else {
-          this.stacksMap.set(AppType.Folder.toString(), [{ id : crypto.randomUUID(), name : toOpen.name, hidden : false, icon : "./folder.png"}]);
+          this.stacksMap.set(AppType.Folder.toString(), [{ id : uuid, name : toOpen.name, hidden : false, icon : "./folder.png"}]);
         }
       }
       else {
@@ -159,14 +162,15 @@ export class DesktopComponent implements OnInit{
       index++;
     }
     val.splice(index, 1);
-    if(key === AppType.Folder.toString()) this.removeFolder(index);
+    if(key === AppType.Folder.toString()) this.removeFolder(itemId);
     if(val.length == 0) this.stacksMap.delete(key);
     return;
   }
 
-  addFolder(name: string, iconLogo: string) {
+  addFolder(id : string, name: string, iconLogo: string) {
     const newFolder = this.foldersManager.createComponent(FolderComponent);
     newFolder.instance.name = name;
+    newFolder.instance.folderId = id;
     newFolder.instance.positionX = this.XOffsetfolderPosition;
     newFolder.instance.positionY = this.YOffsetfolderPosition;
     newFolder.instance.iconLogo = iconLogo;
@@ -176,8 +180,16 @@ export class DesktopComponent implements OnInit{
     this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
   }
 
-  removeFolder(index : number) {
-    this.foldersManager.remove(index);
+  removeFolder(id : string) {
+    for(let folderI=0; folderI<this.foldersManager.length; folderI++){
+      const ref = this.foldersManager.get(folderI) as EmbeddedViewRef<any>;
+      const context = ref.context;
+      if(context && context.folderId === id) {
+        this.foldersManager.remove(folderI);
+        return;
+      }
+    }
+    
   }
 
   onDragStart(event : DragEvent, key : number) {

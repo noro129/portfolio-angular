@@ -14,6 +14,7 @@ import { ExperienceComponent } from "../experience/experience.component";
 export class FolderComponent implements OnInit, AfterViewInit{
   @ViewChild("folderTab") folderTab!: ElementRef<HTMLDivElement>;
   @Input() name = '';
+  @Input() folderId = "";
   @Input() iconLogo = '';
   @Input() positionX = 150;
   @Input() positionY = 150;

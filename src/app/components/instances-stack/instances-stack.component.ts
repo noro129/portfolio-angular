@@ -16,8 +16,8 @@ export class InstancesStackComponent {
   expand = false;
 
   hoverStart(event : MouseEvent) {
-    if(this.stack.length == 1) return;
     this.expand = true;
+    if(this.stack.length == 1) return;
     const el = this.instancesStack.nativeElement;
     const expandedHeight = 10+ 24*this.stack.length + 5*(this.stack.length-1);
     el.style.minHeight = `${expandedHeight}px`;
