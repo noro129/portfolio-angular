@@ -1,23 +1,23 @@
 import { Component, Input } from '@angular/core';
 import { InstancesStackComponent } from "../instances-stack/instances-stack.component";
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, KeyValuePipe } from '@angular/common';
 import { OpenInstance } from '../../models/OpenInstance';
 
 @Component({
   selector: 'app-active-items-panel',
-  imports: [InstancesStackComponent, NgFor, NgIf],
+  imports: [InstancesStackComponent, NgFor, NgIf, KeyValuePipe],
   templateUrl: './active-items-panel.component.html',
   styleUrl: './active-items-panel.component.scss'
 })
 export class ActiveItemsPanelComponent {
   @Input() stacksMap !: Map<string, OpenInstance[]>;
-  @Input() removeItem !: (keyI : number, i : number) => void;
+  @Input() removeItem !: (keyI : string, i : string) => void;
 
   getValues() {
     return Array.from(this.stacksMap.values());
   }
 
-  removeStackElement = (index : number, itemI: number) => {
-    this.removeItem(index, itemI);
+  removeStackElement = (stackId : string, itemId: string) => {
+    this.removeItem(stackId, itemId);
   }
 }

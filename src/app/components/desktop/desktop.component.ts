@@ -148,18 +148,20 @@ export class DesktopComponent implements OnInit{
     }
   }
 
-  removeItem = (keyI : number, itemI : number)  => {
-    var i =-1;
-    for( const [key, val] of this.stacksMap) {
-      i++;
-      if(i == keyI) {
-        
-        val.splice(itemI, 1);
-        if(key === AppType.Folder.toString()) this.removeFolder(itemI);
-        if(val.length == 0) this.stacksMap.delete(key);
-        return;
+  removeItem = (key : string, itemId : string)  => {
+    const val = this.stacksMap.get(key) || [];
+    var index = 0;
+    for( const item of val) {
+      
+      if(item.id === itemId) {
+        break;
       }
+      index++;
     }
+    val.splice(index, 1);
+    if(key === AppType.Folder.toString()) this.removeFolder(index);
+    if(val.length == 0) this.stacksMap.delete(key);
+    return;
   }
 
   addFolder(name: string, iconLogo: string) {

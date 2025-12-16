@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
-import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import { NgClass, NgFor, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-instances-stack',
@@ -11,8 +11,8 @@ import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 export class InstancesStackComponent {
   @ViewChild("instancesStack") instancesStack !: ElementRef<HTMLDivElement>;
   @Input() stack !:OpenInstance[];
-  @Input() stackIndex !:number;
-  @Input() removeStackElement!: (i: number, j: number)=> void;
+  @Input() stackId !:string;
+  @Input() removeStackElement!: (i: string, j: string)=> void;
   expand = false;
 
   hoverStart(event : MouseEvent) {
@@ -31,7 +31,7 @@ export class InstancesStackComponent {
     el.style.transform = `translateY(0)`;
   }
 
-  close(index : number) {
-    this.removeStackElement(this.stackIndex, index);
+  close(itemId : string) {
+    this.removeStackElement(this.stackId, itemId);
   }
 }
