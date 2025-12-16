@@ -7,7 +7,7 @@
         <span class="dragging-bar" (mousedown)="startDrag($event)" (mouseup)="endDrag()"></span>
         <div class="control-buttons">
             <div class="hide" text="hide">&gt;</div>
-            <div class="close" text="close">X</div>
+            <div class="close" text="close" (click)="close()">X</div>
         </div>
     </div>
 

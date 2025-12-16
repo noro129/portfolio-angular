@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { Application } from '../../models/Application';
 import { AppType } from '../../models/AppType';
 import { FolderComponent } from "../folder/folder.component";
@@ -82,16 +82,16 @@ export class DesktopComponent implements OnInit{
       if(!app.focused) continue;
       if(app.type === AppType.Folder) {
         if(this.stacksMap.has(AppType.Folder.toString())){
-          this.stacksMap.get(AppType.Folder.toString())?.unshift({ name : app.name, hidden : false, icon : "./folder.png"});
+          this.stacksMap.get(AppType.Folder.toString())?.unshift({ id : crypto.randomUUID(), name : app.name, hidden : false, icon : "./folder.png"});
         } else {
-          this.stacksMap.set(AppType.Folder.toString(), [{ name : app.name, hidden : false, icon : "./folder.png"}]);
+          this.stacksMap.set(AppType.Folder.toString(), [{ id : crypto.randomUUID(), name : app.name, hidden : false, icon : "./folder.png"}]);
         }
         this.addFolder(app.name, app.icon);
       } else {
         if(this.stacksMap.has(app.name)){
-          this.stacksMap.get(app.name)?.unshift({ name : app.name, hidden : false, icon : app.icon});
+          this.stacksMap.get(app.name)?.unshift({ id : crypto.randomUUID(), name : app.name, hidden : false, icon : app.icon});
         } else {
-          this.stacksMap.set(app.name, [{ name : app.name, hidden : false, icon : app.icon}]);
+          this.stacksMap.set(app.name, [{ id : crypto.randomUUID(), name : app.name, hidden : false, icon : app.icon}]);
         }
         //TODO: open app
       }
@@ -127,9 +127,9 @@ export class DesktopComponent implements OnInit{
       if(toOpen?.type === AppType.Folder) {
         this.addFolder(toOpen.name, toOpen.icon);
         if(this.stacksMap.has(AppType.Folder.toString())){
-          this.stacksMap.get(AppType.Folder.toString())?.unshift({ name : toOpen.name, hidden : false, icon : "./folder.png"});
+          this.stacksMap.get(AppType.Folder.toString())?.unshift({ id : crypto.randomUUID(), name : toOpen.name, hidden : false, icon : "./folder.png"});
         } else {
-          this.stacksMap.set(AppType.Folder.toString(), [{ name : toOpen.name, hidden : false, icon : "./folder.png"}]);
+          this.stacksMap.set(AppType.Folder.toString(), [{ id : crypto.randomUUID(), name : toOpen.name, hidden : false, icon : "./folder.png"}]);
         }
       }
       else {

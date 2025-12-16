@@ -59,9 +59,13 @@ export class FolderComponent implements OnInit, AfterViewInit{
 
   }
 
-  // change the openend instance name in stack manager as well
+  //TODO change the openend instance name in stack manager as well
   changeFolder(folderName : string) {
     if(folderName === this.name) return;
     this.name = folderName;
+  }
+
+  close() {
+    
   }
 }
