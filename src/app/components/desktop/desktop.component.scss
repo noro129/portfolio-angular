@@ -7,6 +7,30 @@
     overflow: hidden;
     z-index: -1;
     background-color: var(--color-2);
+
+    .date{
+        position: absolute;
+        top: 100%; left: 100%; transform: translate(0px, calc( -100% - 30px)) rotate(-90deg);
+        z-index: 4;
+        font-weight: bolder;
+        font-size: 1.2em;
+        display: flex;
+        flex-direction: row;
+        column-gap: 1em;
+        min-width: max-content;
+        color: var(--color-2);
+        transform-origin: bottom left;
+
+        .day{
+            position: relative;
+
+            &>span{
+                font-size: .6em;
+                position: absolute;
+                top: 0; right: 0; transform: translateX(100%);
+            }
+        }
+    }
   
     .wave {
         position: absolute;
@@ -19,7 +43,7 @@
         animation: moveWave1 8s ease-in-out infinite alternate;
         z-index: 1;
         height: 150%;
-        filter: drop-shadow(0 -5px 10px rgba(20, 20, 20, 0.3));
+        filter: drop-shadow(0 -5px 10px rgba(20, 20, 20, 0.432)) blur(5px);
     }
 
     .wave2 {
@@ -27,7 +51,7 @@
         z-index: 2;
         left: -100%;
         height: 140%;
-        filter: drop-shadow(0 -5px 10px rgba(20, 20, 20, 0.3));
+        filter: drop-shadow(0 -5px 10px rgba(20, 20, 20, 0.3)) blur(2px);
     }
 
     .wave3 {

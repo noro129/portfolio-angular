@@ -16,6 +16,8 @@ import { OpenInstance } from '../../models/OpenInstance';
 })
 export class DesktopComponent implements OnInit{
   @ViewChild("foldersManager" ,{ read: ViewContainerRef, static: true }) foldersManager!: ViewContainerRef;
+  day = 1;
+  weekDay = "Sunday";
   XOffsetfolderPosition = 250;
   YOffsetfolderPosition = 150;
   gridColumns = 21;
@@ -99,6 +101,7 @@ export class DesktopComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.setDate();
     for(let appIndex = 0; appIndex<this.applications.length; appIndex++) {
       const app = this.applications[appIndex];
       let iconLocation = app.icon;
@@ -112,6 +115,13 @@ export class DesktopComponent implements OnInit{
         'focused' : false
       });
     }
+  }
+
+  setDate() {
+    const weekdays: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const today = new Date();
+    this.day = today.getDate();
+    this.weekDay = weekdays[today.getDay()]
   }
 
   appFocus(index : number) {
