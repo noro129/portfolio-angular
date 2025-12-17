@@ -17,7 +17,7 @@
             transition: all .2s ease;
             width: 90%;
             height: 5px;
-            border-top-left-radius: 2px; border-top-right-radius: 2px;
+            border-radius: 2px;
             background-color: var(--color-1);
             opacity: .9;
 
@@ -29,6 +29,7 @@
                 width: 100%; height: 100%;
                 border: inherit;
                 background-color: inherit;
+                border-radius: 2px;
             }
 
             &::after{
@@ -38,16 +39,31 @@
 
             &::before{
                 top: 20px;
-                border-bottom-left-radius: 2px; border-bottom-right-radius: 2px;
                 opacity: .5;
             }
         }
 
         &:hover{
             .dash, .dash::after, .dash::before{
-                box-shadow: 0 0 4px var(--color-1);
+                box-shadow: 0 0 5px var(--color-1);
             }
+
             
+        }
+
+        .menu-clicked{
+            height: 0;
+        }
+        
+        .menu-clicked::after, .menu-clicked::before{
+            height: 5px;
+            transform-origin: center;
+        }
+        .menu-clicked::before{
+            transform: translateY(-10px) rotate(45deg);
+        }
+        .menu-clicked::after{
+            transform: rotate(-45deg);
         }
     }
 
