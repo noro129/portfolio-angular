@@ -4,6 +4,7 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '
 import { FolderStructure } from '../../models/FolderStructure';
 import { ProjectsComponent } from "../projects/projects.component";
 import { ExperienceComponent } from "../experience/experience.component";
+import { AppType } from '../../models/AppType';
 
 @Component({
   selector: 'app-folder',
@@ -18,6 +19,7 @@ export class FolderComponent implements OnInit, AfterViewInit{
   @Input() iconLogo = '';
   @Input() positionX = 150;
   @Input() positionY = 150;
+  @Input() removeFolder !: (key : string, folderId : string) => void;
   foldersStructureFile = "/folders-structure.json";
   foldersStructure!: FolderStructure[];
   isDragging = false;
@@ -67,6 +69,6 @@ export class FolderComponent implements OnInit, AfterViewInit{
   }
 
   close() {
-    
+    this.removeFolder(AppType.Folder.toString(), this.folderId);
   }
 }

@@ -171,6 +171,7 @@ export class DesktopComponent implements OnInit{
     const newFolder = this.foldersManager.createComponent(FolderComponent);
     newFolder.instance.name = name;
     newFolder.instance.folderId = id;
+    newFolder.instance.removeFolder = this.removeItem;
     newFolder.instance.positionX = this.XOffsetfolderPosition;
     newFolder.instance.positionY = this.YOffsetfolderPosition;
     newFolder.instance.iconLogo = iconLogo;
