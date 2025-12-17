@@ -77,7 +77,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.renderer.appendChild(revealButton, revealIcon);
         this.renderer.appendChild(spanItem, revealButton);
 
-        this.renderer.listen(revealButton, 'click', () => {
+        this.renderer.listen(spanItem, 'click', () => {
           if(revealButton.textContent === '▼') {
             this.renderer.setProperty(revealButton, 'textContent', '▲');
             this.renderer.setStyle(subItemsContainerDiv, 'max-height', `${menuItem.content.length*25}px`);
