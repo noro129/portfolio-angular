@@ -67,6 +67,35 @@
         }
     }
 
+    .wifi-battery{
+        width: 100%;
+        position: absolute;
+        bottom: 120px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: center;
+
+        .logo{
+            width: 50%;
+            position: relative;
+            
+
+            &>img{
+                display: block;
+                width: 100%;
+            }
+
+            .battery-bar{
+                position: absolute; top: 15%; left: 10%;
+                height: 70%;
+            }
+            
+        }
+
+        
+    }
+
     .date-time{
         width: 100%;
         position: absolute;

@@ -1,17 +1,17 @@
-import { NgClass } from '@angular/common';
-import { Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { NgClass, NgStyle } from '@angular/common';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MenuItem } from '../../models/MenuItem';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-toolbar',
-  imports: [NgClass],
+  imports: [NgClass, NgStyle],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
   @ViewChild("menuItemsManager") menuItemsManager !: ElementRef<HTMLDivElement>;
-
+  battery = Math.floor(Math.random()*101);
   readonly fullName = "Oussama Errazi";
   readonly occupation = "software engineer";
   dateDay = "12";
