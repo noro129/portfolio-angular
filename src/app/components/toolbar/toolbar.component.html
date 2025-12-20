@@ -4,7 +4,7 @@
     </div>
     <div class="wifi-battery">
         <div class="wifi logo" title="internet access"><img src="./wifi.png" alt="wifi logo" class="wifi-logo"/></div>
-        <div class="battery logo" title="{{battery >20 ? 'battery status : '+battery+'%' : 'plug in the charger'}}">
+        <div class="battery logo" title="{{battery >20 ? 'battery status : '+battery+'%' : 'plug in the charger'}}" [attr.batteryP]="battery">
             <img src="./battery.png" alt="battery logo" class="battery-logo"/>
             <div class="battery-bar" [ngStyle]="{'width' :  (battery*8/10)+'%', 'background-color' : battery>20 ? 'var(--color-green)' : 'var(--color-red)'}"></div>
         </div>
