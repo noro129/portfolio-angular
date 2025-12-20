@@ -174,12 +174,23 @@ export class DesktopComponent implements OnInit{
     
   }
 
+  changeFolderName = (newFolderName : string, folderId : string) => {
+    const folders = this.stacksMap.get(AppType.Folder.toString()) || [];
+    for(let folder of folders) {
+      if(folder.id === folderId) {
+        folder.name = newFolderName;
+        break;
+      }
+    }
+  }
+
   addFolder(id : string, name: string, iconLogo: string) {
     const newFolder = this.foldersManager.createComponent(FolderComponent);
     newFolder.instance.name = name;
     newFolder.instance.folderId = id;
     newFolder.instance.removeFolder = this.removeItem;
     newFolder.instance.putFront = this.putInstanceFront;
+    newFolder.instance.changeFolderName = this.changeFolderName;
     newFolder.instance.positionX = this.XOffsetfolderPosition;
     newFolder.instance.positionY = this.YOffsetfolderPosition;
     newFolder.instance.iconLogo = iconLogo;

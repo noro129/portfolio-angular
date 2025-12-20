@@ -21,6 +21,7 @@ export class FolderComponent implements OnInit, AfterViewInit{
   @Input() positionY = 150;
   @Input() removeFolder !: (key : string, folderId : string) => void;
   @Input() putFront !: (key : string, folderId : string) => void;
+  @Input() changeFolderName !: (newFolderName : string, folderId : string) => void;
   foldersStructureFile = "/folders-structure.json";
   foldersStructure!: FolderStructure[];
   isDragging = false;
@@ -72,6 +73,7 @@ export class FolderComponent implements OnInit, AfterViewInit{
   changeFolder(folderName : string) {
     if(folderName === this.name) return;
     this.name = folderName;
+    this.changeFolderName(folderName, this.folderId);
   }
 
   close() {
