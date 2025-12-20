@@ -1,6 +1,6 @@
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { FolderStructure } from '../../models/FolderStructure';
 import { ProjectsComponent } from "../projects/projects.component";
 import { ExperienceComponent } from "../experience/experience.component";
@@ -20,6 +20,7 @@ export class FolderComponent implements OnInit, AfterViewInit{
   @Input() positionX = 150;
   @Input() positionY = 150;
   @Input() removeFolder !: (key : string, folderId : string) => void;
+  @Input() putFront !: (key : string, folderId : string) => void;
   foldersStructureFile = "/folders-structure.json";
   foldersStructure!: FolderStructure[];
   isDragging = false;
@@ -27,6 +28,11 @@ export class FolderComponent implements OnInit, AfterViewInit{
   yOffset=0;
 
   constructor(private httpClient : HttpClient) {}
+
+  @HostListener('click')
+  onClick() {
+    this.putFront(AppType.Folder.toString(), this.folderId);
+  }
 
   ngOnInit(): void {
     this.httpClient.get<FolderStructure[]>(this.foldersStructureFile).subscribe({

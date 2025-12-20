@@ -153,18 +153,25 @@ export class DesktopComponent implements OnInit{
 
   removeItem = (key : string, itemId : string)  => {
     const val = this.stacksMap.get(key) || [];
-    var index = 0;
-    for( const item of val) {
-      
-      if(item.id === itemId) {
-        break;
-      }
-      index++;
-    }
+    var index = val.findIndex(item => item.id === itemId);
+    if(index == -1) return;
     val.splice(index, 1);
     if(key === AppType.Folder.toString()) this.removeFolder(itemId);
     if(val.length == 0) this.stacksMap.delete(key);
-    return;
+  }
+
+  putInstanceFront = (key : string, itemId : string) => {
+    const instances = this.stacksMap.get(key) || [];
+    var index = instances.findIndex(item => item.id === itemId);
+    if(index == -1) return;
+    const instance = instances[index];
+    const folderRef = this.foldersManager.get(this.foldersManager.length - 1 - index);
+    if(folderRef) {
+      this.foldersManager.move(folderRef, this.foldersManager.length - 1);
+      instances.splice(index, 1);
+      instances.unshift(instance);
+    }
+    
   }
 
   addFolder(id : string, name: string, iconLogo: string) {
@@ -172,6 +179,7 @@ export class DesktopComponent implements OnInit{
     newFolder.instance.name = name;
     newFolder.instance.folderId = id;
     newFolder.instance.removeFolder = this.removeItem;
+    newFolder.instance.putFront = this.putInstanceFront;
     newFolder.instance.positionX = this.XOffsetfolderPosition;
     newFolder.instance.positionY = this.YOffsetfolderPosition;
     newFolder.instance.iconLogo = iconLogo;
