@@ -8,8 +8,8 @@ import { OpenInstance } from '../../models/OpenInstance';
 
 @Component({
   selector: 'app-desktop',
-  imports: [NgFor, NgIf, NgClass, 
-    FolderComponent, 
+  imports: [NgFor, NgIf, NgClass,
+    FolderComponent,
     ActiveItemsPanelComponent],
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'

@@ -67,6 +67,6 @@ export class ProjectsComponent implements OnInit {
         this.projectBeforeIndex = (this.projects.length+this.projectBeforeIndex-1)%this.projects.length;
         this.projectAfterIndex = temp;
       }
-    }, 300);
+    }, 500);
   }
 }
