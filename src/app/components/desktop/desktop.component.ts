@@ -184,6 +184,15 @@ export class DesktopComponent implements OnInit{
     }
   }
 
+  hideRevealItem = (key : string, itemId : string) => {
+    const instances = this.stacksMap.get(key) || [];
+    for(let instance of instances) {
+      if(instance.id === itemId) {
+        instance.hidden = !instance.hidden;
+      } 
+    }
+  }
+
   addFolder(id : string, name: string, iconLogo: string) {
     const newFolder = this.foldersManager.createComponent(FolderComponent);
     newFolder.instance.name = name;
@@ -191,6 +200,7 @@ export class DesktopComponent implements OnInit{
     newFolder.instance.removeFolder = this.removeItem;
     newFolder.instance.putFront = this.putInstanceFront;
     newFolder.instance.changeFolderName = this.changeFolderName;
+    newFolder.instance.hideFolder = this.hideRevealItem;
     newFolder.instance.positionX = this.XOffsetfolderPosition;
     newFolder.instance.positionY = this.YOffsetfolderPosition;
     newFolder.instance.iconLogo = iconLogo;
