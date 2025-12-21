@@ -2,7 +2,7 @@
     (mouseenter)="hoverStart($event)"
     (mouseleave)="hoverEnd($event)"
     >
-    <div *ngFor="let item of stack; index as i" class="instance" [ngClass]="{'hidden-instance' : item.hidden, 'expanded' : expand}" [ngStyle]="{'transition-delay' : (i*0.1)+'s'}">
+    <div *ngFor="let item of stack; index as i" class="instance" [ngClass]="{'hidden-instance' : item.hidden, 'expanded' : expand}" [ngStyle]="{'transition-delay' : (i*0.1)+'s', 'background-color' : i%2==0 && !item.hidden ? '#0005' : ''}">
         <img src="{{item.icon}}" alt="icon" class="icon"/>
         <p class="instance-name">{{item.name}}</p>
         <div class="hide">{{item.hidden ? '&#9652;' : '&#9662;'}}</div>
