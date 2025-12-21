@@ -50,6 +50,7 @@ export class FolderComponent implements OnInit, AfterViewInit{
 
   startDrag(event : MouseEvent) {
     this.isDragging = true;
+    this.putFront(AppType.Folder.toString(), this.folderId);
     const rect = this.folderTab.nativeElement.getBoundingClientRect();
     this.xOffset = event.clientX - rect.left;
     this.yOffset = event.clientY - rect.top;
