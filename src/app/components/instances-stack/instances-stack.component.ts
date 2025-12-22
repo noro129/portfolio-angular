@@ -13,6 +13,7 @@ export class InstancesStackComponent {
   @Input() stack !:OpenInstance[];
   @Input() stackId !:string;
   @Input() removeStackElement!: (i: string, j: string)=> void;
+  @Input() putInstanceFront !: (key : string, itemId : string) => void;
   expand = false;
 
   hoverStart(event : MouseEvent) {
@@ -32,5 +33,9 @@ export class InstancesStackComponent {
 
   close(itemId : string) {
     this.removeStackElement(this.stackId, itemId);
+  }
+
+  putFront(itemId : string) {
+    this.putInstanceFront(this.stackId, itemId);
   }
 }

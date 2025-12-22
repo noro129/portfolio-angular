@@ -52,17 +52,20 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-
-            &:hover{
-                background-color: var(--color-1-lighter);
-            }
-        }
-
+        }   
+        
+        
         .hide{
             font-size: 20px;
         }
 
-        
+        &:has(.close:hover){
+            background-color: var(--color-red) !important;
+        }
+
+        &:has(.hide:hover){
+            background-color: var(--color-blue) !important;
+        }
     }
 
 
