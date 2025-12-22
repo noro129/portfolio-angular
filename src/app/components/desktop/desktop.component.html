@@ -19,7 +19,6 @@
                 class="row"
                 (click)="appFocus(column + row*gridColumns)"
                 (dblclick)="open(column + row*gridColumns)"
-                [ngClass]="{'empty-position' : hoveringNeighbour(column + row*gridColumns)}"
                 (dragover)="onDragOver($event, row, column)"
                 (drop)="onDrop($event, column + row*gridColumns)">
             <span *ngIf="applicationsMatrix.get(column + row*gridColumns) as app" 

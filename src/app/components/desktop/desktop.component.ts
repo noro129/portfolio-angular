@@ -256,22 +256,6 @@ export class DesktopComponent implements OnInit{
     this.hoveredAppPosition = {'row' : -1, 'column' : -1};
   }
 
-  hoveringNeighbour(key : number) : boolean{
-    if(this.hoveredAppPosition.row === -1) return false;
-    const row = this.hoveredAppPosition.row, column = this.hoveredAppPosition.column;
-    return this.isSameKey(key, row, column) ||
-           this.isSameKey(key, row, column-1) ||
-           this.isSameKey(key, row, column+1) || 
-
-           this.isSameKey(key, row-1, column) ||
-           this.isSameKey(key, row-1, column-1) ||
-           this.isSameKey(key, row-1, column+1) ||
-
-           this.isSameKey(key, row+1, column-1) ||
-           this.isSameKey(key, row+1, column+1) ||
-           this.isSameKey(key, row+1, column);
-  }
-
   isSameKey(key : number, row : number, column : number) : boolean {
     return row<this.gridRows && row>=0 && column>=0 && column<this.gridColumns && key === row*this.gridColumns + column;
   }
