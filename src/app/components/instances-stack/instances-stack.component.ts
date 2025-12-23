@@ -34,6 +34,7 @@ export class InstancesStackComponent {
   }
 
   close(itemId : string) {
+    this.onMouseLeaveInstance(itemId);
     this.removeStackElement(this.stackId, itemId);
   }
 
