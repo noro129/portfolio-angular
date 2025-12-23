@@ -19,7 +19,7 @@ export class InstancesStackComponent {
   @Input() hideRevealItem !: (key : string, itemId : string) => void;
   expand = false;
 
-  hoverStart(event : MouseEvent) {
+  hoverStart() {
     this.expand = true;
     const el = this.instancesStack.nativeElement;
     const expandedHeight = this.stack.length === 1 ? 24 : 10+ 24*this.stack.length + 5*(this.stack.length-1);
@@ -27,7 +27,7 @@ export class InstancesStackComponent {
     el.style.transform = `translateY(-${expandedHeight-24}px)`;
   }
 
-  hoverEnd(event : MouseEvent) {
+  hoverEnd() {
     this.expand = false;
     const el = this.instancesStack.nativeElement;
     el.style.minHeight = "24px";
@@ -35,15 +35,18 @@ export class InstancesStackComponent {
   }
 
   hideReveal(itemId : string) {
+    this.hoverEnd();
     this.hideRevealItem(this.stackId, itemId);
   }
 
   close(itemId : string) {
+    this.hoverEnd();
     this.onMouseLeaveInstance(itemId);
     this.removeStackElement(this.stackId, itemId);
   }
 
   putFront(itemId : string) {
+    this.hoverEnd();
     this.putInstanceFront(this.stackId, itemId);
   }
 

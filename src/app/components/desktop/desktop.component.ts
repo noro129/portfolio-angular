@@ -210,7 +210,6 @@ export class DesktopComponent implements OnInit{
           if(root instanceof HTMLElement) {
             this.renderer.setStyle(root, 'z-index', '9999');
             this.renderer.setStyle(root, 'position', 'relative');
-            this.renderer.setStyle(root, 'display', 'block');
           }
         })
         return;

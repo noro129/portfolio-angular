@@ -1,6 +1,6 @@
 <div class="instances-container" #instancesStack
-    (mouseenter)="hoverStart($event)"
-    (mouseleave)="hoverEnd($event)"
+    (mouseenter)="hoverStart()"
+    (mouseleave)="hoverEnd()"
     >
     <div 
         *ngFor="let item of stack; index as i" 
