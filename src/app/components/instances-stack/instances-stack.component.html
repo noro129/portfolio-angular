@@ -7,6 +7,8 @@
         class="instance" 
         [ngClass]="{'hidden-instance' : item.hidden, 'expanded' : expand}" 
         [ngStyle]="{'transition-delay' : (i*0.1)+'s', 'background-color' : i%2==0 && !item.hidden ? '#0005' : ''}"
+        (mouseenter)="onMouseEnterInstance(item.id)"
+        (mouseleave)="onMouseLeaveInstance(item.id)"
         >
             <img src="{{item.icon}}" alt="icon" class="icon" (click)="putFront(item.id)"/>
             <p class="instance-name" (click)="putFront(item.id)">{{item.name}}</p>

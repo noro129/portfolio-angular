@@ -9,11 +9,22 @@
         <path fill="#222" d="M0,240 C360,300 1080,100 1440,240 L1440,320 L0,320 Z"></path>
     </svg>
     <div class="date">
-        <div class="day">{{day}}<span>{{ day==11 || day==12 || day==13 ? "th" : day%10==1 ? "st" : day%10==2 ? "nd" :  day%10 == 3 ? "rd" : "th" }}</span></div>
+        <div class="day">{{day}}<span>{{ 
+                                        day==11 || day==12 || day==13 ? 
+                                        "th" 
+                                        : day%10==1 ? 
+                                            "st" 
+                                            : day%10==2 ? 
+                                                "nd" 
+                                                : day%10 == 3 ?
+                                                    "rd" 
+                                                    : "th" 
+                                        }}</span>
+            </div>
         <div class="week-day">{{weekDay}}</div>
     </div>
 </div>
-<div class="apps">
+<div class="apps" #desktop>
     <div *ngFor="let column of arrayOfSize(gridColumns)" class="column">
         <div *ngFor="let row of arrayOfSize(gridRows)" 
                 class="row"
@@ -37,9 +48,10 @@
 
 <ng-container #foldersManager></ng-container>
 
-
 <app-active-items-panel
     [stacksMap]="stacksMap" 
     [removeItem]="removeItem"
     [putInstanceFront]="putInstanceFront"
+    [focusOnWindow]="focusOnWindow"
+    [removeFocusOnWindow]="removeFocusOnWindow"
     />

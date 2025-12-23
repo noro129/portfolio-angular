@@ -14,6 +14,8 @@ export class InstancesStackComponent {
   @Input() stackId !:string;
   @Input() removeStackElement!: (i: string, j: string)=> void;
   @Input() putInstanceFront !: (key : string, itemId : string) => void;
+  @Input() focusOnWindow !: (key : string, itemId : string) => void;
+  @Input() removeFocusOnWindow !: (key : string, itemId : string) => void;
   expand = false;
 
   hoverStart(event : MouseEvent) {
@@ -37,5 +39,13 @@ export class InstancesStackComponent {
 
   putFront(itemId : string) {
     this.putInstanceFront(this.stackId, itemId);
+  }
+
+  onMouseEnterInstance(itemId : string) {
+    this.focusOnWindow(this.stackId, itemId);
+  }
+
+  onMouseLeaveInstance(itemId : string) {
+    this.removeFocusOnWindow(this.stackId, itemId);
   }
 }

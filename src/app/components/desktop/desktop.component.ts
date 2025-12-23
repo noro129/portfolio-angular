@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, HostListener, OnInit, ViewChild, ViewContainerRef, EmbeddedViewRef } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ViewContainerRef, EmbeddedViewRef, Renderer2, ElementRef } from '@angular/core';
 import { Application } from '../../models/Application';
 import { AppType } from '../../models/AppType';
 import { FolderComponent } from "../folder/folder.component";
@@ -16,12 +16,14 @@ import { OpenInstance } from '../../models/OpenInstance';
 })
 export class DesktopComponent implements OnInit{
   @ViewChild("foldersManager" ,{ read: ViewContainerRef, static: true }) foldersManager!: ViewContainerRef;
+  @ViewChild("desktop" ,{ static: true }) desktop!: ElementRef;
   day = 1;
   weekDay = "Sunday";
   XOffsetfolderPosition = 250;
   YOffsetfolderPosition = 150;
   gridColumns = 21;
   gridRows = 10;
+  appFocusEl !: HTMLElement;
   readonly applications : Application[] = [
       {
         'id' : 0,
@@ -69,7 +71,7 @@ export class DesktopComponent implements OnInit{
   draggedIndex =-1;
   hoveredAppPosition = {'row' : -1, 'column' : -1};
 
-  constructor() {
+  constructor(private renderer : Renderer2) {
     this.gridColumns = window.innerWidth / 100;
     this.gridRows = window.innerHeight / 100;
   }
@@ -160,6 +162,7 @@ export class DesktopComponent implements OnInit{
     if(val.length == 0) this.stacksMap.delete(key);
   }
 
+  //todo works only for folders now
   putInstanceFront = (key : string, itemId : string) => {
     const instances = this.stacksMap.get(key) || [];
     var index = instances.findIndex(item => item.id === itemId);
@@ -190,6 +193,60 @@ export class DesktopComponent implements OnInit{
       if(instance.id === itemId) {
         instance.hidden = !instance.hidden;
       } 
+    }
+  }
+
+  focusOnWindow = (key : string, itemId : string) => {
+    this.appFocusEl = this.renderer.createElement("div");
+    this.renderer.setStyle(this.appFocusEl, 'backdrop-filter', 'blur(20px)');
+    this.renderer.setStyle(this.appFocusEl, 'z-index', "9998");
+    this.renderer.setStyle(this.appFocusEl, 'position', 'absolute');
+    this.renderer.setStyle(this.appFocusEl, 'top', '0');
+    this.renderer.setStyle(this.appFocusEl, 'left', '0');
+    this.renderer.setStyle(this.appFocusEl, 'width', '100%');
+    this.renderer.setStyle(this.appFocusEl, 'height', '100%');
+
+    this.renderer.appendChild(this.desktop.nativeElement, this.appFocusEl);
+
+    if(key === AppType.Folder.toString()) {
+      for(let folderI=0; folderI<this.foldersManager.length; folderI++){
+      const ref = this.foldersManager.get(folderI) as EmbeddedViewRef<any>;
+      const context = ref.context;
+      if(context && context.folderId === itemId) {
+        ref.rootNodes.forEach((root)=> {
+          if(root instanceof HTMLElement) {
+            this.renderer.setStyle(root, 'z-index', '9999');
+            this.renderer.setStyle(root, 'position', 'relative');
+            this.renderer.setStyle(root, 'display', 'block');
+          }
+        })
+        return;
+      }
+    }
+    }
+  }
+
+  removeFocusOnWindow = (key : string, itemId : string) => {
+    if(this.appFocusEl) {
+      
+      this.renderer.removeChild(this.desktop.nativeElement, this.appFocusEl);
+      this.appFocusEl = null!;
+    }
+    
+    if(key === AppType.Folder.toString()) {
+      for(let folderI=0; folderI<this.foldersManager.length; folderI++){
+      const ref = this.foldersManager.get(folderI) as EmbeddedViewRef<any>;
+      const context = ref.context;
+      if(context && context.folderId === itemId) {
+        ref.rootNodes.forEach((root)=> {
+          if(root instanceof HTMLElement) {
+            this.renderer.removeStyle(root, 'z-index');
+            this.renderer.removeStyle(root, 'position');
+          }
+        })
+        return;
+      }
+    }
     }
   }
 

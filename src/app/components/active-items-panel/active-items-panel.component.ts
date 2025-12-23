@@ -13,6 +13,8 @@ export class ActiveItemsPanelComponent {
   @Input() stacksMap !: Map<string, OpenInstance[]>;
   @Input() removeItem !: (key : string, itemId : string) => void;
   @Input() putInstanceFront !: (key : string, itemId : string) => void;
+  @Input() focusOnWindow !: (key : string, itemId : string) => void;
+  @Input() removeFocusOnWindow !: (key : string, itemId : string) => void;
 
   removeStackElement = (stackId : string, itemId: string) => {
     this.removeItem(stackId, itemId);
