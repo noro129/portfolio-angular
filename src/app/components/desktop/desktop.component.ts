@@ -85,18 +85,19 @@ export class DesktopComponent implements OnInit{
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
+      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon};
       if(app.type === AppType.Folder) {
         if(this.stacksMap.has(AppType.Folder.toString())){
-          this.stacksMap.get(AppType.Folder.toString())?.unshift({ id : uuid, name : app.name, hidden : false, icon : "./folder.png"});
+          this.stacksMap.get(AppType.Folder.toString())?.unshift(instance);
         } else {
-          this.stacksMap.set(AppType.Folder.toString(), [{ id : uuid, name : app.name, hidden : false, icon : "./folder.png"}]);
+          this.stacksMap.set(AppType.Folder.toString(), [instance]);
         }
-        this.addFolder(uuid, app.name, app.icon);
+        this.addFolder(instance);
       } else {
         if(this.stacksMap.has(app.name)){
-          this.stacksMap.get(app.name)?.unshift({ id : uuid, name : app.name, hidden : false, icon : app.icon});
+          this.stacksMap.get(app.name)?.unshift(instance);
         } else {
-          this.stacksMap.set(app.name, [{ id : uuid, name : app.name, hidden : false, icon : app.icon}]);
+          this.stacksMap.set(app.name, [instance]);
         }
         //TODO: open app
       }
@@ -138,13 +139,15 @@ export class DesktopComponent implements OnInit{
     if(this.applicationsMatrix.has(index)) {
       const toOpen = this.applicationsMatrix.get(index);
       const uuid = crypto.randomUUID();
+      const app : OpenInstance = {id : uuid, name : toOpen?.name || '', hidden : false, icon : toOpen?.icon || ''};
+      console.log(app);
       if(toOpen?.type === AppType.Folder) {
         
-        this.addFolder(uuid, toOpen.name, toOpen.icon);
+        this.addFolder(app);
         if(this.stacksMap.has(AppType.Folder.toString())){
-          this.stacksMap.get(AppType.Folder.toString())?.unshift({ id : uuid, name : toOpen.name, hidden : false, icon : "./folder.png"});
+          this.stacksMap.get(AppType.Folder.toString())?.unshift(app);
         } else {
-          this.stacksMap.set(AppType.Folder.toString(), [{ id : uuid, name : toOpen.name, hidden : false, icon : "./folder.png"}]);
+          this.stacksMap.set(AppType.Folder.toString(), [app]);
         }
       }
       else {
@@ -177,16 +180,6 @@ export class DesktopComponent implements OnInit{
     
   }
 
-  changeFolderName = (newFolderName : string, folderId : string) => {
-    const folders = this.stacksMap.get(AppType.Folder.toString()) || [];
-    for(let folder of folders) {
-      if(folder.id === folderId) {
-        folder.name = newFolderName;
-        break;
-      }
-    }
-  }
-
   hideRevealItem = (key : string, itemId : string) => {
     const instances = this.stacksMap.get(key) || [];
     for(let instance of instances) {
@@ -212,7 +205,7 @@ export class DesktopComponent implements OnInit{
       for(let folderI=0; folderI<this.foldersManager.length; folderI++){
       const ref = this.foldersManager.get(folderI) as EmbeddedViewRef<any>;
       const context = ref.context;
-      if(context && context.folderId === itemId) {
+      if(context && context.folder.id === itemId) {
         ref.rootNodes.forEach((root)=> {
           if(root instanceof HTMLElement) {
             this.renderer.setStyle(root, 'z-index', '9999');
@@ -237,7 +230,7 @@ export class DesktopComponent implements OnInit{
       for(let folderI=0; folderI<this.foldersManager.length; folderI++){
       const ref = this.foldersManager.get(folderI) as EmbeddedViewRef<any>;
       const context = ref.context;
-      if(context && context.folderId === itemId) {
+      if(context && context.folder.id === itemId) {
         ref.rootNodes.forEach((root)=> {
           if(root instanceof HTMLElement) {
             this.renderer.removeStyle(root, 'z-index');
@@ -250,17 +243,13 @@ export class DesktopComponent implements OnInit{
     }
   }
 
-  addFolder(id : string, name: string, iconLogo: string) {
+  addFolder(folder : OpenInstance) {
     const newFolder = this.foldersManager.createComponent(FolderComponent);
-    newFolder.instance.name = name;
-    newFolder.instance.folderId = id;
+    newFolder.instance.folder = folder;
     newFolder.instance.removeFolder = this.removeItem;
     newFolder.instance.putFront = this.putInstanceFront;
-    newFolder.instance.changeFolderName = this.changeFolderName;
-    newFolder.instance.hideFolder = this.hideRevealItem;
     newFolder.instance.positionX = this.XOffsetfolderPosition;
     newFolder.instance.positionY = this.YOffsetfolderPosition;
-    newFolder.instance.iconLogo = iconLogo;
 
 
     this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
@@ -271,7 +260,7 @@ export class DesktopComponent implements OnInit{
     for(let folderI=0; folderI<this.foldersManager.length; folderI++){
       const ref = this.foldersManager.get(folderI) as EmbeddedViewRef<any>;
       const context = ref.context;
-      if(context && context.folderId === id) {
+      if(context && context.folder.id === id) {
         this.foldersManager.remove(folderI);
         return;
       }

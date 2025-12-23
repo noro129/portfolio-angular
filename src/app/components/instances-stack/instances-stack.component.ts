@@ -12,10 +12,11 @@ export class InstancesStackComponent {
   @ViewChild("instancesStack") instancesStack !: ElementRef<HTMLDivElement>;
   @Input() stack !:OpenInstance[];
   @Input() stackId !:string;
-  @Input() removeStackElement!: (i: string, j: string)=> void;
+  @Input() removeStackElement !: (i: string, j: string)=> void;
   @Input() putInstanceFront !: (key : string, itemId : string) => void;
   @Input() focusOnWindow !: (key : string, itemId : string) => void;
   @Input() removeFocusOnWindow !: (key : string, itemId : string) => void;
+  @Input() hideRevealItem !: (key : string, itemId : string) => void;
   expand = false;
 
   hoverStart(event : MouseEvent) {
@@ -31,6 +32,10 @@ export class InstancesStackComponent {
     const el = this.instancesStack.nativeElement;
     el.style.minHeight = "24px";
     el.style.transform = `translateY(0)`;
+  }
+
+  hideReveal(itemId : string) {
+    this.hideRevealItem(this.stackId, itemId);
   }
 
   close(itemId : string) {

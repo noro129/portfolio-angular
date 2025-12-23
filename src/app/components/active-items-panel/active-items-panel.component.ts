@@ -15,6 +15,7 @@ export class ActiveItemsPanelComponent {
   @Input() putInstanceFront !: (key : string, itemId : string) => void;
   @Input() focusOnWindow !: (key : string, itemId : string) => void;
   @Input() removeFocusOnWindow !: (key : string, itemId : string) => void;
+  @Input() hideRevealItem !: (key : string, itemId : string) => void;
 
   removeStackElement = (stackId : string, itemId: string) => {
     this.removeItem(stackId, itemId);

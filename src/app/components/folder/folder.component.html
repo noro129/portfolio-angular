@@ -1,8 +1,8 @@
-<div class="container" [ngStyle]="{'top': positionY+'px', 'left': positionX+'px', 'display' : hidden ? 'none' : 'block'}" #folderTab>
+<div class="container" [ngStyle]="{'top': positionY+'px', 'left': positionX+'px', 'display' : folder.hidden ? 'none' : 'block'}" #folderTab>
     <div class="header">
         <div class="title">
-            <img src="{{iconLogo}}" alt="logo" class="icon-logo">
-            <p class="name">{{name}}</p>
+            <img src="{{folder.icon}}" alt="logo" class="icon-logo">
+            <p class="name">{{folder.name}}</p>
         </div>
         <span class="dragging-bar" (mousedown)="startDrag($event)" (mouseup)="endDrag()"></span>
         <div class="control-buttons">
@@ -14,18 +14,18 @@
 
     <div class="body">
         <div class="left-panel">
-            <div *ngFor="let folder of foldersStructure" class="folders">
-                <span class="folder-name"><span class="folder">{{folder.name}}</span><span class="show-sub-folders-button" *ngIf="folder.subContent.length != 0">&gt;</span></span>
-                <span *ngIf="folder.subContent.length != 0">
-                    <div *ngFor="let subfolder of folder.subContent">
-                        <span class="sub-folder-name" [ngClass]="{'opened-folder' : name === subfolder.name}" (click)="changeFolder(subfolder.name)">{{subfolder.name}}</span>
+            <div *ngFor="let fs of foldersStructure" class="folders">
+                <span class="folder-name"><span class="folder">{{fs.name}}</span><span class="show-sub-folders-button" *ngIf="fs.subContent.length != 0">&gt;</span></span>
+                <span *ngIf="fs.subContent.length != 0">
+                    <div *ngFor="let subfolder of fs.subContent">
+                        <span class="sub-folder-name" [ngClass]="{'opened-folder' : folder.name === subfolder.name}" (click)="changeFolder(subfolder.name)">{{subfolder.name}}</span>
                     </div>
                 </span>
             </div>
         </div>
         <div class="content">
-            <app-projects *ngIf="name === 'Projects'"></app-projects>
-            <app-experience *ngIf="name === 'Experience'"/>
+            <app-projects *ngIf="folder.name === 'Projects'"></app-projects>
+            <app-experience *ngIf="folder.name === 'Experience'"/>
         </div>
     </div>
 </div>

@@ -5,6 +5,7 @@ import { FolderStructure } from '../../models/FolderStructure';
 import { ProjectsComponent } from "../projects/projects.component";
 import { ExperienceComponent } from "../experience/experience.component";
 import { AppType } from '../../models/AppType';
+import { OpenInstance } from '../../models/OpenInstance';
 
 @Component({
   selector: 'app-folder',
@@ -14,18 +15,14 @@ import { AppType } from '../../models/AppType';
 })
 export class FolderComponent implements OnInit, AfterViewInit{
   @ViewChild("folderTab") folderTab!: ElementRef<HTMLDivElement>;
-  @Input() name = '';
-  @Input() folderId = "";
-  @Input() iconLogo = '';
+  @Input() folder !: OpenInstance;
   @Input() positionX = 150;
   @Input() positionY = 150;
   @Input() removeFolder !: (key : string, folderId : string) => void;
   @Input() putFront !: (key : string, folderId : string) => void;
-  @Input() changeFolderName !: (newFolderName : string, folderId : string) => void;
-  @Input() hideFolder !: (key : string, folderId : string) => void;
   foldersStructureFile = "/folders-structure.json";
   foldersStructure!: FolderStructure[];
-  isDragging = false; hidden = false;
+  isDragging = false;
   xOffset=0;
   yOffset=0;
 
@@ -33,7 +30,7 @@ export class FolderComponent implements OnInit, AfterViewInit{
 
   @HostListener('click')
   onClick() {
-    this.putFront(AppType.Folder.toString(), this.folderId);
+    this.putFront(AppType.Folder.toString(), this.folder.id);
   }
 
   ngOnInit(): void {
@@ -51,7 +48,7 @@ export class FolderComponent implements OnInit, AfterViewInit{
 
   startDrag(event : MouseEvent) {
     this.isDragging = true;
-    this.putFront(AppType.Folder.toString(), this.folderId);
+    this.putFront(AppType.Folder.toString(), this.folder.id);
     const rect = this.folderTab.nativeElement.getBoundingClientRect();
     this.xOffset = event.clientX - rect.left;
     this.yOffset = event.clientY - rect.top;
@@ -71,19 +68,16 @@ export class FolderComponent implements OnInit, AfterViewInit{
 
   }
 
-  //TODO change the openend instance name in stack manager as well
   changeFolder(folderName : string) {
-    if(folderName === this.name) return;
-    this.name = folderName;
-    this.changeFolderName(folderName, this.folderId);
+    if(folderName === this.folder.name) return;
+    this.folder.name = folderName;
   }
 
   hide() {
-    this.hidden = true;
-    this.hideFolder(AppType.Folder.toString(), this.folderId);
+    this.folder.hidden = true;
   }
 
   close() {
-    this.removeFolder(AppType.Folder.toString(), this.folderId);
+    this.removeFolder(AppType.Folder.toString(), this.folder.id);
   }
 }

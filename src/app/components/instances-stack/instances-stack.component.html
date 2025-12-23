@@ -12,7 +12,7 @@
         >
             <img src="{{item.icon}}" alt="icon" class="icon" (click)="putFront(item.id)"/>
             <p class="instance-name" (click)="putFront(item.id)">{{item.name}}</p>
-            <div class="hide">{{item.hidden ? '&#9652;' : '&#9662;'}}</div>
+            <div class="hide" (click)="hideReveal(item.id)">{{item.hidden ? '&#9652;' : '&#9662;'}}</div>
             <div class="close" (click)="close(item.id)">X</div>
     </div>
 </div>
