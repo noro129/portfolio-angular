@@ -191,13 +191,20 @@ export class DesktopComponent implements OnInit{
 
   focusOnWindow = (key : string, itemId : string) => {
     this.appFocusEl = this.renderer.createElement("div");
-    this.renderer.setStyle(this.appFocusEl, 'backdrop-filter', 'blur(20px)');
+    this.renderer.setStyle(this.appFocusEl, 'background', 'rgba(0,0,0,0)');
+      this.renderer.setStyle(this.appFocusEl, 'backdrop-filter', 'blur(0)');
+    this.renderer.setStyle(this.appFocusEl, 'transition', 'background .2s ease, backdrop-filter .2s .1s ease');
     this.renderer.setStyle(this.appFocusEl, 'z-index', "9998");
     this.renderer.setStyle(this.appFocusEl, 'position', 'absolute');
     this.renderer.setStyle(this.appFocusEl, 'top', '0');
     this.renderer.setStyle(this.appFocusEl, 'left', '0');
     this.renderer.setStyle(this.appFocusEl, 'width', '100%');
     this.renderer.setStyle(this.appFocusEl, 'height', '100%');
+
+    setTimeout(()=> {
+      this.renderer.setStyle(this.appFocusEl, 'background', 'rgba(0,0,0,0.3)');
+      this.renderer.setStyle(this.appFocusEl, 'backdrop-filter', 'blur(5px)');
+    }, 100);
 
     this.renderer.appendChild(this.desktop.nativeElement, this.appFocusEl);
 
