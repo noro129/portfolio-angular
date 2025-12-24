@@ -5,12 +5,13 @@ import { AppType } from '../../models/AppType';
 import { FolderComponent } from "../folder/folder.component";
 import { ActiveItemsPanelComponent } from "../active-items-panel/active-items-panel.component";
 import { OpenInstance } from '../../models/OpenInstance';
+import { ApplicationsComponent } from "../applications/applications.component";
 
 @Component({
   selector: 'app-desktop',
   imports: [NgFor, NgIf, NgClass,
     FolderComponent,
-    ActiveItemsPanelComponent],
+    ActiveItemsPanelComponent, ApplicationsComponent],
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })
@@ -29,7 +30,7 @@ export class DesktopComponent implements OnInit{
         'id' : 0,
         'name' : 'Projects',
         'type' : AppType.Folder,
-        'icon' : '',
+        'icon' : './folder.png',
         'xPosition' : 0,
         'yPosition' : 0 
       },
@@ -37,7 +38,7 @@ export class DesktopComponent implements OnInit{
         'id' : 1,
         'name' : 'Experience',
         'type' : AppType.Folder,
-        'icon' : './question-mark.png',
+        'icon' : './folder.png',
         'xPosition' : 1,
         'yPosition' : 0
       },
@@ -108,13 +109,11 @@ export class DesktopComponent implements OnInit{
     this.setDate();
     for(let appIndex = 0; appIndex<this.applications.length; appIndex++) {
       const app = this.applications[appIndex];
-      let iconLocation = app.icon;
-      if(app.type === AppType.Folder) iconLocation = "./folder.png";
       const index = app.yPosition + app.xPosition*this.gridColumns;
       this.applicationsMatrix.set(index, {
         'id' : app.id,
         'name' : app.name,
-        'icon' : iconLocation,
+        'icon' : app.icon,
         'type' : app.type,
         'focused' : false
       });
