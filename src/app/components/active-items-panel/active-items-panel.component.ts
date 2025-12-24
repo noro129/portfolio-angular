@@ -17,7 +17,5 @@ export class ActiveItemsPanelComponent {
   @Input() removeFocusOnWindow !: (key : string, itemId : string) => void;
   @Input() hideRevealItem !: (key : string, itemId : string) => void;
 
-  removeStackElement = (stackId : string, itemId: string) => {
-    this.removeItem(stackId, itemId);
-  }
+  keepOrder = () => 0;
 }
