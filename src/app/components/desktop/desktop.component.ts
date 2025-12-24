@@ -140,7 +140,6 @@ export class DesktopComponent implements OnInit{
       const toOpen = this.applicationsMatrix.get(index);
       const uuid = crypto.randomUUID();
       const app : OpenInstance = {id : uuid, name : toOpen?.name || '', hidden : false, icon : toOpen?.icon || ''};
-      console.log(app);
       if(toOpen?.type === AppType.Folder) {
         
         this.addFolder(app);
@@ -151,6 +150,11 @@ export class DesktopComponent implements OnInit{
         }
       }
       else {
+        if(this.stacksMap.has(app.name)){
+          this.stacksMap.get(app.name)?.unshift(app);
+        } else {
+          this.stacksMap.set(app.name, [app]);
+        }
         //TODO: open APP
       }
     }
