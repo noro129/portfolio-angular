@@ -1,7 +1,9 @@
 <div class="container">
     <ng-container *ngFor="let appInstance of openedAplications | keyvalue : keepOrder">
             <ng-container [ngSwitch]="appInstance.key">
-
+                <ng-container *ngSwitchCase="'Blodest'">
+                    <app-blodest *ngFor="let instance of appInstance.value" [instanceData]="instance"/>
+                </ng-container>
             </ng-container>
     </ng-container>
 </div>
