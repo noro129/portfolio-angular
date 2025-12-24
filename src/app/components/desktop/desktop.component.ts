@@ -86,7 +86,7 @@ export class DesktopComponent implements OnInit{
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
-      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon};
+      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : 700, windowHeight : 450};
       if(app.type === AppType.Folder) {
         if(this.stacksMap.has(AppType.Folder.toString())){
           this.stacksMap.get(AppType.Folder.toString())?.unshift(instance);
@@ -138,7 +138,7 @@ export class DesktopComponent implements OnInit{
     if(this.applicationsMatrix.has(index)) {
       const toOpen = this.applicationsMatrix.get(index);
       const uuid = crypto.randomUUID();
-      const app : OpenInstance = {id : uuid, name : toOpen?.name || '', hidden : false, icon : toOpen?.icon || ''};
+      const app : OpenInstance = {id : uuid, name : toOpen?.name || '', hidden : false, icon : toOpen?.icon || '', windowWidth : 700, windowHeight : 450};
       if(toOpen?.type === AppType.Folder) {
         
         this.addFolder(app);
