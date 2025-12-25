@@ -8,4 +8,5 @@ export interface OpenInstance {
     positionZ : number;
     windowWidth : number;
     windowHeight : number;
+    focusedOn : boolean;
 }

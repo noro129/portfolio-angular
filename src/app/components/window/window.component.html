@@ -1,5 +1,10 @@
 <div class="container"
-    [ngStyle]="{'width': openInstance.windowWidth+'px' , 'height': openInstance.windowHeight+'px' ,'top': openInstance.positionY+'px', 'left': openInstance.positionX+'px', 'display' : openInstance.hidden ? 'none' : 'block', 'z-index' : openInstance.positionZ}"
+    [ngStyle]="{'width': openInstance.windowWidth+'px' , 
+                'height': openInstance.windowHeight+'px' ,
+                'top': openInstance.positionY+'px', 
+                'left': openInstance.positionX+'px', 
+                'display' : openInstance.hidden && !openInstance.focusedOn ? 'none' : 'block', 
+                'z-index' : openInstance.focusedOn ? '10000' : openInstance.positionZ}"
     #window>
     <div class="header">
         <div class="title">

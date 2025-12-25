@@ -84,7 +84,7 @@ export class DesktopComponent implements OnInit{
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
-      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition};
+      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
       this.XOffsetPosition = this.XOffsetPosition + 50;
       this.YOffsetPosition = this.YOffsetPosition + 50;
       this.ZOffsetPosition++;
@@ -145,7 +145,7 @@ export class DesktopComponent implements OnInit{
     const toOpen = this.applicationsMatrix.get(index);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
-    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition};
+    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
     this.XOffsetPosition = this.XOffsetPosition + 50;
     this.YOffsetPosition = this.YOffsetPosition + 50;
     this.ZOffsetPosition++;
@@ -190,11 +190,20 @@ export class DesktopComponent implements OnInit{
     for(let instance of instances) {
       if(instance.id === itemId) {
         instance.hidden = !instance.hidden;
+        break;
       } 
     }
   }
 
   focusOnWindow = (key : string, itemId : string) => {
+    const instances = this.stacksMap.get(key) || [];
+    for(let instance of instances) {
+      if(instance.id === itemId) {
+        instance.focusedOn = true;
+        break;
+      } 
+    }
+
     this.appFocusEl = this.renderer.createElement("div");
     this.renderer.setStyle(this.appFocusEl, 'background', 'rgba(0,0,0,0)');
     this.renderer.setStyle(this.appFocusEl, 'backdrop-filter', 'blur(0)');
@@ -215,8 +224,14 @@ export class DesktopComponent implements OnInit{
   }
 
   removeFocusOnWindow = (key : string, itemId : string) => {
+    const instances = this.stacksMap.get(key) || [];
+    for(let instance of instances) {
+      if(instance.id === itemId) {
+        instance.focusedOn = false;
+        break;
+      } 
+    }
     if(this.appFocusEl) {
-      
       this.renderer.removeChild(this.desktop.nativeElement, this.appFocusEl);
       this.appFocusEl = null!;
     }
