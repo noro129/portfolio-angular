@@ -16,7 +16,6 @@ import { ApplicationsComponent } from "../applications/applications.component";
   styleUrl: './desktop.component.scss'
 })
 export class DesktopComponent implements OnInit{
-  @ViewChild("foldersManager" ,{ read: ViewContainerRef, static: true }) foldersManager!: ViewContainerRef;
   @ViewChild("desktop" ,{ static: true }) desktop!: ElementRef;
   day = 1;
   weekDay = "Sunday";
@@ -96,14 +95,12 @@ export class DesktopComponent implements OnInit{
         } else {
           this.stacksMap.set(AppType.Folder.toString(), [instance]);
         }
-        this.addFolder(instance);
       } else {
         if(this.stacksMap.has(app.name)){
           this.stacksMap.get(app.name)?.unshift(instance);
         } else {
           this.stacksMap.set(app.name, [instance]);
         }
-        //TODO: open app
       }
     }
   }
@@ -153,7 +150,6 @@ export class DesktopComponent implements OnInit{
     this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
     this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
     if(toOpen.type === AppType.Folder) {
-      this.addFolder(app);
       if(this.stacksMap.has(AppType.Folder.toString())){
         this.stacksMap.get(AppType.Folder.toString())?.unshift(app);
       } else {
@@ -166,7 +162,6 @@ export class DesktopComponent implements OnInit{
       } else {
         this.stacksMap.set(app.name, [app]);
       }
-      //TODO: open APP
     }
   }
 
@@ -175,11 +170,10 @@ export class DesktopComponent implements OnInit{
     var index = val.findIndex(item => item.id === itemId);
     if(index == -1) return;
     val.splice(index, 1);
-    if(key === AppType.Folder.toString()) this.removeFolder(itemId);
     if(val.length == 0) this.stacksMap.delete(key);
   }
 
-  
+
   putInstanceFront = (key : string, itemId : string) => {
     const instances = this.stacksMap.get(key) || [];
     var index = instances.findIndex(item => item.id === itemId);
@@ -187,12 +181,6 @@ export class DesktopComponent implements OnInit{
     const instance = instances[index];
     instances.splice(index, 1);
     instances.unshift(instance);
-    // const folderRef = this.foldersManager.get(this.foldersManager.length - 1 - index);
-    // if(folderRef) {
-    //   this.foldersManager.move(folderRef, this.foldersManager.length - 1);
-      
-    // }
-    
   }
 
   hideRevealItem = (key : string, itemId : string) => {
@@ -222,22 +210,6 @@ export class DesktopComponent implements OnInit{
     }, 100);
 
     this.renderer.appendChild(this.desktop.nativeElement, this.appFocusEl);
-
-    if(key === AppType.Folder.toString()) {
-      for(let folderI=0; folderI<this.foldersManager.length; folderI++){
-      const ref = this.foldersManager.get(folderI) as EmbeddedViewRef<any>;
-      const context = ref.context;
-      if(context && context.folder.id === itemId) {
-        ref.rootNodes.forEach((root)=> {
-          if(root instanceof HTMLElement) {
-            this.renderer.setStyle(root, 'z-index', '9999');
-            this.renderer.setStyle(root, 'position', 'relative');
-          }
-        })
-        return;
-      }
-    }
-    }
   }
 
   removeFocusOnWindow = (key : string, itemId : string) => {
@@ -246,39 +218,6 @@ export class DesktopComponent implements OnInit{
       this.renderer.removeChild(this.desktop.nativeElement, this.appFocusEl);
       this.appFocusEl = null!;
     }
-    
-    if(key === AppType.Folder.toString()) {
-      for(let folderI=0; folderI<this.foldersManager.length; folderI++){
-      const ref = this.foldersManager.get(folderI) as EmbeddedViewRef<any>;
-      const context = ref.context;
-      if(context && context.folder.id === itemId) {
-        ref.rootNodes.forEach((root)=> {
-          if(root instanceof HTMLElement) {
-            this.renderer.removeStyle(root, 'z-index');
-            this.renderer.removeStyle(root, 'position');
-          }
-        })
-        return;
-      }
-    }
-    }
-  }
-
-  addFolder(folder : OpenInstance) {
-    // const newFolder = this.foldersManager.createComponent(FolderComponent);
-    // newFolder.instance.folder = folder;
-  }
-
-  removeFolder(id : string) {
-    for(let folderI=0; folderI<this.foldersManager.length; folderI++){
-      const ref = this.foldersManager.get(folderI) as EmbeddedViewRef<any>;
-      const context = ref.context;
-      if(context && context.folder.id === id) {
-        this.foldersManager.remove(folderI);
-        return;
-      }
-    }
-    
   }
 
   onDragStart(event : DragEvent, key : number) {
