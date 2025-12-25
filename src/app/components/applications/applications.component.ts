@@ -18,4 +18,12 @@ export class ApplicationsComponent {
   @Input() putOpenInstanceFront !: (key: string, itemId: string)=> void;
   AppType = AppType;
   keepOrder = () => 0;
+
+  trackByKey (index: number, item: { key: string; value: any }) : string {
+    return item.key;
+  }
+
+  trackById (index: number, item : OpenInstance) : string {
+    return item.id;
+  }
 }

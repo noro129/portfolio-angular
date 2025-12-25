@@ -1,5 +1,5 @@
-<ng-container *ngFor="let appInstances of openedAplications | keyvalue : keepOrder">
-    <ng-container *ngFor="let instance of appInstances.value">
+<ng-container *ngFor="let appInstances of openedAplications | keyvalue : keepOrder; trackBy: trackByKey">
+    <ng-container *ngFor="let instance of appInstances.value; trackBy: trackById">
         <ng-container [ngSwitch]="appInstances.key">
             <ng-container *ngSwitchCase="'BloDest'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">

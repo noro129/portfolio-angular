@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
-import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-blodest',
-  imports: [NgStyle],
+  imports: [],
   templateUrl: './blodest.component.html',
   styleUrl: './blodest.component.scss'
 })
