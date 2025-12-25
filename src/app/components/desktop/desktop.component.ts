@@ -81,7 +81,6 @@ export class DesktopComponent implements OnInit{
 
   @HostListener('document:keydown.enter')
   handleEnterKey() {
-    this.open(-1);
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
@@ -120,12 +119,12 @@ export class DesktopComponent implements OnInit{
     }
     //app not on desktop
     this.applicationsMatrix.set(-1, {
-        'id' : -1,
-        'name' : 'BloDest',
-        'icon' : './BloDest.png',
-        'type' : AppType.Application,
-        'focused' : false
-      });
+      'id' : -1,
+      'name' : 'BloDest',
+      'icon' : './BloDest.png',
+      'type' : AppType.Application,
+      'focused' : false
+    });
   }
 
   setDate() {
@@ -182,6 +181,8 @@ export class DesktopComponent implements OnInit{
     const instance = instances[index];
     instances.splice(index, 1);
     instances.unshift(instance);
+    instance.positionZ=this.ZOffsetPosition;
+    this.ZOffsetPosition++;
   }
 
   hideRevealItem = (key : string, itemId : string) => {
@@ -196,7 +197,7 @@ export class DesktopComponent implements OnInit{
   focusOnWindow = (key : string, itemId : string) => {
     this.appFocusEl = this.renderer.createElement("div");
     this.renderer.setStyle(this.appFocusEl, 'background', 'rgba(0,0,0,0)');
-      this.renderer.setStyle(this.appFocusEl, 'backdrop-filter', 'blur(0)');
+    this.renderer.setStyle(this.appFocusEl, 'backdrop-filter', 'blur(0)');
     this.renderer.setStyle(this.appFocusEl, 'transition', 'background .2s ease, backdrop-filter .2s .1s ease');
     this.renderer.setStyle(this.appFocusEl, 'z-index', "9998");
     this.renderer.setStyle(this.appFocusEl, 'position', 'absolute');

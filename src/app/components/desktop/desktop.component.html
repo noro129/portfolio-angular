@@ -46,7 +46,11 @@
     </div>
 </div>
 
-<app-applications [openedAplications]="stacksMap" [removeOpenInstance]="removeItem" [putOpenInstanceFront]="putInstanceFront"/>
+<app-applications
+    [openedAplications]="stacksMap"
+    [removeOpenInstance]="removeItem"
+    [putOpenInstanceFront]="putInstanceFront"
+/>
 
 <app-active-items-panel
     [stacksMap]="stacksMap" 
@@ -55,4 +59,4 @@
     [focusOnWindow]="focusOnWindow"
     [removeFocusOnWindow]="removeFocusOnWindow"
     [hideRevealItem]="hideRevealItem"
-    />
+/>
