@@ -1,0 +1,16 @@
+<div class="container"
+    [ngStyle]="{'width': openInstance.windowWidth+'px' , 'height': openInstance.windowHeight+'px' ,'top': positionY+'px', 'left': positionX+'px', 'display' : openInstance.hidden ? 'none' : 'block'}"
+    #window>
+    <div class="header">
+        <div class="title">
+            <img src="{{openInstance.icon}}" alt="logo" class="icon-logo">
+            <p class="name">{{openInstance.name}}</p>
+        </div>
+        <span class="dragging-bar" (mousedown)="startDrag($event)" (mouseup)="endDrag()"></span>
+        <div class="control-buttons">
+            <div class="hide" text="hide" (click)="hide()">&#9660;</div>
+            <div class="close" text="close" (click)="close()">X</div>
+        </div>
+    </div>
+    <ng-content></ng-content>
+</div>

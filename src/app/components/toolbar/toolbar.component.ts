@@ -91,7 +91,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       }
       this.renderer.appendChild(el, container);
     }
-    console.log(el);
   }
 
   menuToggle(){

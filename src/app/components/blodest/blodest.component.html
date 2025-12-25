@@ -1,3 +1,13 @@
-<div class="container">
-    <div class="header"></div>
+<div class="container" [ngStyle]="{'width' : instanceData.windowWidth+'px', 'height' : instanceData.windowHeight+'px'}">
+    <div class="header">
+        <div class="title">
+            <img src="{{instanceData.icon}}" alt="app logo" class="app-logo"/>
+            <p class="app-name">{{instanceData.name}}</p>
+        </div>
+        <span class="dragging-bar"></span>
+        <div class="control-buttons">
+            <div class="hide" text="hide" (click)="hide()">&#9660;</div>
+            <div class="close" text="close" (click)="close()">X</div>
+        </div>
+    </div>
 </div>

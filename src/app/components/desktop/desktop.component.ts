@@ -83,6 +83,7 @@ export class DesktopComponent implements OnInit{
 
   @HostListener('document:keydown.enter')
   handleEnterKey() {
+    this.open(-1);
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
@@ -118,6 +119,14 @@ export class DesktopComponent implements OnInit{
         'focused' : false
       });
     }
+    //app not on desktop
+    this.applicationsMatrix.set(-1, {
+        'id' : -1,
+        'name' : 'BloDest',
+        'icon' : './BloDest.png',
+        'type' : AppType.Application,
+        'focused' : false
+      });
   }
 
   setDate() {
@@ -135,27 +144,25 @@ export class DesktopComponent implements OnInit{
   }
 
   open(index : number) {
-    if(this.applicationsMatrix.has(index)) {
-      const toOpen = this.applicationsMatrix.get(index);
-      const uuid = crypto.randomUUID();
-      const app : OpenInstance = {id : uuid, name : toOpen?.name || '', hidden : false, icon : toOpen?.icon || '', windowWidth : 700, windowHeight : 450};
-      if(toOpen?.type === AppType.Folder) {
-        
-        this.addFolder(app);
-        if(this.stacksMap.has(AppType.Folder.toString())){
-          this.stacksMap.get(AppType.Folder.toString())?.unshift(app);
-        } else {
-          this.stacksMap.set(AppType.Folder.toString(), [app]);
-        }
+    const toOpen = this.applicationsMatrix.get(index);
+    if(!toOpen) return;
+    const uuid = crypto.randomUUID();
+    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : 700, windowHeight : 450};
+    if(toOpen.type === AppType.Folder) {
+      this.addFolder(app);
+      if(this.stacksMap.has(AppType.Folder.toString())){
+        this.stacksMap.get(AppType.Folder.toString())?.unshift(app);
+      } else {
+        this.stacksMap.set(AppType.Folder.toString(), [app]);
       }
-      else {
-        if(this.stacksMap.has(app.name)){
-          this.stacksMap.get(app.name)?.unshift(app);
-        } else {
-          this.stacksMap.set(app.name, [app]);
-        }
-        //TODO: open APP
+    }
+    else {
+      if(this.stacksMap.has(app.name)){
+        this.stacksMap.get(app.name)?.unshift(app);
+      } else {
+        this.stacksMap.set(app.name, [app]);
       }
+      //TODO: open APP
     }
   }
 

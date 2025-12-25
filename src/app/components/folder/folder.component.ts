@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { FolderStructure } from '../../models/FolderStructure';
@@ -6,14 +6,15 @@ import { ProjectsComponent } from "../projects/projects.component";
 import { ExperienceComponent } from "../experience/experience.component";
 import { AppType } from '../../models/AppType';
 import { OpenInstance } from '../../models/OpenInstance';
+import { WindowComponent } from "../window/window.component";
 
 @Component({
   selector: 'app-folder',
-  imports: [NgStyle, NgClass, NgFor, NgIf, ProjectsComponent, ExperienceComponent],
+  imports: [NgClass, NgFor, NgIf, ProjectsComponent, ExperienceComponent, WindowComponent],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.scss'
 })
-export class FolderComponent implements OnInit, AfterViewInit{
+export class FolderComponent implements OnInit{
   @ViewChild("folderTab") folderTab!: ElementRef<HTMLDivElement>;
   @Input() folder !: OpenInstance;
   @Input() positionX = 150;
@@ -22,16 +23,8 @@ export class FolderComponent implements OnInit, AfterViewInit{
   @Input() putFront !: (key : string, folderId : string) => void;
   foldersStructureFile = "/folders-structure.json";
   foldersStructure!: FolderStructure[];
-  isDragging = false;
-  xOffset=0;
-  yOffset=0;
 
   constructor(private httpClient : HttpClient) {}
-
-  @HostListener('click')
-  onClick() {
-    this.putFront(AppType.Folder.toString(), this.folder.id);
-  }
 
   ngOnInit(): void {
     this.httpClient.get<FolderStructure[]>(this.foldersStructureFile).subscribe({
@@ -41,43 +34,8 @@ export class FolderComponent implements OnInit, AfterViewInit{
     })
   }
 
-  ngAfterViewInit(): void {
-    document.addEventListener('mousemove', this.onMouseMove);
-    document.addEventListener('mouseup', this.endDrag);
-  }
-
-  startDrag(event : MouseEvent) {
-    this.isDragging = true;
-    this.putFront(AppType.Folder.toString(), this.folder.id);
-    const rect = this.folderTab.nativeElement.getBoundingClientRect();
-    this.xOffset = event.clientX - rect.left;
-    this.yOffset = event.clientY - rect.top;
-  }
-
-  endDrag = () => {
-    this.isDragging = false;
-    this.xOffset=0;
-    this.yOffset=0;
-  }
-
-  onMouseMove = (event : MouseEvent) => {
-    if(!this.isDragging) return;
-    const el = this.folderTab.nativeElement;
-    el.style.left = `${event.clientX - this.xOffset}px`;
-    el.style.top = `${event.clientY - this.yOffset}px`;
-
-  }
-
   changeFolder(folderName : string) {
     if(folderName === this.folder.name) return;
     this.folder.name = folderName;
-  }
-
-  hide() {
-    this.folder.hidden = true;
-  }
-
-  close() {
-    this.removeFolder(AppType.Folder.toString(), this.folder.id);
   }
 }
