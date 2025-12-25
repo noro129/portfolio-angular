@@ -5,19 +5,16 @@ import { FolderStructure } from '../../models/FolderStructure';
 import { ProjectsComponent } from "../projects/projects.component";
 import { ExperienceComponent } from "../experience/experience.component";
 import { OpenInstance } from '../../models/OpenInstance';
-import { WindowComponent } from "../window/window.component";
 
 @Component({
   selector: 'app-folder',
-  imports: [NgClass, NgFor, NgIf, ProjectsComponent, ExperienceComponent, WindowComponent],
+  imports: [NgClass, NgFor, NgIf, ProjectsComponent, ExperienceComponent],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.scss'
 })
 export class FolderComponent implements OnInit{
   @ViewChild("folderTab") folderTab!: ElementRef<HTMLDivElement>;
   @Input() folder !: OpenInstance;
-  @Input() removeFolder !: (key : string, folderId : string) => void;
-  @Input() putFront !: (key : string, folderId : string) => void;
   foldersStructureFile = "/folders-structure.json";
   foldersStructure!: FolderStructure[];
 

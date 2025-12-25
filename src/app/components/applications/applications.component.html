@@ -1,9 +1,17 @@
-<div class="container">
-    <ng-container *ngFor="let appInstance of openedAplications | keyvalue : keepOrder">
-            <ng-container [ngSwitch]="appInstance.key">
-                <ng-container *ngSwitchCase="'BloDest'">
-                    <app-blodest *ngFor="let instance of appInstance.value" [instanceData]="instance"/>
-                </ng-container>
+<ng-container *ngFor="let appInstances of openedAplications | keyvalue : keepOrder">
+    <ng-container *ngFor="let instance of appInstances.value.slice().reverse()">
+        <ng-container [ngSwitch]="appInstances.key">
+            <ng-container *ngSwitchCase="'BloDest'">
+                <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
+                    <app-blodest [instanceData]="instance" class="application-body"/>
+                </app-window>
             </ng-container>
+
+            <ng-container *ngSwitchCase="AppType.Folder.toString()">
+                <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
+                    <app-folder [folder]="instance" class="application-body"/>
+                </app-window>
+            </ng-container>
+        </ng-container>
     </ng-container>
-</div>
+</ng-container>

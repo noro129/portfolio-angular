@@ -3,15 +3,19 @@ import { OpenInstance } from '../../models/OpenInstance';
 import { NgFor, KeyValuePipe, NgSwitch, NgSwitchCase } from '@angular/common';
 import { AppType } from '../../models/AppType';
 import { BlodestComponent } from "../blodest/blodest.component";
+import { WindowComponent } from "../window/window.component";
+import { FolderComponent } from "../folder/folder.component";
 
 @Component({
   selector: 'app-applications',
-  imports: [NgFor, KeyValuePipe, NgSwitch, NgSwitchCase, BlodestComponent],
+  imports: [NgFor, KeyValuePipe, NgSwitch, NgSwitchCase, BlodestComponent, WindowComponent, FolderComponent],
   templateUrl: './applications.component.html',
   styleUrl: './applications.component.scss'
 })
 export class ApplicationsComponent {
   @Input() openedAplications!: Map<string, OpenInstance[]>;
+  @Input() removeOpenInstance !: (key: string, itemId: string)=> void;
+  @Input() putOpenInstanceFront !: (key: string, itemId: string)=> void;
   AppType = AppType;
   keepOrder = () => 0;
 }

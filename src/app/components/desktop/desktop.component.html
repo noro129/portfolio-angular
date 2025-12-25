@@ -46,8 +46,7 @@
     </div>
 </div>
 
-<ng-container #foldersManager></ng-container>
-<app-applications [openedAplications]="stacksMap"/>
+<app-applications [openedAplications]="stacksMap" [removeOpenInstance]="removeItem" [putOpenInstanceFront]="putInstanceFront"/>
 
 <app-active-items-panel
     [stacksMap]="stacksMap" 

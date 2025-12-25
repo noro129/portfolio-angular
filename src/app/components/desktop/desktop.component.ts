@@ -179,18 +179,19 @@ export class DesktopComponent implements OnInit{
     if(val.length == 0) this.stacksMap.delete(key);
   }
 
-  //todo works only for folders now
+  
   putInstanceFront = (key : string, itemId : string) => {
     const instances = this.stacksMap.get(key) || [];
     var index = instances.findIndex(item => item.id === itemId);
     if(index == -1) return;
     const instance = instances[index];
-    const folderRef = this.foldersManager.get(this.foldersManager.length - 1 - index);
-    if(folderRef) {
-      this.foldersManager.move(folderRef, this.foldersManager.length - 1);
-      instances.splice(index, 1);
-      instances.unshift(instance);
-    }
+    instances.splice(index, 1);
+    instances.unshift(instance);
+    // const folderRef = this.foldersManager.get(this.foldersManager.length - 1 - index);
+    // if(folderRef) {
+    //   this.foldersManager.move(folderRef, this.foldersManager.length - 1);
+      
+    // }
     
   }
 
@@ -264,10 +265,8 @@ export class DesktopComponent implements OnInit{
   }
 
   addFolder(folder : OpenInstance) {
-    const newFolder = this.foldersManager.createComponent(FolderComponent);
-    newFolder.instance.folder = folder;
-    newFolder.instance.removeFolder = this.removeItem;
-    newFolder.instance.putFront = this.putInstanceFront;
+    // const newFolder = this.foldersManager.createComponent(FolderComponent);
+    // newFolder.instance.folder = folder;
   }
 
   removeFolder(id : string) {

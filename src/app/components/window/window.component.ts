@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
 import { NgStyle } from '@angular/common';
-import { AppType } from '../../models/AppType';
 
 @Component({
   selector: 'app-window',
@@ -12,6 +11,7 @@ import { AppType } from '../../models/AppType';
 export class WindowComponent implements AfterViewInit{
   @ViewChild("window") window!: ElementRef<HTMLDivElement>;
   @Input() openInstance !: OpenInstance;
+  @Input() instanceType !: string;
   @Input() removeOpenInstance !: (key : string, openInstanceId : string) => void;
   @Input() putFront !: (key : string, openInstanceId : string) => void;
   isDragging = false;
@@ -20,7 +20,7 @@ export class WindowComponent implements AfterViewInit{
 
   @HostListener('click')
   onClick() {
-    this.putFront(AppType.Folder.toString(), this.openInstance.id);
+    this.putFront(this.instanceType, this.openInstance.id);
   }
 
   ngAfterViewInit(): void {
@@ -30,7 +30,7 @@ export class WindowComponent implements AfterViewInit{
   
   startDrag(event : MouseEvent) {
     this.isDragging = true;
-    this.putFront(AppType.Folder.toString(), this.openInstance.id);
+    this.putFront(this.instanceType, this.openInstance.id);
     const rect = this.window.nativeElement.getBoundingClientRect();
     this.xOffset = event.clientX - rect.left;
     this.yOffset = event.clientY - rect.top;
@@ -54,6 +54,6 @@ export class WindowComponent implements AfterViewInit{
   }
 
   close() {
-    this.removeOpenInstance(AppType.Folder.toString(), this.openInstance.id);
+    this.removeOpenInstance(this.instanceType, this.openInstance.id);
   }
 }

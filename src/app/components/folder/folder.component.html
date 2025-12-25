@@ -1,18 +1,16 @@
-<app-window [openInstance]="folder" [putFront]="putFront" [removeOpenInstance]="removeFolder">
-    <div class="body">
-        <div class="left-panel">
-            <div *ngFor="let fs of foldersStructure" class="folders">
-                <span class="folder-name"><span class="folder">{{fs.name}}</span><span class="show-sub-folders-button" *ngIf="fs.subContent.length != 0">&gt;</span></span>
-                <span *ngIf="fs.subContent.length != 0">
-                    <div *ngFor="let subfolder of fs.subContent">
-                        <span class="sub-folder-name" [ngClass]="{'opened-folder' : folder.name === subfolder.name}" (click)="changeFolder(subfolder.name)">{{subfolder.name}}</span>
-                    </div>
-                </span>
-            </div>
-        </div>
-        <div class="content">
-            <app-projects *ngIf="folder.name === 'Projects'"></app-projects>
-            <app-experience *ngIf="folder.name === 'Experience'"/>
+<div class="body">
+    <div class="left-panel">
+        <div *ngFor="let fs of foldersStructure" class="folders">
+            <span class="folder-name"><span class="folder">{{fs.name}}</span><span class="show-sub-folders-button" *ngIf="fs.subContent.length != 0">&gt;</span></span>
+            <span *ngIf="fs.subContent.length != 0">
+                <div *ngFor="let subfolder of fs.subContent">
+                    <span class="sub-folder-name" [ngClass]="{'opened-folder' : folder.name === subfolder.name}" (click)="changeFolder(subfolder.name)">{{subfolder.name}}</span>
+                </div>
+            </span>
         </div>
     </div>
-</app-window>
+    <div class="content">
+        <app-projects *ngIf="folder.name === 'Projects'"></app-projects>
+        <app-experience *ngIf="folder.name === 'Experience'"/>
+    </div>
+</div>
