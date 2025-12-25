@@ -17,8 +17,9 @@ export class DesktopComponent implements OnInit{
   @ViewChild("desktop" ,{ static: true }) desktop!: ElementRef;
   day = 1;
   weekDay = "Sunday";
-  XOffsetfolderPosition = 250;
-  YOffsetfolderPosition = 150;
+  XOffsetPosition = 250;
+  YOffsetPosition = 150;
+  ZOffsetPosition = 10;
   gridColumns = 21;
   gridRows = 10;
   appFocusEl !: HTMLElement;
@@ -84,9 +85,10 @@ export class DesktopComponent implements OnInit{
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
-      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetfolderPosition, positionY : this.YOffsetfolderPosition};
-      this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
-      this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
+      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition};
+      this.XOffsetPosition = this.XOffsetPosition + 50;
+      this.YOffsetPosition = this.YOffsetPosition + 50;
+      this.ZOffsetPosition++;
       if(app.type === AppType.Folder) {
         if(this.stacksMap.has(AppType.Folder.toString())){
           this.stacksMap.get(AppType.Folder.toString())?.unshift(instance);
@@ -144,9 +146,10 @@ export class DesktopComponent implements OnInit{
     const toOpen = this.applicationsMatrix.get(index);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
-    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetfolderPosition, positionY : this.YOffsetfolderPosition};
-    this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
-    this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
+    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition};
+    this.XOffsetPosition = this.XOffsetPosition + 50;
+    this.YOffsetPosition = this.YOffsetPosition + 50;
+    this.ZOffsetPosition++;
     if(toOpen.type === AppType.Folder) {
       if(this.stacksMap.has(AppType.Folder.toString())){
         this.stacksMap.get(AppType.Folder.toString())?.unshift(app);

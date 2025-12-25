@@ -5,6 +5,7 @@ export interface OpenInstance {
     icon : string;
     positionX : number;
     positionY : number;
+    positionZ : number;
     windowWidth : number;
     windowHeight : number;
 }
