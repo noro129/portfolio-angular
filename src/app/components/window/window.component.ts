@@ -12,8 +12,6 @@ import { AppType } from '../../models/AppType';
 export class WindowComponent implements AfterViewInit{
   @ViewChild("window") window!: ElementRef<HTMLDivElement>;
   @Input() openInstance !: OpenInstance;
-  @Input() positionX = 150;
-  @Input() positionY = 150;
   @Input() removeOpenInstance !: (key : string, openInstanceId : string) => void;
   @Input() putFront !: (key : string, openInstanceId : string) => void;
   isDragging = false;

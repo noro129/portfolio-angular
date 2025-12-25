@@ -3,6 +3,8 @@ export interface OpenInstance {
     name : string;
     hidden : boolean;
     icon : string;
+    positionX : number;
+    positionY : number;
     windowWidth : number;
     windowHeight : number;
 }

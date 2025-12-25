@@ -87,7 +87,9 @@ export class DesktopComponent implements OnInit{
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
-      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : 700, windowHeight : 450};
+      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetfolderPosition, positionY : this.YOffsetfolderPosition};
+      this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
+      this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
       if(app.type === AppType.Folder) {
         if(this.stacksMap.has(AppType.Folder.toString())){
           this.stacksMap.get(AppType.Folder.toString())?.unshift(instance);
@@ -147,7 +149,9 @@ export class DesktopComponent implements OnInit{
     const toOpen = this.applicationsMatrix.get(index);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
-    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : 700, windowHeight : 450};
+    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetfolderPosition, positionY : this.YOffsetfolderPosition};
+    this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
+    this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
     if(toOpen.type === AppType.Folder) {
       this.addFolder(app);
       if(this.stacksMap.has(AppType.Folder.toString())){
@@ -264,12 +268,6 @@ export class DesktopComponent implements OnInit{
     newFolder.instance.folder = folder;
     newFolder.instance.removeFolder = this.removeItem;
     newFolder.instance.putFront = this.putInstanceFront;
-    newFolder.instance.positionX = this.XOffsetfolderPosition;
-    newFolder.instance.positionY = this.YOffsetfolderPosition;
-
-
-    this.XOffsetfolderPosition = this.XOffsetfolderPosition + 50;
-    this.YOffsetfolderPosition = this.YOffsetfolderPosition + 50;
   }
 
   removeFolder(id : string) {
