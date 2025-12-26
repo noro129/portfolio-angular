@@ -30,7 +30,9 @@ export class DesktopComponent implements OnInit{
         'type' : AppType.Folder,
         'icon' : './folder.png',
         'xPosition' : 0,
-        'yPosition' : 0 
+        'yPosition' : 0,
+        'defaultHeight' : 450,
+        'defaultWidth' : 700
       },
       {
         'id' : 1,
@@ -38,7 +40,9 @@ export class DesktopComponent implements OnInit{
         'type' : AppType.Folder,
         'icon' : './folder.png',
         'xPosition' : 1,
-        'yPosition' : 0
+        'yPosition' : 0,
+        'defaultHeight' : 450,
+        'defaultWidth' : 700
       },
       {
         'id' : 2,
@@ -46,7 +50,9 @@ export class DesktopComponent implements OnInit{
         'type' : AppType.Application,
         'icon' : './question-mark.png',
         'xPosition' : 2,
-        'yPosition' : 0 
+        'yPosition' : 0,
+        'defaultHeight' : 250,
+        'defaultWidth' : 700
       },
       {
         'id' : 3,
@@ -54,7 +60,9 @@ export class DesktopComponent implements OnInit{
         'type' : AppType.Application,
         'icon' : './command-line.png',
         'xPosition' : 3,
-        'yPosition' : 0 
+        'yPosition' : 0,
+        'defaultHeight' : 250,
+        'defaultWidth' : 700
       },
       {
         'id' : 4,
@@ -62,7 +70,9 @@ export class DesktopComponent implements OnInit{
         'type' : AppType.Application,
         'icon' : './trash-can.png',
         'xPosition' : 4,
-        'yPosition' : 0
+        'yPosition' : 0,
+        'defaultHeight' : 250,
+        'defaultWidth' : 700
       }
   ];
   applicationsMatrix = new Map<number, AppsObject>();
@@ -84,7 +94,7 @@ export class DesktopComponent implements OnInit{
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
-      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
+      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : app.defaultWidth, windowHeight : app.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
       this.XOffsetPosition = this.XOffsetPosition + 10;
       this.YOffsetPosition = this.YOffsetPosition + 10;
       this.ZOffsetPosition++;
@@ -114,7 +124,9 @@ export class DesktopComponent implements OnInit{
         'name' : app.name,
         'icon' : app.icon,
         'type' : app.type,
-        'focused' : false
+        'focused' : false,
+        'defaultHeight' : app.defaultHeight,
+        'defaultWidth' : app.defaultWidth
       });
     }
     //app not on desktop
@@ -123,7 +135,9 @@ export class DesktopComponent implements OnInit{
       'name' : 'BloDest',
       'icon' : './BloDest.png',
       'type' : AppType.Application,
-      'focused' : false
+      'focused' : false,
+      'defaultHeight' : 700,
+      'defaultWidth' : 700
     });
   }
 
@@ -145,7 +159,7 @@ export class DesktopComponent implements OnInit{
     const toOpen = this.applicationsMatrix.get(index);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
-    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
+    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
     this.XOffsetPosition = this.XOffsetPosition + 10;
     this.YOffsetPosition = this.YOffsetPosition + 10;
     this.ZOffsetPosition++;
@@ -282,4 +296,6 @@ interface AppsObject {
   icon : string;
   type : AppType;
   focused : boolean;
+  defaultHeight : number;
+  defaultWidth : number;
 }

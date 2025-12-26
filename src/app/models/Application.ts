@@ -7,4 +7,6 @@ export interface Application{
     type : AppType;
     xPosition : number;
     yPosition : number;
+    defaultWidth : number;
+    defaultHeight : number;
 }
