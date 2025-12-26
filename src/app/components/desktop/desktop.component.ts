@@ -17,8 +17,8 @@ export class DesktopComponent implements OnInit{
   @ViewChild("desktop" ,{ static: true }) desktop!: ElementRef;
   day = 1;
   weekDay = "Sunday";
-  XOffsetPosition = 250;
-  YOffsetPosition = 150;
+  XOffsetPosition = 150;
+  YOffsetPosition = 50;
   ZOffsetPosition = 10;
   gridColumns = 21;
   gridRows = 10;
@@ -85,8 +85,8 @@ export class DesktopComponent implements OnInit{
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
       const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
-      this.XOffsetPosition = this.XOffsetPosition + 50;
-      this.YOffsetPosition = this.YOffsetPosition + 50;
+      this.XOffsetPosition = this.XOffsetPosition + 10;
+      this.YOffsetPosition = this.YOffsetPosition + 10;
       this.ZOffsetPosition++;
       if(app.type === AppType.Folder) {
         if(this.stacksMap.has(AppType.Folder.toString())){
@@ -146,8 +146,8 @@ export class DesktopComponent implements OnInit{
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
     const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : 700, windowHeight : 450, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
-    this.XOffsetPosition = this.XOffsetPosition + 50;
-    this.YOffsetPosition = this.YOffsetPosition + 50;
+    this.XOffsetPosition = this.XOffsetPosition + 10;
+    this.YOffsetPosition = this.YOffsetPosition + 10;
     this.ZOffsetPosition++;
     if(toOpen.type === AppType.Folder) {
       if(this.stacksMap.has(AppType.Folder.toString())){

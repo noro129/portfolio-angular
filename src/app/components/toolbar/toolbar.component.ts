@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { MenuItem } from '../../models/MenuItem';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
   @ViewChild("menuItemsManager") menuItemsManager !: ElementRef<HTMLDivElement>;
+  @Output() openApp = new EventEmitter<number>();
   battery = Math.floor(Math.random()*101);
   readonly fullName = "Oussama Errazi";
   readonly occupation = "software engineer";
@@ -88,6 +89,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         })
       } else {
         this.renderer.setStyle(spanItem, 'cursor', 'pointer');
+        this.renderer.listen(spanItem, 'click', () => {
+          this.open(menuItem.item_name);
+          this.showMenu = false;
+        })
       }
       this.renderer.appendChild(el, container);
     }
@@ -99,5 +104,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   powerOff() {
     window.close();
+  }
+
+  open(appName : string) {
+    switch (appName) {
+      case "bloDest" : 
+        this.openApp.emit(-1);
+        break;
+      default :
+        console.log(appName);
+    }
   }
 }

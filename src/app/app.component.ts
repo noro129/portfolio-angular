@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { DesktopComponent } from "./components/desktop/desktop.component";
 import { ToolbarComponent } from "./components/toolbar/toolbar.component";
 
@@ -10,4 +10,9 @@ import { ToolbarComponent } from "./components/toolbar/toolbar.component";
 })
 export class AppComponent {
   title = 'portfolio';
+  @ViewChild("desktop") desktop !: DesktopComponent;
+
+  openApp(id: number) {
+    this.desktop.open(id);
+  }
 }
