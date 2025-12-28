@@ -1,1 +1,18 @@
-<div class="container">blodest component works!</div>
+<div class="container">
+    <span *ngIf="!gameStarted" class="start-button-underlay">
+        <div class="start-button" (click)="startGame()">START</div>
+    </span>
+    <div class="body" *ngIf="gameStarted">
+        <div class="score-screen">
+            <div class="score">
+                <div class="current-score">Current Score : <span class="score-amount">{{currentScore}} xp</span></div>
+                <div class="max-score">Max Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="score-amount">{{maxScore}} xp</span></div>
+            </div>
+            
+        </div>
+        <div class="game-screen" (mousemove)="onMouseMove($event)" #gameContainer>
+            <div class="ball" #gameBall></div>
+            <div class="playing-bar" [style.transform]="translateX"></div>
+        </div>
+    </div>
+</div>

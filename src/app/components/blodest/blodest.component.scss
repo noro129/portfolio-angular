@@ -1,4 +1,103 @@
 .container{
     width: 100%; height: 100%;
-    background-color: red;
+    background-color: var(--bg-color-2);
+
+    .start-button-underlay{
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        width: 20%; height: 45px;
+        background-color: var(--color-1);
+
+        .start-button{
+            cursor: pointer;
+            position: absolute; left: 5%;top: 10%; width: 100%; height: 100%;
+            font-weight: bolder;
+            font-size: 2em;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--color-green);
+            color: var(--color-1);
+            
+
+            &:active{
+                transform: translate(-5%, -10%);
+                transition: transform 0.1s ease forwards;
+            }
+        }
+    }
+
+    .body{
+        width: 100%; height: 100%;
+
+        .score-screen{
+            width: 100%; height: 70px;
+            border-top: 1px solid var(--color-1);
+            border-bottom: 1px solid var(--color-1);
+            background-color: #000;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                rgba(0, 255, 0, 0.1) 0px,
+                rgba(0, 255, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 3px
+                ),
+                repeating-linear-gradient(
+                to left,
+                rgba(0, 255, 0, 0.1) 0px,
+                rgba(0, 255, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 3px
+                );
+            background-size: 100% 4px;
+
+            .score{
+                height: 100%; width: 70%; border-right: 1px solid var(--color-1);
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+                justify-content: center;
+                padding-left: 10px;
+                color: var(--color-green); text-shadow: 0 0 2px var(--color-green);
+                font-weight: bolder;
+
+                .current-score, .max-score{
+                    position: relative;
+                    width: 100%;
+
+                    .score-amount{
+                        position: absolute;
+                        right: 10px;
+                    }
+                }
+            }
+        }
+
+        .game-screen{
+            position: relative;
+            width: 100%; height: calc( 100% - 70px );
+
+            .ball{
+                position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+                width: 30px; height: 30px;
+                border-radius: 100%;
+                background-color: var(--color-red);
+                box-shadow: 5px 5px 5px var(--bg-color-1);
+                transition: transform .2s ease;
+
+                &::after{
+                    content: '';
+                    position: absolute; top: 15%; left: 15%; width: 40%; height: 40%; border-radius: 100%;
+                    background-color: var(--color-1);
+                    opacity: .2;
+                }
+            }
+
+            .playing-bar{
+                position: absolute; bottom: 0; left: 0;
+                width: 20%; height: 5px;
+                border-radius: 10px;
+                background-color: var(--color-red);
+                box-shadow: 0px -5px 20px var(--color-red);
+                transition: transform .2s ease;
+            }
+        }
+    }
 }
