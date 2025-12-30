@@ -104,8 +104,114 @@
 
         .game-over{
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 50%; height: 50%;
-            background-color: var(--color-red); color: var(--color-1);
+            width: 50%; height: 30%;
+            background-color: #000;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                rgba(0, 255, 0, 0.1) 0px,
+                rgba(0, 255, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 3px
+                ),
+                repeating-linear-gradient(
+                to left,
+                rgba(0, 255, 0, 0.1) 0px,
+                rgba(0, 255, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 3px
+                );
+            background-size: 100% 4px;
+            color: var(--color-green);
+            font-weight: bolder;
+            border-radius: 10px;
+            border: 3px solid var(--color-green);
+            box-shadow: 0 0 4px var(--color-green), inset 0 0 6px var(--color-green);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            row-gap: 15px;
+
+            animation: flactuationsScreen 4s infinite;
+
+            &::after{
+                content: '';
+                opacity: 0.2;
+                position: absolute; left: 0; top: 0;
+                width: 100%; height: 100%;
+                background-image: url("/broken-glass.png");
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
+
+            .head{
+                font-size: 2em;
+                width: 100%;
+                text-align: center;
+                text-shadow: 0 0 6px var(--color-green);
+                animation: flactuationsText 4s infinite;
+            }
+
+            .xp-earned{
+                width: 100%;
+                text-align: center;
+                text-shadow: 0 0 6px var(--color-green);
+                animation: flactuationsText 4s infinite;
+
+                .xp-earned-value{
+                    color: var(--color-red);
+                    font-weight: bolder; font-size: 1.5em;
+                    text-shadow: 0 0 6px var(--color-red);
+                    animation: flactuationsText2 4s infinite;
+                }
+            }
         }
+    }
+}
+
+@keyframes flactuationsScreen {
+    10%{
+        border-color: var(--bg-color-1);
+        box-shadow: 0 0 4px var(--color-green), inset 0 0 6px var(--color-green);
+    } 40% {
+        border-color: var(--bg-color-1);
+        box-shadow: 0 0 10px var(--color-green), inset 0 0 6px var(--color-green);
+    } 60%, 70%, 90% {
+        border-color: var(--bg-color-1);
+        box-shadow: unset;
+    } 9%, 11%, 38%, 42%, 58%, 62%, 68%, 72%, 88%, 92% {
+        border: 3px solid var(--color-green);
+        box-shadow: 0 0 4px var(--color-green), inset 0 0 6px var(--color-green);
+    }
+}
+
+@keyframes flactuationsText {
+    10%{
+        opacity: 0;
+        text-shadow: 0 0 4px var(--color-green);
+    } 40% {
+        opacity: 0.7;
+        text-shadow: 0 0 10px var(--color-green);
+    } 60%, 70%, 90% {
+        opacity: 0;
+        text-shadow: unset;
+    } 9%, 11%, 38%, 42%, 58%, 62%, 68%, 72%, 88%, 92% {
+        opacity: 1;
+        text-shadow: 0 0 4px var(--color-green);
+    }
+}
+
+@keyframes flactuationsText2 {
+    10%{
+        opacity: 0;
+        text-shadow: 0 0 4px var(--color-red);
+    } 40% {
+        opacity: 0.7;
+        text-shadow: 0 0 10px var(--color-red);
+    } 60%, 70%, 90% {
+        opacity: 0;
+        text-shadow: unset;
+    } 9%, 11%, 38%, 42%, 58%, 62%, 68%, 72%, 88%, 92% {
+        opacity: 1;
+        text-shadow: 0 0 4px var(--color-red);
     }
 }

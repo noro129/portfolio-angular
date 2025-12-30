@@ -18,7 +18,7 @@ export class BlodestComponent{
   gameStarted : boolean = false;
   gameOver : boolean = false;
 
-  currentScore : number = 0;
+  currentScore : number = 1234;
   maxScore : number = 0;
 
   translateX : string = "";

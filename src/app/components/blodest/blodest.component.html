@@ -14,6 +14,11 @@
             <div class="ball" [style.transform]="translateBall" #gameBall></div>
             <div class="playing-bar" [style.transform]="translateX" #playingBar></div>
         </div>
-        <div class="game-over" *ngIf="gameOver">GAME OVER</div>
+        <div class="game-over" *ngIf="gameOver">
+            <div class="head">GAME OVER</div>
+            <div class="xp-earned">
+                you earned <span class="xp-earned-value">{{currentScore}}</span> xp
+            </div>
+        </div>
     </div>
 </div>
