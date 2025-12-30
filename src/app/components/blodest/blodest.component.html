@@ -11,8 +11,9 @@
             
         </div>
         <div class="game-screen" (mousemove)="onMouseMove($event)" #gameContainer>
-            <div class="ball" #gameBall></div>
-            <div class="playing-bar" [style.transform]="translateX"></div>
+            <div class="ball" [style.transform]="translateBall" #gameBall></div>
+            <div class="playing-bar" [style.transform]="translateX" #playingBar></div>
         </div>
+        <div class="game-over" *ngIf="gameOver">GAME OVER</div>
     </div>
 </div>

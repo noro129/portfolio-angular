@@ -75,12 +75,14 @@
             width: 100%; height: calc( 100% - 70px );
 
             .ball{
-                position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+                position: absolute;
                 width: 30px; height: 30px;
                 border-radius: 100%;
                 background-color: var(--color-red);
                 box-shadow: 5px 5px 5px var(--bg-color-1);
-                transition: transform .2s ease;
+                border: 2px solid var(--color-1-light);
+                transition-property: transform;
+                transition-timing-function: linear;
 
                 &::after{
                     content: '';
@@ -98,6 +100,12 @@
                 box-shadow: 0px -5px 20px var(--color-red);
                 transition: transform .2s ease;
             }
+        }
+
+        .game-over{
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 50%; height: 50%;
+            background-color: var(--color-red); color: var(--color-1);
         }
     }
 }
