@@ -111,6 +111,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       case "bloDest" : 
         this.openApp.emit(-1);
         break;
+      case "github" :
+        navigator.clipboard.writeText("https://github.com/noro129");
+        break;
+      case "email" :
+        navigator.clipboard.writeText("errazi111@gmail.com"); 
+        break;
+      case "phone number" :
+        navigator.clipboard.writeText("+212694105029");
+        break;
       default :
         console.log(appName);
     }
