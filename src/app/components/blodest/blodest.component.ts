@@ -1,10 +1,10 @@
 import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
-import { NgIf } from '@angular/common';
+import { NgIf, NgFor, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-blodest',
-  imports: [NgIf],
+  imports: [NgIf, NgFor, NgStyle],
   templateUrl: './blodest.component.html',
   styleUrl: './blodest.component.scss'
 })
@@ -13,12 +13,15 @@ export class BlodestComponent{
   @ViewChild("gameBall", { static: false }) gameBall !: ElementRef;
   @ViewChild("gameContainer", {static: false}) gameContainer !: ElementRef;
   @ViewChild("playingBar", {static: false}) playingBar !: ElementRef;
-
+  
+  upperBlocks: boolean[] = new Array<boolean>(9).fill(false);
+  lowerBlocks: boolean[] = new Array<boolean>(9).fill(false);
+  blockWidth = 0;
 
   gameStarted : boolean = false;
   gameOver : boolean = false;
 
-  currentScore : number = 1234;
+  currentScore : number = 0;
   maxScore : number = 0;
 
   translateX : string = "";
@@ -41,6 +44,7 @@ export class BlodestComponent{
     requestAnimationFrame(()=>{
       this.yDistance = this.gameContainer.nativeElement.getBoundingClientRect().height - this.playingBar.nativeElement.getBoundingClientRect().height - this.gameBall.nativeElement.getBoundingClientRect().height;
       this.xDistance = this.gameContainer.nativeElement.getBoundingClientRect().width - this.gameBall.nativeElement.getBoundingClientRect().width;
+      this.blockWidth = Math.floor(this.gameContainer.nativeElement.getBoundingClientRect().width/5) - 5;
       this.renderer.setStyle(this.gameBall.nativeElement, 'top', Math.floor(this.yDistance/2)+'px');
       this.renderer.setStyle(this.gameBall.nativeElement, 'left', Math.floor(this.xDistance/2)+'px');
       this.animateBall();
@@ -48,7 +52,7 @@ export class BlodestComponent{
   }
 
   onMouseMove(event : MouseEvent) {
-    if(this.gameStarted && !this.gameOver) {
+    if(!this.gameOver && this.gameStarted) {
       const rect = this.gameContainer.nativeElement.getBoundingClientRect();
       this.barSpeed = (event.clientX - this.playingBar.nativeElement.getBoundingClientRect().left - this.playingBar.nativeElement.getBoundingClientRect().width/2 - this.gameBall.nativeElement.getBoundingClientRect().width/2) / rect.width;
       this.translateX = `translateX(${event.clientX - rect.left - rect.width*0.1}px)`;

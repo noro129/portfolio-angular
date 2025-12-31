@@ -1,6 +1,7 @@
 .container{
     width: 100%; height: 100%;
     background-color: var(--bg-color-2);
+    backdrop-filter: blur(5px);
 
     .start-button-underlay{
         position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -74,11 +75,38 @@
             position: relative;
             width: 100%; height: calc( 100% - 70px );
 
+            .blocks{
+                position: absolute; top: 10px; left: 0; width: 100%; height: max-content;
+                display: flex;
+                flex-direction: column;
+                row-gap: 3px;
+
+                span{
+                    width: 100%;
+                    height: max-content;
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    row-gap: 3px; column-gap: 3px;
+                    align-items: center; justify-content: center;
+                    
+                    
+                    .block{
+                        height: 40px;
+                        background-color: var(--color-1-light);
+                        border: 1px solid var(--color-1);
+                        box-shadow: 0 0 4px var(--color-1);
+                    }
+                }
+
+                
+            }
+
             .ball{
                 position: absolute;
                 width: 30px; height: 30px;
                 border-radius: 100%;
-                background-color: var(--color-red);
+                background-color: var(--color-blue);
                 box-shadow: 5px 5px 5px var(--bg-color-1);
                 border: 2px solid var(--color-1-light);
                 transition-property: transform;
@@ -96,8 +124,8 @@
                 position: absolute; bottom: 0; left: 0;
                 width: 20%; height: 5px;
                 border-radius: 10px;
-                background-color: var(--color-red);
-                box-shadow: 0px -5px 20px var(--color-red);
+                background-color: var(--color-blue);
+                box-shadow: 0px -5px 20px var(--color-blue);
                 transition: transform .2s ease;
             }
         }

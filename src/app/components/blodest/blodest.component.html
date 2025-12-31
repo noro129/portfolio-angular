@@ -11,6 +11,18 @@
             
         </div>
         <div class="game-screen" (mousemove)="onMouseMove($event)" #gameContainer>
+            <div class="blocks">
+                <span>
+                    <div *ngFor="let block of upperBlocks; index as i">
+                        <div class="block" [ngStyle]="{'opacity' : block ? 0 : .8, 'width' : blockWidth+'px'}"></div>
+                    </div>
+                </span>
+                <span>
+                    <div *ngFor="let block of lowerBlocks; index as i">
+                        <div class="block" [ngStyle]="{'opacity' : block ? 0 : .8, 'width' : blockWidth+'px'}"></div>
+                    </div>
+                </span>
+            </div>
             <div class="ball" [style.transform]="translateBall" #gameBall></div>
             <div class="playing-bar" [style.transform]="translateX" #playingBar></div>
         </div>
