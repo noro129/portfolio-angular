@@ -1,4 +1,46 @@
 <div class="container">
+    <div class="background" *ngIf="!gameStarted">
+        <div class="row">
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+        </div>
+        <div class="row">
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+        </div>
+        <div class="row">
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+        </div>
+        <div class="row">
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+            <div class="el" style="background-color: var(--color-red);"></div>
+        </div>
+        <div class="row">
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+            <div class="el" style="background-color: var(--bg-color-1);"></div>
+        </div>
+    </div>
     <span *ngIf="!gameStarted" class="start-button-underlay">
         <div class="start-button" (click)="startGame()">START</div>
     </span>
