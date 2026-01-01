@@ -61,8 +61,8 @@ export class DesktopComponent implements OnInit{
         'icon' : './command-line.png',
         'xPosition' : 3,
         'yPosition' : 0,
-        'defaultHeight' : 250,
-        'defaultWidth' : 700
+        'defaultHeight' : 450,
+        'defaultWidth' : 800
       },
       {
         'id' : 4,

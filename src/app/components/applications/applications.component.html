@@ -1,9 +1,16 @@
 <ng-container *ngFor="let appInstances of openedAplications | keyvalue : keepOrder; trackBy: trackByKey">
     <ng-container *ngFor="let instance of appInstances.value; trackBy: trackById">
         <ng-container [ngSwitch]="appInstances.key">
+
             <ng-container *ngSwitchCase="'BloDest'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
                     <app-blodest [instanceData]="instance" class="application-body"/>
+                </app-window>
+            </ng-container>
+            
+            <ng-container *ngSwitchCase="'CMD'">
+                <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
+                    <app-cmd [instanceData]="instance" class="application-body"/>
                 </app-window>
             </ng-container>
 
@@ -12,6 +19,7 @@
                     <app-folder [folder]="instance" class="application-body"/>
                 </app-window>
             </ng-container>
+            
         </ng-container>
     </ng-container>
 </ng-container>
