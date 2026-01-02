@@ -1,1 +1,14 @@
-<p>cmd works!</p>
+<div class="container">
+    <div class="content">
+        <div class="heading">
+            TealOS version 1.0.0 --- Interactive Shell
+        </div>
+        <div class="commands">
+            <ng-container *ngFor="let command of enteredCommands">
+                <p class="command">{{shellPrompt}} {{command}}</p>
+                <div class="command-result">result here</div>
+            </ng-container>
+            <p class="command">{{shellPrompt}} </p>
+        </div>
+    </div>
+</div>
