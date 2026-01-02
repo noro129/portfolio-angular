@@ -1,12 +1,14 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
 import { NgStyle } from '@angular/common';
+import { AppFocusService } from '../../services/app-focus.service';
 
 @Component({
   selector: 'app-window',
   imports: [NgStyle],
   templateUrl: './window.component.html',
-  styleUrl: './window.component.scss'
+  styleUrl: './window.component.scss',
+  providers: [AppFocusService]
 })
 export class WindowComponent implements AfterViewInit{
   @ViewChild("window") window!: ElementRef<HTMLDivElement>;
@@ -18,10 +20,17 @@ export class WindowComponent implements AfterViewInit{
   xOffset=0;
   yOffset=0;
 
-  @HostListener('click')
-  onClick() {
-    this.putFront(this.instanceType, this.openInstance.id);
+  @HostListener('document:click', ['$event'])
+  onClick(event : MouseEvent) {
+    if(this.el.nativeElement.contains(event.target)) {
+      this.putFront(this.instanceType, this.openInstance.id);
+      this.appFocusService.notifyApp(true);
+    } else {
+      this.appFocusService.notifyApp(false);
+    }
   }
+
+  constructor(private el : ElementRef, private appFocusService : AppFocusService) {}
 
   ngAfterViewInit(): void {
     document.addEventListener('mousemove', this.onMouseMove);
