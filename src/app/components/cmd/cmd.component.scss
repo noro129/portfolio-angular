@@ -38,6 +38,17 @@
                 margin-left: 5px;
             }
 
+            .unavailable-command{
+                color: var(--color-red);
+                font-style: italic;
+
+                .typed-command{
+                    color: var(--color-1);
+                    background-color: var(--color-1-light);
+                    padding: 0 2px;
+                }
+            }
+
             .line{
                 width: 100%;
                 position: relative;

@@ -8,11 +8,11 @@
         <div class="commands">
             <ng-container *ngFor="let command of enteredCommands">
                 <p class="command">{{shellPrompt}} {{command}}</p>
-                <div class="command-result">result here</div>
+                <div *ngIf="!commandsResultText.has(command) && !commandsResultTable.has(command)" class="command-result unavailable-command"><span class="typed-command">{{command}}</span> is not recognized as an available command.</div>
             </ng-container>
             <div class="line">
                 <span class="command">{{shellPrompt}} </span>
-                <div tabindex="-1" #commandInput class="command-input" contenteditable="true"></div>
+                <div tabindex="-1" #commandInput class="command-input" contenteditable="true" (keydown.enter)="executeCommand($event)"></div>
             </div>
         </div>
     </div>
