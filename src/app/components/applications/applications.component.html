@@ -10,7 +10,7 @@
             
             <ng-container *ngSwitchCase="'CMD'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-cmd [instanceData]="instance" class="application-body"/>
+                    <app-cmd [instanceData]="instance" class="application-body" [exit]="removeOpenInstance" [key1]="'CMD'" [key2]="instance.id" />
                 </app-window>
             </ng-container>
 

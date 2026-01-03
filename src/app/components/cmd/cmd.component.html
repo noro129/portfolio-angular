@@ -3,15 +3,16 @@
         <div class="heading">
             TealOS version 1.0.0 --- Interactive Shell
             <br><br>
-            <span class="help-prompt">Use command <span class="help-c">help</span> to view the command manual.</span>
+            <span class="help-prompt">Use command <span class="help-c">help</span> to view commands manual.</span>
         </div>
         <div class="commands">
             <ng-container *ngFor="let command of enteredCommands">
-                <p class="command">{{shellPrompt}} {{command}}</p>
-                <div *ngIf="!commandsResultText.has(command) && !commandsResultTable.has(command)" class="command-result unavailable-command"><span class="typed-command">{{command}}</span> is not recognized as an available command.</div>
+                <p class="command"><span class="shell-prompt">{{shellPrompt}}</span> {{command}}</p>
+                <div class="command-result" *ngFor="let text of commandsResult.get(commandToKey(command))">{{text}}</div>
+                <div *ngIf="!commandsResult.has(command)" class="command-result unavailable-command">{{getErrorMessage(command)}}</div>
             </ng-container>
             <div class="line">
-                <span class="command">{{shellPrompt}} </span>
+                <span class="command"><span class="shell-prompt">{{shellPrompt}}</span> </span>
                 <div tabindex="-1" #commandInput class="command-input" contenteditable="true" (keydown.enter)="executeCommand($event)"></div>
             </div>
         </div>

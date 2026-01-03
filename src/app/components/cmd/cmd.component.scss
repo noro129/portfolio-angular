@@ -36,19 +36,22 @@
                 margin-bottom: 5px;
             }
 
+            .command>.shell-prompt{
+                opacity: .6;
+                font-size: .9em;
+            }
+
             .command-result{
                 margin-left: 5px;
+                white-space: pre-wrap;
+                user-select: all;
+                font-family: monospace;
+                font-size: 1.2em;
             }
 
             .unavailable-command{
                 color: var(--color-red);
                 font-style: italic;
-
-                .typed-command{
-                    color: var(--color-1);
-                    background-color: var(--color-1-light);
-                    padding: 0 2px;
-                }
             }
 
             .line{
@@ -62,7 +65,7 @@
                 .command-input{
                     position: absolute; top: 0; left: 0; width: 100%;
                     cursor: default;
-                    padding-left: 125px;
+                    padding-left: 116px;
                     background-color: transparent;
                     color: var(--color-1);
                     border: unset;
