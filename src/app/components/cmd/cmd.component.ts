@@ -23,6 +23,7 @@ export class CMDComponent implements OnInit, OnDestroy {
   constructor(private appFocusService : AppFocusService) {}
   
   ngOnInit(): void {
+    setTimeout(()=>this.commandInput.nativeElement.focus(), 0);
     this.focusSubscriber = this.appFocusService.activeSubject$.subscribe(data => {
       this.isActive = data;
       console.log(data);
