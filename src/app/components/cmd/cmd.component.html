@@ -8,7 +8,10 @@
                 <p class="command">{{shellPrompt}} {{command}}</p>
                 <div class="command-result">result here</div>
             </ng-container>
-            <p class="command">{{shellPrompt}} </p>
+            <div class="line">
+                <span class="command">{{shellPrompt}} </span>
+                <div tabindex="-1" #commandInput class="command-input" contenteditable="true"></div>
+            </div>
         </div>
     </div>
 </div>

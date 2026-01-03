@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
 import { NgFor } from '@angular/common';
 import { AppFocusService } from '../../services/app-focus.service';
@@ -11,11 +11,12 @@ import { Subscription } from 'rxjs';
   styleUrl: './cmd.component.scss'
 })
 export class CMDComponent implements OnInit, OnDestroy {
+  @ViewChild("commandInput") commandInput !: ElementRef;
   @Input() instanceData !: OpenInstance;
   isActive = true;
   focusSubscriber !: Subscription;
   commands : string[] = ['help', 'whoami', 'print', 'clear', 'exit'];
-  enteredCommands : string[] = ['help'];
+  enteredCommands : string[] = [];
   currentCommand : string = '';
   readonly shellPrompt = 'guest@tealos:~$';
 
@@ -23,8 +24,12 @@ export class CMDComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     this.focusSubscriber = this.appFocusService.activeSubject$.subscribe(data => {
-      if (this.isActive != data) {
-        this.isActive = data;
+      this.isActive = data;
+      console.log(data);
+      if(this.isActive) {
+        setTimeout(()=>this.commandInput.nativeElement.focus(), 0);
+      } else {
+        this.commandInput.nativeElement.blur();
       }
     })
   }

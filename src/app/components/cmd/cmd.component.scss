@@ -12,12 +12,12 @@
 
         .heading{
             letter-spacing: 2px;
-            padding: 5px 5px 10px 5px;
+            padding: 5px 5px 40px 5px;
         }
 
         .commands{
 
-            .command,.command-result{
+            .command,.command-result, .line>.command{
                 margin-bottom: 5px;
             }
 
@@ -25,14 +25,22 @@
                 margin-left: 5px;
             }
 
-            .command{
+            .line{
+                width: 100%;
+                position: relative;
+
+                .command{
+                    flex-shrink: 0;
+                }
+
                 .command-input{
+                    position: absolute; top: 0; left: 0; width: 100%;
                     cursor: default;
+                    padding-left: 125px;
                     background-color: transparent;
                     color: var(--color-1);
                     border: unset;
-                    font-size: 1em;
-                    font-weight: lighter;
+                    word-wrap: break-word;
 
                     &:focus{
                         border: unset;
