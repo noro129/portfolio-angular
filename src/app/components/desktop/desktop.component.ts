@@ -111,6 +111,8 @@ export class DesktopComponent implements OnInit{
           this.stacksMap.set(app.name, [instance]);
         }
       }
+      app.focused = false;
+      break;
     }
   }
 
@@ -177,6 +179,7 @@ export class DesktopComponent implements OnInit{
         this.stacksMap.set(app.name, [app]);
       }
     }
+    toOpen.focused = false;
   }
 
   removeItem = (key : string, itemId : string)  => {
