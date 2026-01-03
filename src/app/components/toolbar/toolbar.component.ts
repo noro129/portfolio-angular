@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { MenuItem } from '../../models/MenuItem';
 import { HttpClient } from '@angular/common/http';
 
@@ -23,7 +23,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   private interval : any;
   menuItems!: MenuItem[];
   
-  constructor(private http : HttpClient, private renderer : Renderer2) {}
+  constructor(private http : HttpClient, private renderer : Renderer2, private el : ElementRef) {}
 
   ngOnInit(): void {
     this.http.get<MenuItem[]>("./menu-items.json").subscribe({
@@ -122,6 +122,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         break;
       default :
         console.log(appName);
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event : MouseEvent) {
+    if(!this.el.nativeElement.contains(event.target)){
+      this.showMenu = false;
     }
   }
 }
