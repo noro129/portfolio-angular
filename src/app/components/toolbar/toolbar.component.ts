@@ -61,7 +61,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     for(let menuItem of menuItems) {
       const container = this.renderer.createElement("div");
       this.renderer.addClass(container, "item");
-      const spanItem = this.renderer.createElement("span");
+      let spanItem = this.renderer.createElement("span");
+      if(menuItem.item_name.endsWith(".pdf")) {
+        const aTag = this.renderer.createElement("a");
+        this.renderer.setAttribute(aTag, 'download', menuItem.item_name);
+        this.renderer.setAttribute(aTag, 'href', menuItem.item_name);
+        this.renderer.setStyle(aTag, 'all', 'unset');
+        this.renderer.appendChild(spanItem, aTag);
+        this.renderer.listen(spanItem, 'click', () => {aTag.click()});
+      }
       const spanTextContent = this.renderer.createText(menuItem.item_name);
       this.renderer.addClass(spanItem, "item-name");
       this.renderer.setStyle(spanItem, "margin-left", `${leftMargin}px`);
@@ -120,8 +128,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       case "phone number" :
         navigator.clipboard.writeText("+212694105029");
         break;
+      case "linkedin" :
+        navigator.clipboard.writeText("https://www.linkedin.com/in/oussama-errazi/");
+        break;
       default :
-        console.log(appName);
+        return;
     }
   }
 
