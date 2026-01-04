@@ -51,8 +51,8 @@ export class DesktopComponent implements OnInit{
         'icon' : './question-mark.png',
         'xPosition' : 2,
         'yPosition' : 0,
-        'defaultHeight' : 250,
-        'defaultWidth' : 700
+        'defaultHeight' : 600,
+        'defaultWidth' : 460
       },
       {
         'id' : 3,

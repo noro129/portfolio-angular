@@ -6,10 +6,11 @@ import { BlodestComponent } from "../blodest/blodest.component";
 import { WindowComponent } from "../window/window.component";
 import { FolderComponent } from "../folder/folder.component";
 import { CMDComponent } from "../cmd/cmd.component";
+import { WhoamiComponent } from "../whoami/whoami.component";
 
 @Component({
   selector: 'app-applications',
-  imports: [NgFor, KeyValuePipe, NgSwitch, NgSwitchCase, BlodestComponent, WindowComponent, FolderComponent, CMDComponent],
+  imports: [NgFor, KeyValuePipe, NgSwitch, NgSwitchCase, BlodestComponent, WindowComponent, FolderComponent, CMDComponent, WhoamiComponent],
   templateUrl: './applications.component.html',
   styleUrl: './applications.component.scss'
 })
