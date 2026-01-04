@@ -8,15 +8,15 @@
     padding: 10px;
 
     .file{
-        width: 90px; height: 130px;
+        width: 90px; height: 140px;
         display: flex;
         flex-direction: column;
         row-gap: 10px;
         align-items: center;
-        padding: 2px;
+        padding: 5px;
 
         .file-icon{
-            height: 60%; width: 90%;
+            height: 50%; width: 80%;
         }
 
         .company-name{
@@ -26,7 +26,7 @@
         }
 
         &:hover{
-            background-color: var(--color-1-lighter);
+            background-color: var(--color-1-light);
         }
     }
 }
