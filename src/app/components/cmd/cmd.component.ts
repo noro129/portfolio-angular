@@ -62,21 +62,13 @@ export class CMDComponent implements OnInit, OnDestroy {
     this.commandsResult.set('help', [
                                          'Available commands:',
                                          ' ',
-                                         'help',
-                                         '\tDisplay this manual.',
-                                         ' ',
-                                         'print <arg>',
-                                         '\tPrint user contact or profile information.',
-                                         '\targ : github | email | phone | linkedin.',
-                                         ' ',
-                                         'whoami', 
-                                         '\tShow user information (name, education, skills, languages).',
-                                         ' ',
-                                         'clear',
-                                         '\tClear the terminal screen.',
-                                         ' ',
-                                         'exit',
-                                         '\tExit the session.'
+                                         'help         Display this manual.',
+                                         'print <arg>  Print user contact or profile information.',
+                                         '             arg : github | email | phone | linkedin.',
+                                         'whoami       Show user information (name, education, skills, languages).',
+                                         'clear        Clear the terminal screen.',
+                                         'exit         Exit the session.',
+                                         ' '
     ]);
 
     this.commandsResult.set('whoami', [
