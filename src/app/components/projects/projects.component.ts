@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Project } from '../../models/Project';
 import { ProjectComponent } from "../project/project.component";
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass, NgFor, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-projects',
-  imports: [ProjectComponent, NgClass, NgFor],
+  imports: [ProjectComponent, NgClass, NgFor, NgStyle],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
