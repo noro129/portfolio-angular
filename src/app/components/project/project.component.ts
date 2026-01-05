@@ -1,9 +1,9 @@
-import { NgStyle } from '@angular/common';
+import { NgStyle, NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-project',
-  imports: [NgStyle],
+  imports: [NgStyle, NgClass],
   templateUrl: './project.component.html',
   styleUrl: './project.component.scss'
 })
