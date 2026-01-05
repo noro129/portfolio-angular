@@ -56,12 +56,12 @@
             <div class="blocks">
                 <span>
                     <div *ngFor="let block of upperBlocks; index as i">
-                        <div class="block" [ngStyle]="{'opacity' : block ? 0 : .8, 'width' : blockWidth+'px'}"></div>
+                        <div class="block" [ngStyle]="{'opacity' : block ? 0 : 1, 'width' : blockWidth+'px', 'background-color' : i >4 ? 'var(--color-red)' : 'var(--bg-color-1)'}"></div>
                     </div>
                 </span>
                 <span>
                     <div *ngFor="let block of lowerBlocks; index as i">
-                        <div class="block" [ngStyle]="{'opacity' : block ? 0 : .8, 'width' : blockWidth+'px'}"></div>
+                        <div class="block" [ngStyle]="{'opacity' : block ? 0 : 1, 'width' : blockWidth+'px', 'background-color' : i >4 ? 'var(--color-red)' : 'var(--bg-color-1)'}"></div>
                     </div>
                 </span>
             </div>
