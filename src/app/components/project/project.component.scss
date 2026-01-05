@@ -25,8 +25,8 @@
 
     &:not(.carousel):hover{
         background: linear-gradient(45deg, var(--color-2-light) 20%, transparent 30%, transparent 70%, var(--color-2-light) 80%);
-        box-shadow: 0 20px 10px 5px var(--bg-color-1);
-        transform: rotate3d(1, 0, 0, 20deg) scaleY(1.05);
+        box-shadow: 4px 6px 0px var(--color-1);
+        transform: rotate3d(1, -0.5, 0, 20deg) ;
         .project-title {
             text-shadow: 0 0 10px var(--color-2);
         }
