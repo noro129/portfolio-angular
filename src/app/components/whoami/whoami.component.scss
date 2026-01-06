@@ -74,9 +74,10 @@
                 border-top: unset;
 
                 .attribute, .config{
-                    position: absolute; left: 0; top: 0;
-                    padding: 5px;
+                    position: absolute; left: 0; top: 0; height: 30px;
                     font-weight: bolder;
+                    padding-left: 5px;
+                    display: flex; justify-content: center; align-items: center;
                 }
 
                 .attribute{
@@ -104,6 +105,23 @@
 
                 .value{
                     position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
+                    display: flex; flex-direction: column;
+
+                    
+                }
+
+                .value:has(.list) {
+                    top: 0; transform: unset;
+                    
+                    .list{
+                        height: 30px;
+                        font-size: 15px;
+                        display: flex; align-items: center;
+                    }
+
+                    .date{
+                        justify-content: end;
+                    }
                 }
             }
 
