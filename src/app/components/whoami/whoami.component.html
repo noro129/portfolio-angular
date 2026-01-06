@@ -3,7 +3,9 @@
         <div class="tab" *ngFor="let tab of tabs; index as i" [ngClass]="{'displayed-tab' : i === tabI}" (click)="onTabClick(i)" >{{tab}}</div>
     </div>
     <div class="content">
+        <p class="edit" *ngIf="tabI === 0">Edit</p>
         <div class="wrapper" *ngIf="tabI===0">
+            
             <div class="item empty">
                 <img src="user.png" alt="user logo" class="user">
             </div>
