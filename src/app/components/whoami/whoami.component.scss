@@ -81,7 +81,7 @@
                 }
 
                 .attribute{
-                    transform: translateY(-50%);
+                    transform: translateY(-60%);
                 }
 
                 .input{
@@ -106,7 +106,7 @@
                 .value{
                     position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
                     display: flex; flex-direction: column;
-
+                    font-size: 15px;
                     
                 }
 
