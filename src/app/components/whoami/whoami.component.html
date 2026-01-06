@@ -2,5 +2,44 @@
     <div class="head">
         <div class="tab" *ngFor="let tab of tabs; index as i" [ngClass]="{'displayed-tab' : i === tabI}" (click)="onTabClick(i)" >{{tab}}</div>
     </div>
-    <div class="content"></div>
+    <div class="content">
+        <div class="wrapper" *ngIf="tabI===0">
+            <div class="item empty">
+                <img src="user.png" alt="user logo" class="user">
+            </div>
+            <div class="item">
+                <div class="attribute">full name :</div>
+                <div class="value">Oussama Errazi</div>
+            </div>
+            <div class="item">
+                <div class="attribute">profile :</div>
+                <div class="value">Software Engineer</div>
+            </div>
+            <div class="item empty">
+            </div>
+            <div class="item">
+                <div class="attribute">email :</div>
+                <div class="value">errazi111&#64;gmail.com</div>
+            </div>
+            <div class="item">
+                <div class="attribute">password :</div>
+                <div class="value">* * * * * * * *</div>
+            </div>
+        </div>
+
+        <div class="wrapper" *ngIf="tabI === 3">
+            <div class="item">
+                <div class="config">Arabic</div>
+                <div class="value input">Native Language</div>
+            </div>
+            <div class="item">
+                <div class="config">English</div>
+                <div class="value input">Proficient</div>
+            </div>
+            <div class="item">
+                <div class="config">French</div>
+                <div class="value input">Fluent</div>
+            </div>
+        </div>
+    </div>
 </div>

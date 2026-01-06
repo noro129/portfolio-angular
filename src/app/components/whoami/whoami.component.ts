@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
-import { NgFor, NgClass } from '@angular/common';
+import { NgFor, NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-whoami',
-  imports: [NgFor, NgClass],
+  imports: [NgFor, NgClass, NgIf],
   templateUrl: './whoami.component.html',
   styleUrl: './whoami.component.scss'
 })
