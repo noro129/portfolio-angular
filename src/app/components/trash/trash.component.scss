@@ -56,4 +56,48 @@
             }
         }
     }
+
+    .deleted-apps{
+        position: absolute; top: 10%; height: 90%; left: 0; width: 100%; padding: 20px;
+        display: flex; flex-direction: row; flex-wrap: wrap; row-gap: 10px; column-gap: 10px;
+        justify-content: start; align-content: start;
+
+        .deleted-app{
+            cursor: pointer;
+            width: 23%;
+            height: 60px;
+            display: flex; flex-direction: row;
+            background: linear-gradient(160deg, transparent 50%, var(--color-1-light));
+
+            &:hover{
+                background: none;
+            }
+
+            .app-icon{
+                height: 100%; aspect-ratio: 1 / 1;
+                position: relative;
+
+                img{
+                    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    width: 90%;
+                }
+            }
+
+            .app-info{
+                height: 100%; flex: 1;
+
+                .app-title{
+                    width: 100%; text-align: center;
+                    font-size: 1.1em;
+                }
+
+                .app-size{
+                    padding-top: 5px;
+                    padding-left: 10px;
+                    font-size: smaller;
+                    opacity: .7;
+                }
+            }
+        }
+    }
 }
