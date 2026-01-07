@@ -20,6 +20,12 @@
                 </app-window>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'Dr. Trash'">
+                <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
+                    <app-trash [instanceData]="instance" class="application-body"/>
+                </app-window>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'WhoAmI'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
                     <app-whoami [instanceData]="instance" class="application-body"/>

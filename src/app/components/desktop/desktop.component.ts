@@ -71,7 +71,7 @@ export class DesktopComponent implements OnInit{
         'icon' : './trash-can.png',
         'xPosition' : 4,
         'yPosition' : 0,
-        'defaultHeight' : 250,
+        'defaultHeight' : 450,
         'defaultWidth' : 700
       }
   ];
