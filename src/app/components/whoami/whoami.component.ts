@@ -9,7 +9,6 @@ import { NgFor, NgClass, NgIf } from '@angular/common';
   styleUrl: './whoami.component.scss'
 })
 export class WhoamiComponent {
-  @Input() instanceData !: OpenInstance;
   readonly tabs = ['User Info', 'Education', 'Skills', 'Languages'];
   tabI =0;
 

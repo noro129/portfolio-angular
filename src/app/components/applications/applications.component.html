@@ -4,13 +4,13 @@
 
             <ng-container *ngSwitchCase="'BloDest'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-blodest [instanceData]="instance" class="application-body"/>
+                    <app-blodest class="application-body"/>
                 </app-window>
             </ng-container>
             
             <ng-container *ngSwitchCase="'CMD'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-cmd [instanceData]="instance" class="application-body" [exit]="removeOpenInstance" [key1]="'CMD'" [key2]="instance.id" />
+                    <app-cmd class="application-body" [exit]="removeOpenInstance" [key1]="'CMD'" [key2]="instance.id" />
                 </app-window>
             </ng-container>
 
@@ -22,13 +22,13 @@
 
             <ng-container *ngSwitchCase="'Dr. Trash'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-trash [instanceData]="instance" class="application-body"/>
+                    <app-trash class="application-body"/>
                 </app-window>
             </ng-container>
 
             <ng-container *ngSwitchCase="'WhoAmI'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-whoami [instanceData]="instance" class="application-body"/>
+                    <app-whoami class="application-body"/>
                 </app-window>
             </ng-container>
             

@@ -8,6 +8,5 @@ import { OpenInstance } from '../../models/OpenInstance';
   styleUrl: './trash.component.scss'
 })
 export class TrashComponent {
-  @Input() instanceData !: OpenInstance;
-  
+
 }
