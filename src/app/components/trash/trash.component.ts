@@ -30,5 +30,14 @@ export class TrashComponent {
 
   restore() {}
 
-  delete() {}
+  delete() {
+    let keys = [];
+    for(let [key, value] of this.deletedApps){
+      if(value.focused) keys.push(key);
+    }
+    for(let key of keys) {
+      this.deletedApps.delete(key);
+    }
+    this.focusedApps = 0;
+  }
 }
