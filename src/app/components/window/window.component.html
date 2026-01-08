@@ -1,6 +1,6 @@
 <div class="container"
-    [ngStyle]="{'width': openInstance.windowWidth+'px' , 
-                'height': openInstance.windowHeight+'px' ,
+    [ngStyle]="{'min-width': openInstance.windowWidth+'px' , 
+                'min-height': openInstance.windowHeight+'px' ,
                 'top': openInstance.positionY+'px', 
                 'left': openInstance.positionX+'px', 
                 'display' : openInstance.hidden && !openInstance.focusedOn ? 'none' : 'block', 
