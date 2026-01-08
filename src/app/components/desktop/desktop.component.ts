@@ -5,6 +5,7 @@ import { AppType } from '../../models/AppType';
 import { ActiveItemsPanelComponent } from "../active-items-panel/active-items-panel.component";
 import { OpenInstance } from '../../models/OpenInstance';
 import { ApplicationsComponent } from "../applications/applications.component";
+import { AppsObject } from '../../models/AppsObject';
 
 @Component({
   selector: 'app-desktop',
@@ -291,14 +292,4 @@ export class DesktopComponent implements OnInit{
   isSameKey(key : number, row : number, column : number) : boolean {
     return row<this.gridRows && row>=0 && column>=0 && column<this.gridColumns && key === row*this.gridColumns + column;
   }
-}
-
-interface AppsObject {
-  id : number;
-  name : string;
-  icon : string;
-  type : AppType;
-  focused : boolean;
-  defaultHeight : number;
-  defaultWidth : number;
 }
