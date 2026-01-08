@@ -1,7 +1,7 @@
 <div class="container">
     <div class="control-buttons">
-        <div class="restore-button">restore<img src="restore-icon.png" class="icon" alt="restore icon"/></div>
-        <div class="delete-button">delete<img src="delete-icon.png" class="icon" alt="delete icon"/></div>
+        <div class="restore-button" [ngClass]="{'disabled' : focusedApps === 0}" (click)="restore()">restore<img src="restore-icon.png" class="icon" alt="restore icon"/></div>
+        <div class="delete-button" [ngClass]="{'disabled' : focusedApps === 0}" (click)="delete()">delete<img src="delete-icon.png" class="icon" alt="delete icon"/></div>
     </div>
     <div class="deleted-apps">
         <div class="deleted-app" *ngFor="let deletedApp of deletedApps | keyvalue : keepOrder; trackBy: trackByKey" draggable="true" (click)="onClick(deletedApp.key)" [ngClass]="{'focused' : deletedApp.value.focused}">

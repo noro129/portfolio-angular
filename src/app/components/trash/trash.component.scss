@@ -22,7 +22,7 @@
             border-right: 2px solid var(--bg-color-1);
             z-index: 1;
 
-            &:hover{
+            &:hover:not(.disabled){
                 color: var(--color-1);
 
                 &::after{
@@ -50,10 +50,15 @@
                 opacity: 0;
             }
 
-            &:active{
+            &:active:not(.disabled){
                 opacity: .8;
                 scale: .8;
             }
+        }
+
+        .disabled{
+            cursor:not-allowed;
+            opacity: .3;
         }
     }
 

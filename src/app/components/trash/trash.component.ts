@@ -27,4 +27,8 @@ export class TrashComponent {
       else this.focusedApps--;
     }
   }
+
+  restore() {}
+
+  delete() {}
 }
