@@ -99,5 +99,9 @@
                 }
             }
         }
+
+        .focused{
+            background-color: var(--color-1-light) !important;
+        }
     }
 }

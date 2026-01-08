@@ -1,0 +1,121 @@
+[33m9b2c295[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m implemented app deletion by dragging over trash bin app
+[33mc75eabe[m made AppsObject interface public in models package
+[33mee1aa5f[m modified restore/delete buttons transitions duration in trash component
+[33me4bab0f[m removed instance data as an input from app components
+[33m07497a2[m trash component content styling
+[33mdc97db8[m added restore and delete buttons in trash component
+[33m5184abe[m added trash component
+[33mab57c8f[m modified projects tracker styling
+[33mb115d49[m added edit button in user tab in whoami
+[33m3d957a9[m fix in education tab dates
+[33m27fe20c[m added skills tab info in whoami component
+[33m6903975[m added education info to whoami tab
+[33m5d55c20[m added user info & languages tabs content in whoami component
+[33m7d45d88[m modified styling
+[33m9b2a6e0[m project hover styling modified
+[33m2b6c7b7[m project component styling
+[33m13c994b[m modified help command result in cmd component
+[33m3d41564[m changed projects slide tracker to powerpoint styled tracker
+[33m10ad70e[m fixed projects component carousel sliding animation
+[33m129a085[m added tabs to whoami component
+[33m9ef9988[m projects component styling
+[33mb51c336[m adjusting title and logo in window component
+[33m251f64e[m added whoami component
+[33mc637122[m added tealOs logo
+[33maee581a[m modified styling text files in experience component
+[33mec59167[m added resume and linkedin profile items to toolbar menu
+[33mf170128[m implemented commands in cmd component
+[33m4523890[m hide toolbar menu when clicking outside toolbar component
+[33md24727c[m remove focus after opening app on desktop
+[33m1ca6894[m added scrolling in cmd component
+[33m9f25ef3[m throw error for unrecognized commands
+[33m524a251[m fixed cmd input el focus at instance opening + added help command usage in cmd header
+[33m066db61[m writing commands in the view in cmd component
+[33maa49993[m passing click in/out from  window component to cmd component
+[33m0b6ed97[m implemented cmd component view
+[33mf4382df[m added cmd component
+[33mb9064c6[m added grabbing cursor styling
+[33mf8006d6[m blodest component background styling
+[33m60f77cb[m blodest component start button styling
+[33m7b282fd[m copying contact and profile items in toolbar component implemented
+[33m6aed49c[m added blocks with styling in blodest component
+[33m56232ea[m game over screen added with styling
+[33m3d557da[m ball movements implemented in blodest container
+[33m48f456e[m implemented playing bar movements in blodest component
+[33m5147729[m added default width and height attributes to Application interface
+[33m0d84b02[m added opening apps from toolbar menu
+[33m3a69e5f[m added focusedOn attribute to OpenInstance interface
+[33m2cb0a37[m styling
+[33mef345b7[m putInstanceFront reimplemented using z-index attr
+[33mecf779c[m added trackby in apps component ngFor loops
+[33mc67ca36[m added positionZ as attribute to openInstance interface
+[33me5d5ba3[m[33m ([m[1;31morigin/reusability-enhancements[m[33m, [m[1;32mreusability-enhancements[m[33m)[m Merge branch 'reusability-enhancements' of https://github.com/noro129/portfolio-angular into reusability-enhancements
+[33mfc4b29c[m deleted folder specific methods because apps component is handling folders now
+[33m734f6f0[m deleted folder specific methods because apps component is handling folders now
+[33m13a6bd6[m modified apps component to handle folders as well
+[33m49a72f8[m added positionX and positionY as attributes of OpenInstance interface
+[33mbe6bcc4[m made open instances frame in a separate reusable component
+[33m3fb3c4c[m added window width and height attributes to open instance interface
+[33m0c229e5[m created blodest game component
+[33mc149dba[m created applications component
+[33me515758[m fixed active items stack tracking order
+[33m25a0c9f[m open applications with double click
+[33m7802dd0[m modified styling and transitions when focusing on an opened instance
+[33m76e4a1e[m instances stack shrink when close hide/reveal put front action performed
+[33m604c885[m binding folder object to folder component instead of binding folder attributes
+[33me67bb0a[m fixed remove focus effect when closing instance item
+[33m0e7ddf7[m focus on instance when hovering in instances stack
+[33mb4a6bf7[m fixed ordinal day suffixes in desktop component view
+[33m59bb7ab[m put selected instances stack item front added
+[33m0366d7d[m removed showing empty positions when dragging an app
+[33m9daa6e9[m added instances stacks styling
+[33md261214[m implemented instance hide reveal button method
+[33m375672c[m fixed put dragged folder in front
+[33m5c7eb7a[m change folder name in instances stack fixed
+[33me5d85a7[m fixed projects sliding toLeft ani problem
+[33m4d351d8[m added battery percentage in the view
+[33me7fbbaf[m put clicked window forward method implemented
+[33m4b76663[m added styling to close and hide buttons in folder component
+[33mb0fa4c0[m added battery + wifi options in left toolbar
+[33m3a58c5c[m modified toolbar menu click animation
+[33ma363b6e[m made toolbar menu items clickable
+[33mcffed54[m fixed instances stack expansion transition when closing items
+[33m4180893[m close folder method implemented in folder component
+[33m1cae12d[m fixed remove folder method to delete the right folder by id
+[33me882763[m update folder removal by stack key and folder id instead of indexes
+[33ma2a3ff0[m desktop css styling
+[33m60115bf[m added day of week and modified desktop appearance
+[33m70a02ce[m added id to openInstance model
+[33me2237f8[m projects slider ani transition fixed
+[33mfe5148a[m remove folder when removed in open instances stack panel
+[33m372bb79[m stack items close button fun implemented
+[33me7ab849[m instance animation fix+items hover animation + enter event warning fix in desktop
+[33m76a44a2[m added experience files in experience folder
+[33m55f85d2[m implemented left panel folder selection
+[33mdc23bd3[m added blur effect for the transparent folder background
+[33m084b2bf[m project component styling
+[33m28a5bf1[m fixed problem of folder double click open option not updating opened folders stack manager
+[33m45e4145[m added a pagination dots to the projects slider ui
+[33m1833b90[m projects component slider implemented
+[33m072ffac[m implementation of projects basic styling and folder content
+[33mbf22416[m fix app dragging probelm - only icon shows when dragging -
+[33mfe3b738[m open folders with double click
+[33m17fb487[m changed styling colors
+[33m57f1f61[m implement toolbar menu construction method
+[33m472cb2e[m show available positions to drop dragged app on desktop
+[33m1fff860[m drag apps on desktop + desktop grid size calculation using screen size
+[33m9d12540[m prevent  text and images selection
+[33m85daecb[m optimized stack styling
+[33mb3d3932[m open folder action linked with FolderComponent
+[33ma212316[m link stacks manager to opened folders/apps
+[33mdcc80ee[m open items stack animation optimization
+[33m8b244d0[m added stack component + styling + animation
+[33ma0c86b4[m ability to move folders window
+[33mc5affc0[m folder component accept position as input+ show folders structure in folder left panel
+[33mf03ba58[m added sleep mode button + folder component
+[33mb318a4b[m desktop apps styling + focus effect
+[33me0029a2[m added apps to desktop
+[33m065547b[m desktop component background styling and wave animations
+[33m8f4726c[m added menu main buttons + styling
+[33m56870d5[m added time and date & menu button to toolbar
+[33m5a62746[m initial commit
