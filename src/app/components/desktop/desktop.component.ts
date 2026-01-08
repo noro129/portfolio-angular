@@ -299,4 +299,19 @@ export class DesktopComponent implements OnInit{
   isSameKey(key : number, row : number, column : number) : boolean {
     return row<this.gridRows && row>=0 && column>=0 && column<this.gridColumns && key === row*this.gridColumns + column;
   }
+
+  restoreApp = (key : number) => {
+    const app = this.deletedApps.get(key);
+    if(!app) return;
+    for(let c=0; c<this.gridColumns; c++) {
+      for(let r =0; r<this.gridRows; r++) {
+        if(!this.applicationsMatrix.has(r*this.gridColumns + c)) {
+          this.applicationsMatrix.set(r*this.gridColumns + c, app);
+          this.deletedApps.delete(key);
+          return;
+        }
+      }
+    }
+    
+  } 
 }

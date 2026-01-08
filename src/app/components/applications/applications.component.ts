@@ -21,6 +21,7 @@ export class ApplicationsComponent {
   @Input() openedAplications!: Map<string, OpenInstance[]>;
   @Input() removeOpenInstance !: (key: string, itemId: string)=> void;
   @Input() putOpenInstanceFront !: (key: string, itemId: string)=> void;
+  @Input() restoreApp !: (key : number)=> void;
   AppType = AppType;
   keepOrder = () => 0;
 

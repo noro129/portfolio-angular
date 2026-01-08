@@ -10,6 +10,7 @@ import { KeyValuePipe, NgFor, NgClass } from '@angular/common';
 })
 export class TrashComponent {
   @Input() deletedApps !: Map<number, AppsObject>;
+  @Input() restoreApp !: (key : number) => void;
   focusedApps = 0;
 
 
@@ -28,7 +29,16 @@ export class TrashComponent {
     }
   }
 
-  restore() {}
+  restore() {
+    let keys = [];
+    for(let [key, value] of this.deletedApps){
+      if(value.focused) keys.push(key);
+    }
+    for(let key of keys) {
+      this.restoreApp(key);
+    }
+    this.focusedApps = 0;
+  }
 
   delete() {
     let keys = [];
