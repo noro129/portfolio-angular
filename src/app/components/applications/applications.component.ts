@@ -8,6 +8,7 @@ import { FolderComponent } from "../folder/folder.component";
 import { CMDComponent } from "../cmd/cmd.component";
 import { WhoamiComponent } from "../whoami/whoami.component";
 import { TrashComponent } from "../trash/trash.component";
+import { AppsObject } from '../../models/AppsObject';
 
 @Component({
   selector: 'app-applications',
@@ -16,6 +17,7 @@ import { TrashComponent } from "../trash/trash.component";
   styleUrl: './applications.component.scss'
 })
 export class ApplicationsComponent {
+  @Input() deletedApps !: Map<number, AppsObject>;
   @Input() openedAplications!: Map<string, OpenInstance[]>;
   @Input() removeOpenInstance !: (key: string, itemId: string)=> void;
   @Input() putOpenInstanceFront !: (key: string, itemId: string)=> void;

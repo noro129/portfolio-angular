@@ -77,6 +77,7 @@ export class DesktopComponent implements OnInit{
       }
   ];
   applicationsMatrix = new Map<number, AppsObject>();
+  deletedApps = new Map<number, AppsObject>();
   stacksMap = new Map<string, OpenInstance[]>;
   draggedIndex =-1;
   hoveredAppPosition = {'row' : -1, 'column' : -1};
@@ -277,6 +278,12 @@ export class DesktopComponent implements OnInit{
 
     if(draggedApp) {
       const dragTo = this.applicationsMatrix.get(key);
+      if(dragTo && dragTo.name === 'Dr. Trash') {
+        draggedApp.focused = false;
+        this.deletedApps.set(this.draggedIndex, draggedApp);
+        this.applicationsMatrix.delete(this.draggedIndex);
+        return;
+      }
       this.applicationsMatrix.set(key, draggedApp);
       if(dragTo) {
         this.applicationsMatrix.set(this.draggedIndex, dragTo);
