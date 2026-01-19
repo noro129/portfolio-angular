@@ -103,6 +103,7 @@
                     padding: 5px;
                     width: 170px;
                     border: 1px solid var(--color-1-light);
+                    align-items: start !important;
 
                     &::after{
                         content: '▾';
@@ -121,6 +122,7 @@
                 .value{
                     position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
                     display: flex; flex-direction: column;
+                    align-items: end;
                     font-size: 15px;
                     
                 }
@@ -132,10 +134,23 @@
                         height: 30px;
                         font-size: 15px;
                         display: flex; align-items: center;
+                        max-width: fit-content;
                     }
 
                     .date{
+                        position: relative;
                         justify-content: end;
+
+                        &::after{
+                            content: '';
+                            position: absolute; top: 0; left: 0; transform: translateX(-30px) translateY(5px);
+                            height: 20px; width: 20px;
+                            z-index: 100;
+                            background-image: url("/date-icon.png");
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                            background-position: center;
+                        }
                     }
                 }
             }
