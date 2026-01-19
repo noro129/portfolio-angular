@@ -6,11 +6,12 @@ import { ActiveItemsPanelComponent } from "../active-items-panel/active-items-pa
 import { OpenInstance } from '../../models/OpenInstance';
 import { ApplicationsComponent } from "../applications/applications.component";
 import { AppsObject } from '../../models/AppsObject';
+import { NotificationComponent } from "../notification/notification.component";
 
 @Component({
   selector: 'app-desktop',
   imports: [NgFor, NgIf, NgClass,
-    ActiveItemsPanelComponent, ApplicationsComponent],
+    ActiveItemsPanelComponent, ApplicationsComponent, NotificationComponent],
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })
