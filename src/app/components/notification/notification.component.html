@@ -1,1 +1,7 @@
-<div class="container"></div>
+<div class="container">
+    <ng-container *ngFor="let notification of notifications | keyvalue : keepOrder">
+        <div class="notif-content">
+            <p class="message">{{notification.value.message}}</p>
+        </div>
+    </ng-container>
+</div>

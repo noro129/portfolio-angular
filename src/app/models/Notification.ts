@@ -1,7 +1,7 @@
 import { NotifType } from "./NotifType";
 
 export interface Notification {
-    id : number;
+    id : string;
     message : string;
     type : NotifType;
 }

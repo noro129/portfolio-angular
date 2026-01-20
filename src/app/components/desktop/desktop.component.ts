@@ -7,6 +7,8 @@ import { OpenInstance } from '../../models/OpenInstance';
 import { ApplicationsComponent } from "../applications/applications.component";
 import { AppsObject } from '../../models/AppsObject';
 import { NotificationComponent } from "../notification/notification.component";
+import { NotifType } from '../../models/NotifType';
+import { Notification } from '../../models/Notification';
 
 @Component({
   selector: 'app-desktop',
@@ -78,6 +80,7 @@ export class DesktopComponent implements OnInit{
       }
   ];
   applicationsMatrix = new Map<number, AppsObject>();
+  notifications = new Map<string, Notification>();
   deletedApps = new Map<number, AppsObject>();
   stacksMap = new Map<string, OpenInstance[]>;
   draggedIndex =-1;
@@ -144,6 +147,14 @@ export class DesktopComponent implements OnInit{
       'defaultHeight' : 700,
       'defaultWidth' : 700
     });
+  }
+
+  addNotification(message : string, notifType : NotifType){
+    const uuid = crypto.randomUUID();
+    this.notifications.set(uuid, {id : uuid, message : message, type : notifType});
+    setTimeout(()=>{
+      this.notifications.delete(uuid);
+    },2500);
   }
 
   setDate() {
