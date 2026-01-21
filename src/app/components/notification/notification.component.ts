@@ -14,4 +14,8 @@ export class NotificationComponent {
 
   keepOrder = () => 0;
   NotifType = NotifType;
+
+  trackByKey (index: number, item: { key: string; value: any }) : string {
+    return item.key;
+  }
 }

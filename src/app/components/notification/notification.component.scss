@@ -1,7 +1,7 @@
 .container{
     width: 100%;
     height: max-content;
-    display: flex; flex-direction: column; row-gap: 10px;
+    display: flex; flex-direction: column-reverse; row-gap: 10px;
 
     .notif-content{
         width: 100%;
@@ -10,9 +10,30 @@
         align-items: center;
         color: var(--color-1);
         border-radius: 20px;
+        opacity: 0;
         padding: 10px;
-        opacity: .5;
         font-weight: bolder;
         border: 1px solid var(--color-1);
+        animation: up .3s linear forwards, down .5s 2s linear forwards;
+    }
+}
+
+@keyframes up {
+    from{
+        opacity: 0;
+        transform: translateY(10px);
+    } to {
+        opacity: .5;
+        transform: translateY(0);
+    }
+}
+
+@keyframes down {
+    from{
+        opacity: .5;
+        transform: translateY(0);
+    } to {
+        opacity: 0;
+        transform: translateY(10px);
     }
 }
