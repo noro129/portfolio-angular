@@ -2,6 +2,7 @@ import { NgClass, NgStyle } from '@angular/common';
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { MenuItem } from '../../models/MenuItem';
 import { HttpClient } from '@angular/common/http';
+import { NotifType } from '../../models/NotifType';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 export class ToolbarComponent implements OnInit, OnDestroy {
   @ViewChild("menuItemsManager") menuItemsManager !: ElementRef<HTMLDivElement>;
   @Output() openApp = new EventEmitter<number>();
+  @Output() addNotification = new EventEmitter<{message : string, type : NotifType}>();
   battery = Math.floor(Math.random()*101);
   readonly fullName = "Oussama Errazi";
   readonly occupation = "software engineer";
@@ -121,15 +123,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         break;
       case "github" :
         navigator.clipboard.writeText("https://github.com/noro129");
+        this.addNotification.emit({message : 'copied!', type : NotifType.Info});
         break;
       case "email" :
-        navigator.clipboard.writeText("errazi111@gmail.com"); 
+        navigator.clipboard.writeText("errazi111@gmail.com");
+        this.addNotification.emit({message : 'copied!', type : NotifType.Info});
         break;
       case "phone number" :
         navigator.clipboard.writeText("+212694105029");
+        this.addNotification.emit({message : 'copied!', type : NotifType.Info});
         break;
       case "linkedin" :
         navigator.clipboard.writeText("https://www.linkedin.com/in/oussama-errazi/");
+        this.addNotification.emit({message : 'copied!', type : NotifType.Info});
         break;
       default :
         return;

@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { DesktopComponent } from "./components/desktop/desktop.component";
 import { ToolbarComponent } from "./components/toolbar/toolbar.component";
+import { NotifType } from './models/NotifType';
 
 @Component({
   selector: 'app-root',
@@ -14,5 +15,9 @@ export class AppComponent {
 
   openApp(id: number) {
     this.desktop.open(id);
+  }
+
+  addNotification(messageObject : {message : string, type : NotifType}) {
+    this.desktop.addNotification(messageObject.message, messageObject.type);
   }
 }
