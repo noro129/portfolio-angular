@@ -299,6 +299,10 @@ export class DesktopComponent implements OnInit{
       const dragTo = this.applicationsMatrix.get(key);
       if(dragTo && dragTo.name === 'Dr. Trash') {
         draggedApp.focused = false;
+        if(draggedApp.systemApp) {
+          this.addNotification("cannot delete app "+draggedApp.name, NotifType.Error);
+          return;
+        }
         this.deletedApps.set(this.draggedIndex, draggedApp);
         this.applicationsMatrix.delete(this.draggedIndex);
         return;
