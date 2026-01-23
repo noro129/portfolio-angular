@@ -5,6 +5,7 @@ export interface Application{
     name : string;
     icon : string;
     type : AppType;
+    systemApp : boolean;
     xPosition : number;
     yPosition : number;
     defaultWidth : number;

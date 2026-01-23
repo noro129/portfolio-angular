@@ -5,6 +5,7 @@ export interface AppsObject {
   name : string;
   icon : string;
   type : AppType;
+  systemApp : boolean;
   focused : boolean;
   defaultHeight : number;
   defaultWidth : number;
