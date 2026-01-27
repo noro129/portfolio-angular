@@ -50,7 +50,11 @@
                 <div class="current-score">Current Score : <span class="score-amount">{{currentScore}} xp</span></div>
                 <div class="max-score">Max Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="score-amount">{{maxScore}} xp</span></div>
             </div>
-            
+            <div class="block-score">
+                <div *ngFor="let blockScoreRow of blockScoreMatrix" class="row">
+                    <div class="cell" *ngFor="let blockScoreCell of blockScoreRow" [ngStyle]="{'background-color' : blockScoreCell ? 'var(--color-green)' : '', 'box-shadow' : blockScoreCell ? '0 0 2px var(--color-green)' : ''}"></div>
+                </div>
+            </div>
         </div>
         <div class="game-screen" (mousemove)="onMouseMove($event)" #gameContainer>
             <div class="blocks">

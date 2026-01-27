@@ -13,6 +13,8 @@ export class BlodestComponent{
   @ViewChild("gameBall", { static: false }) gameBall !: ElementRef;
   @ViewChild("gameContainer", {static: false}) gameContainer !: ElementRef;
   @ViewChild("playingBar", {static: false}) playingBar !: ElementRef;
+
+  blockScoreMatrix: boolean[][] = new Array<boolean[]>(11);
   
   upperBlocks: boolean[] = new Array<boolean>(9).fill(false);
   lowerBlocks: boolean[] = new Array<boolean>(9).fill(false);
@@ -39,6 +41,7 @@ export class BlodestComponent{
 
 
   startGame() {
+    this.undoPlusOne();
     this.gameStarted = true;
     
     requestAnimationFrame(()=>{
@@ -70,6 +73,8 @@ export class BlodestComponent{
       } else if (ball.bottom == bar.top) {
         this.ballSpeed++;
         console.log("ball hit bottom");
+        this.plusOne();
+        setTimeout(()=> this.undoPlusOne(), 500);
         if(ball.left + ball.width < bar.left || ball.left + ball.width > bar.right) {
           this.gameOver = true;
           return;
@@ -100,5 +105,36 @@ export class BlodestComponent{
 
   hitsABlock() {
     return false;
+  }
+
+  plusOne() {
+    //plus sign
+    this.blockScoreMatrix[6][9] = true;
+    this.blockScoreMatrix[6][10] = true;
+    this.blockScoreMatrix[6][11] = true;
+
+    this.blockScoreMatrix[5][10] = true;
+    this.blockScoreMatrix[7][10] = true;
+
+    //digit 1 sign
+    this.blockScoreMatrix[2][14] = true;
+    this.blockScoreMatrix[3][13] = true;
+    
+    this.blockScoreMatrix[2][15] = true;
+    this.blockScoreMatrix[3][15] = true;
+    this.blockScoreMatrix[4][15] = true;
+    this.blockScoreMatrix[5][15] = true;
+    this.blockScoreMatrix[6][15] = true;
+    this.blockScoreMatrix[7][15] = true;
+    this.blockScoreMatrix[8][15] = true;this.blockScoreMatrix[8][14] = true;this.blockScoreMatrix[8][16] = true;this.blockScoreMatrix[8][13] = true;this.blockScoreMatrix[8][17] = true;
+
+
+    console.log(this.blockScoreMatrix);
+  }
+
+  undoPlusOne() {
+    for(let i=0; i<this.blockScoreMatrix.length; i++) {
+      this.blockScoreMatrix[i] = new Array<boolean>(35).fill(false);
+    }
   }
 }
