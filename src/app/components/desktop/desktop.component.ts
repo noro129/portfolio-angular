@@ -300,7 +300,17 @@ export class DesktopComponent implements OnInit{
       if(dragTo && dragTo.name === 'Dr. Trash') {
         draggedApp.focused = false;
         if(draggedApp.systemApp) {
-          this.addNotification("cannot delete app "+draggedApp.name, NotifType.Error);
+          this.addNotification("cannot delete "+draggedApp.name, NotifType.Error);
+          return;
+        } else if (draggedApp.type === AppType.Folder){
+          for(let folder of this.stacksMap.get(AppType.Folder.toString()) || []) {
+            if(folder.name === draggedApp.name) {
+              this.addNotification("cannot delete '"+draggedApp.name+"', it is open", NotifType.Warning);
+              return;
+            }
+          }
+        } else if (this.stacksMap.has(draggedApp.name)) {
+          this.addNotification("cannot delete '"+draggedApp.name+"', it is open", NotifType.Warning);
           return;
         }
         this.deletedApps.set(this.draggedIndex, draggedApp);
