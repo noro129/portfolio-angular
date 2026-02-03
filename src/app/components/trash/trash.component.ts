@@ -51,6 +51,16 @@ export class TrashComponent implements OnDestroy {
     this.focusedApps = 0;
   }
 
+  restoreItem(key : number) {
+    console.log("restoring item "+key);
+    this.restoreApp(key);
+  }
+
+  deleteItem(key : number) {
+    console.log("deleting item "+ key);
+    this.deletedApps.delete(key);
+  }
+
   ngOnDestroy(): void {
     for(let [key, deletedApp] of this.deletedApps){
       deletedApp.focused = false;
