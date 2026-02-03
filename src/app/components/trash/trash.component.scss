@@ -73,14 +73,52 @@
             width: 23%;
             height: 60px;
             display: flex; flex-direction: row;
-            border-bottom: 1px solid var(--color-1-light); 
-            border-right: 1px solid var(--color-1-light);
+            border-bottom: 2px solid var(--color-1-light); 
+            border-right: 2px solid var(--color-1-light);
             transition: all .1s linear;
+            position: relative;
+
+            .app-button{
+                position: absolute;
+                background-color: var(--color-1-light);
+                border-radius: 20px;
+                transition: scale .1s linear;
+                display: flex; justify-content: center; align-items: center;
+                right: 0;
+                width: 20px; height: 20px;
+                scale: 0;
+
+                .icon{
+                    width: 60%;
+                    opacity: .7;
+                }
+
+                &:hover{
+                    scale: 1.2 !important;
+                }
+            }
+
+            .app-delete-button{
+                top: 0;
+                transform: translate(50%, -44%);
+            }
+
+            .app-restore-button{
+                bottom: 0;
+                transform: translate(50%, 44%);
+            }
 
             &:hover{
                 background: none;
                 corner-top-right-shape: scoop;
                 border-top-right-radius: 15px;
+
+                corner-bottom-right-shape: scoop;
+                border-bottom-right-radius: 15px;
+
+                &:not(.focused) .app-button{
+                    scale: 1;
+                }
             }
 
             .app-icon{
@@ -116,6 +154,9 @@
             transform: scale(.9);
             corner-top-right-shape: scoop;
             border-top-right-radius: 15px;
+
+            corner-bottom-right-shape: scoop;
+            border-bottom-right-radius: 15px;
         }
     }
 }
