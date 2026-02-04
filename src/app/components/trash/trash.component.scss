@@ -108,7 +108,7 @@
                 transform: translate(50%, 44%);
             }
 
-            &:hover{
+            &:hover:not(.focused){
                 background: none;
                 corner-top-right-shape: scoop;
                 border-top-right-radius: 15px;
@@ -152,11 +152,6 @@
             background-color: var(--color-1-light) !important;
             border: 1px solid var(--color-1-light);
             transform: scale(.9);
-            corner-top-right-shape: scoop;
-            border-top-right-radius: 15px;
-
-            corner-bottom-right-shape: scoop;
-            border-bottom-right-radius: 15px;
         }
     }
 }
