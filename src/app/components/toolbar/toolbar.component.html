@@ -30,11 +30,15 @@
                 <div class="power-off-button button" (click)="powerOff()" title="power off">
                     <img src="./poweroff.png" alt="power off button" class="poweroff-logo logo"/>
                 </div>
-                <div class="sleep-button button" (click)="powerOff()" title="sleep mode">
+                <div class="sleep-button button" (click)="sleepMode()" title="sleep mode">
                     <img src="./sleep.png" alt="sleep mode button" class="sleep-logo logo"/>
                 </div>
             </div>
         </div>
         <div class="menu-items" #menuItemsManager></div>
     </div>
+</div>
+
+<div class="cover" [ngStyle]="{'transform' : cover ? 'translateY(0)' : '', 'background-color' : shuttingDown ? 'var(--bg-color-1)' : 'var(--bg-color-3)', 'backdrop-filter' : shuttingDown ? '' : 'blur(10px)'}">
+    <p class="info" *ngIf="shuttingDown">{{info}}</p>
 </div>

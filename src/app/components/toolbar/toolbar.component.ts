@@ -1,4 +1,4 @@
-import { NgClass, NgStyle } from '@angular/common';
+import { NgClass, NgStyle, NgIf } from '@angular/common';
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { MenuItem } from '../../models/MenuItem';
 import { HttpClient } from '@angular/common/http';
@@ -6,7 +6,7 @@ import { NotifType } from '../../models/NotifType';
 
 @Component({
   selector: 'app-toolbar',
-  imports: [NgClass, NgStyle],
+  imports: [NgClass, NgStyle, NgIf],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss'
 })
@@ -24,6 +24,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   showMenu = false;
   private interval : any;
   menuItems!: MenuItem[];
+  cover = false;
+  shuttingDown = false;
+  info = '';
   
   constructor(private http : HttpClient, private renderer : Renderer2, private el : ElementRef) {}
 
@@ -113,7 +116,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   powerOff() {
-    window.close();
+    this.cover = true;
+    this.showMenu = false;
+    this.shuttingDown = true;
+    setTimeout(() => {
+      this.info = 'shutting down';
+      setTimeout(() => {
+        this.info += '.';
+        setTimeout(() => {
+          this.info += '.';
+          setTimeout(() => {
+            this.info += '.';
+            setTimeout(() => {
+              this.info = '';
+            }, 500);
+          },500);
+        },500);
+      },500);
+    }, 200);
+    
+  }
+
+  sleepMode() {
+    this.cover = true;
+    this.showMenu = false;
   }
 
   open(appName : string) {
