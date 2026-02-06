@@ -43,9 +43,9 @@
     <p class="info" *ngIf="shuttingDown">{{info}}</p>
 
     <div class="watch bg-watch" *ngIf="!shuttingDown">
-        <div class="hours"></div>
-        <div class="minutes"></div>
-        <div class="seconds"></div>
+        <div class="hours" [ngStyle]="{'transform' : 'translate(-50%, -50%) rotateZ('+(30*currentHour + 30*currentMinute/60)+'deg)'}"></div>
+        <div class="minutes" [ngStyle]="{'transform' : 'translate(-50%, -50%) rotateZ('+(6*currentMinute)+'deg)'}"></div>
+        <div class="seconds" [ngStyle]="{'transform' : 'translate(-50%, -50%) rotateZ('+(6*currentSecond)+'deg)'}"></div>
 
 
         <div class="one"></div>
@@ -75,9 +75,9 @@
 
 
     <div class="watch" *ngIf="!shuttingDown">
-        <div class="hours"></div>
-        <div class="minutes"></div>
-        <div class="seconds"></div>
+        <div class="hours" [ngStyle]="{'transform' : 'translate(-50%, -50%) rotateZ('+(30*currentHour + 30*currentMinute/60)+'deg)'}"></div>
+        <div class="minutes" [ngStyle]="{'transform' : 'translate(-50%, -50%) rotateZ('+(6*currentMinute)+'deg)'}"></div>
+        <div class="seconds" [ngStyle]="{'transform' : 'translate(-50%, -50%) rotateZ('+(6*currentSecond)+'deg)'}"></div>
 
 
         <div class="one"></div>

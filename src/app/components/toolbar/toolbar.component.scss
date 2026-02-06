@@ -324,6 +324,7 @@
         .hours::after, .minutes::after, .seconds::after {
             content: '';
             position: absolute; top: 5px; left: 50%; transform: translate(-50%, -80%);
+            border: 1px solid var(--bg-color-1);
 
             corner-top-right-shape: bevel;
             border-top-right-radius: 10px;
@@ -348,31 +349,28 @@
             
         }
 
-        .seconds::before{
+        .hours::before, .minutes::before, .seconds::before{
             content: '';
-            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -180px);
+            border: 1px solid var(--bg-color-1);
+            background-color: var(--bg-color-1);
+
             width: 40px; aspect-ratio: 1 / 1;
             border-radius: 100%;
             corner-shape: scoop;
-            background-color: var(--color-red);
+
+            position: absolute; top: 5px; left: 50%;
+        }
+
+        .seconds::before{
+            transform: translate(-50%, -180px);
         }
 
         .minutes::before{
-            content: '';
-            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -150px);
-            width: 40px; aspect-ratio: 1 / 1;
-            border-radius: 100%;
-            corner-shape: scoop;
-            background-color: var(--color-1);
+            transform: translate(-50%, -150px);
         }
 
         .hours::before{
-            content: '';
-            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -80px);
-            width: 40px; aspect-ratio: 1 / 1;
-            border-radius: 100%;
-            corner-shape: scoop;
-            background-color: var(--color-1);
+            transform: translate(-50%, -80px);
         }
 
 

@@ -21,6 +21,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   dateMonth = "06";
   dateYear = "2025";
   time = "12:09";
+  currentHour = 0; currentMinute = 0; currentSecond = 0;
   showMenu = false;
   private interval : any;
   menuItems!: MenuItem[];
@@ -139,6 +140,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   sleepMode() {
     this.cover = true;
     this.showMenu = false;
+    this.setWatch();
+  }
+
+  setWatch() {
+    const now = new Date();
+    this.currentHour = now.getHours() % 12;
+    this.currentMinute = now.getMinutes();
+    this.currentSecond = now.getSeconds();
+    console.log(this.currentHour + ' ' + this.currentMinute + ' ' + this.currentSecond);
   }
 
   open(appName : string) {
