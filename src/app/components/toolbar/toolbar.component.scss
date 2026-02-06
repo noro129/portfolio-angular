@@ -321,14 +321,6 @@
             background-color: var(--color-1);
         }
 
-        .hours{
-            transform: translate(-50%, -50%) rotateZ(60deg);
-        }
-
-        .seconds{
-            transform: translate(-50%, -50%) rotateZ(-160deg);
-        }
-
         .hours::after, .minutes::after, .seconds::after {
             content: '';
             position: absolute; top: 5px; left: 50%; transform: translate(-50%, -80%);
@@ -341,12 +333,12 @@
         }
 
         .hours::after{
-            height: 200px; width: 10px;
+            height: 100px; width: 10px;
             background-color: var(--color-1);
         }
 
         .minutes::after{
-            height: 100px; width: 10px;
+            height: 200px; width: 10px;
             background-color: var(--color-1);
         }
 
@@ -367,7 +359,7 @@
 
         .minutes::before{
             content: '';
-            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -80px);
+            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -150px);
             width: 40px; aspect-ratio: 1 / 1;
             border-radius: 100%;
             corner-shape: scoop;
@@ -376,7 +368,7 @@
 
         .hours::before{
             content: '';
-            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -150px);
+            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -80px);
             width: 40px; aspect-ratio: 1 / 1;
             border-radius: 100%;
             corner-shape: scoop;
