@@ -137,7 +137,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
           },500);
         },500);
       },500);
-    }, 200);
+    }, 900);
   }
 
   sleepMode() {

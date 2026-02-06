@@ -2,7 +2,8 @@
     <div class="menu-button" (click)="menuToggle()">
         <div class="dash" [ngClass]="{'menu-clicked' : showMenu}"></div>
     </div>
-    <div class="wifi-battery">
+    <div class="wifi-battery-language">
+        <div class="language logo" title="language: english">EN</div>
         <div class="wifi logo" title="internet access"><img src="./wifi.png" alt="wifi logo" class="wifi-logo"/></div>
         <div class="battery logo" title="{{battery >20 ? 'battery status : '+battery+'%' : 'plug in the charger'}}" [attr.batteryP]="battery">
             <img src="./battery.png" alt="battery logo" class="battery-logo"/>
@@ -39,7 +40,7 @@
     </div>
 </div>
 
-<div class="cover" [ngStyle]="{'opacity' : cover ? '1' : '0','scale' : cover ? '1' : '0', 'background-color' : shuttingDown ? 'var(--bg-color-1)' : 'var(--bg-color-3)', 'backdrop-filter' : shuttingDown ? '' : 'blur(10px)'}">
+<div class="cover" [ngStyle]="{'opacity' : cover ? '1' : '0','scale' : cover ? '1' : '0', 'background-color' : 'var(--bg-color-1)'}">
     <p class="info" *ngIf="shuttingDown">{{info}}</p>
 
     <div class="watch bg-watch" *ngIf="!shuttingDown" #bgWatch>
@@ -83,7 +84,7 @@
     </div>
 
 
-    <div class="watch" *ngIf="!shuttingDown" #watch>
+    <div class="watch" *ngIf="!shuttingDown" (mouseenter)="toggleConnectWindow(true)" (mouseleave)="toggleConnectWindow(false)" #watch>
         <div class="hours"></div>
         <div class="minutes"></div>
         <div class="seconds"></div>

@@ -67,7 +67,7 @@
         }
     }
 
-    .wifi-battery{
+    .wifi-battery-language{
         width: 100%;
         position: absolute;
         bottom: 120px;
@@ -91,6 +91,15 @@
                 height: 70%;
             }
             
+        }
+
+        .language{
+            cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            background: linear-gradient(-45deg, transparent 50%, var(--color-1-light) 50%);
+            color: var(--color-1);
+            font-weight: bold;
+            aspect-ratio: 1 / 1;
         }
 
         .battery::after{
@@ -287,7 +296,7 @@
     .watch{
         position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: .5;
         width: 510px; aspect-ratio: 1 / 1; border-radius: 100%;
-        border: 10px solid var(--color-1-light);
+        border: 10px solid var(--color-1-light); box-shadow: 0px 0px 0px 2px var(--color-1);
         background-color: var(--color-1-lighter);
         overflow: hidden;
         
@@ -312,7 +321,6 @@
             border: 60px solid var(--bg-color-1);
             border-left: none;
             border-top: none;
-            opacity: .5;
         }
 
         .hours, .minutes, .seconds{
@@ -385,9 +393,9 @@
 
         .three::after, .six::after, .nine::after, .twelve::after{
             content: '';
-            height: 40px; width: 20px;
+            height: 60px; width: 20px;
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -240px);
-            background-color: var(--bg-color-1); border: 2px solid var(--color-1);
+            background-color: var(--bg-color-1); border: 2px solid var(--color-silver);
             corner-bottom-right-shape: bevel;
             border-bottom-right-radius: 20px;
 
@@ -409,9 +417,9 @@
 
         .one::after, .two::after, .four::after, .five::after, .seven::after, .eight::after, .ten::after, .eleven::after{
             content: '';
-            height: 30px; width: 8px;
+            height: 30px; width: 10px;
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -240px);
-            background-color: transparent; border: 3px solid var(--bg-color-1);
+            background-color: transparent; border: 3px solid var(--color-gold); opacity: .7;
         }
 
         .one{
