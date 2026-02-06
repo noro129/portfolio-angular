@@ -271,8 +271,9 @@
 
 .cover{
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%; transform: translateY(-100%); transition: transform .2s linear;
+    top: 0; left: 0; width: 100%; height: 100%; transition: opacity .2s linear;
     z-index: 9999;
+    opacity: 0;
 
     .info{
         position: absolute;
@@ -281,5 +282,211 @@
         font-size: 1.2em; font-weight: bolder;
         opacity: .7;
         letter-spacing: 1px; font-style: italic;
+    }
+
+    .watch{
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: .7;
+        width: 500px; aspect-ratio: 1 / 1; border-radius: 100%;
+        border: 2px solid var(--color-1);
+        background-color: var(--color-1-light);
+        overflow: hidden;
+        
+
+        &::after, &::before{
+            content: '';
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            border-radius: 100%;
+            aspect-ratio: 1 / 1;
+            z-index: -1;
+        }
+
+        &::after{
+            width: 100%;
+            border-top: 20px solid var(--color-1);
+            transform: translate(-50%, -50%) rotate(-45deg);
+            opacity: .2;
+        }
+
+        &::before{
+            width: 100%;
+            border: 60px solid var(--bg-color-1);
+            border-left: none;
+            border-top: none;
+            opacity: .5;
+        }
+
+        .hours, .minutes, .seconds{
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            width: 10px; height: 10px; border-radius: 100%; border: 4px solid var(--bg-color-1);
+            background-color: var(--color-1);
+        }
+
+        .hours{
+            transform: translate(-50%, -50%) rotateZ(60deg);
+        }
+
+        .seconds{
+            transform: translate(-50%, -50%) rotateZ(-160deg);
+        }
+
+        .hours::after, .minutes::after, .seconds::after {
+            content: '';
+            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -80%);
+
+            corner-top-right-shape: bevel;
+            border-top-right-radius: 10px;
+
+            corner-top-left-shape: bevel;
+            border-top-left-radius: 10px;
+        }
+
+        .hours::after{
+            height: 200px; width: 10px;
+            background-color: var(--color-1);
+        }
+
+        .minutes::after{
+            height: 100px; width: 10px;
+            background-color: var(--color-1);
+        }
+
+        .seconds::after{
+            height: 230px; width: 5px;
+            background-color: var(--color-red);
+            
+        }
+
+        .seconds::before{
+            content: '';
+            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -180px);
+            width: 40px; aspect-ratio: 1 / 1;
+            border-radius: 100%;
+            corner-shape: scoop;
+            background-color: var(--color-red);
+        }
+
+        .minutes::before{
+            content: '';
+            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -80px);
+            width: 40px; aspect-ratio: 1 / 1;
+            border-radius: 100%;
+            corner-shape: scoop;
+            background-color: var(--color-1);
+        }
+
+        .hours::before{
+            content: '';
+            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -150px);
+            width: 40px; aspect-ratio: 1 / 1;
+            border-radius: 100%;
+            corner-shape: scoop;
+            background-color: var(--color-1);
+        }
+
+
+        .one, .two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .eleven, .twelve{
+            position: absolute; width: 1px; height: 1px; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        }
+
+        .three::after, .six::after, .nine::after, .twelve::after{
+            content: '';
+            height: 40px; width: 20px;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -240px);
+            background-color: var(--bg-color-1); border: 2px solid var(--color-1);
+            corner-bottom-right-shape: bevel;
+            border-bottom-right-radius: 20px;
+
+            corner-bottom-left-shape: bevel;
+            border-bottom-left-radius: 20px;
+        }
+
+        .three{
+            transform: translate(-50%, -50%) rotateZ(90deg);
+        }
+
+        .six{
+            transform: translate(-50%, -50%) rotateZ(180deg);
+        }
+
+        .nine{
+            transform: translate(-50%, -50%) rotateZ(270deg);
+        }
+
+        .one::after, .two::after, .four::after, .five::after, .seven::after, .eight::after, .ten::after, .eleven::after{
+            content: '';
+            height: 30px; width: 8px;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -240px);
+            background-color: transparent; border: 3px solid var(--bg-color-1);
+        }
+
+        .one{
+            transform: translate(-50%, -50%) rotateZ(30deg);
+        }
+
+        .two{
+            transform: translate(-50%, -50%) rotateZ(60deg);
+        }
+
+        .four{
+            transform: translate(-50%, -50%) rotateZ(120deg);
+        }
+
+        .five{
+            transform: translate(-50%, -50%) rotateZ(150deg);
+        }
+
+        .seven{
+            transform: translate(-50%, -50%) rotateZ(210deg);
+        }
+
+        .eight{
+            transform: translate(-50%, -50%) rotateZ(240deg);
+        }
+
+        .ten{
+            transform: translate(-50%, -50%) rotateZ(300deg);
+        }
+
+        .eleven{
+            transform: translate(-50%, -50%) rotateZ(330deg);
+        }
+
+
+        .wave-container{
+            position: absolute; width: 100%; height: 100%; z-index: -1;
+
+            .wave{
+                position: absolute; bottom: 0; left: -20%;
+                opacity: .3;
+            }
+
+            .wave2{
+                width: 150%; height: 150%;
+                animation: translation1 7s ease-in-out infinite alternate;
+            }
+
+            .wave1{
+                width: 180%; height: 100%;
+                animation: translation2 5s ease-in-out infinite alternate;
+            }
+        }
+    }
+
+    .bg-watch{
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(3);
+        opacity: .1;
+    }
+}
+
+
+@keyframes translation1 {
+    100%{
+        transform: translateX(-10%);
+    }
+}
+
+@keyframes translation2 {
+    100%{
+        transform: translateX(10%);
     }
 }

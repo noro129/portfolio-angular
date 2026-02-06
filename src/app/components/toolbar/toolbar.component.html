@@ -39,6 +39,71 @@
     </div>
 </div>
 
-<div class="cover" [ngStyle]="{'transform' : cover ? 'translateY(0)' : '', 'background-color' : shuttingDown ? 'var(--bg-color-1)' : 'var(--bg-color-3)', 'backdrop-filter' : shuttingDown ? '' : 'blur(10px)'}">
+<div class="cover" [ngStyle]="{'opacity' : cover ? '1' : '0','scale' : cover ? '1' : '0', 'background-color' : shuttingDown ? 'var(--bg-color-1)' : 'var(--bg-color-3)', 'backdrop-filter' : shuttingDown ? '' : 'blur(10px)'}">
     <p class="info" *ngIf="shuttingDown">{{info}}</p>
+
+    <div class="watch bg-watch" *ngIf="!shuttingDown">
+        <div class="hours"></div>
+        <div class="minutes"></div>
+        <div class="seconds"></div>
+
+
+        <div class="one"></div>
+        <div class="two"></div>
+        <div class="three"></div>
+        <div class="four"></div>
+        <div class="five"></div>
+        <div class="six"></div>
+        <div class="seven"></div>
+        <div class="eight"></div>
+        <div class="nine"></div>
+        <div class="ten"></div>
+        <div class="eleven"></div>
+        <div class="twelve"></div>
+
+
+        <div class="wave-container">
+            <svg class="wave wave1" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#FFD700" d="M0,160 C360,240 1080,80 1440,160 L1440,320 L0,320 Z"></path>
+            </svg>
+
+            <svg class="wave wave2" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#C0C0C0" d="M0,200 C360,100 1080,300 1440,200 L1440,320 L0,320 Z"></path>
+            </svg>
+        </div>
+    </div>
+
+
+    <div class="watch" *ngIf="!shuttingDown">
+        <div class="hours"></div>
+        <div class="minutes"></div>
+        <div class="seconds"></div>
+
+
+        <div class="one"></div>
+        <div class="two"></div>
+        <div class="three"></div>
+        <div class="four"></div>
+        <div class="five"></div>
+        <div class="six"></div>
+        <div class="seven"></div>
+        <div class="eight"></div>
+        <div class="nine"></div>
+        <div class="ten"></div>
+        <div class="eleven"></div>
+        <div class="twelve"></div>
+
+        <div class="wave-container">
+            <svg class="wave wave1" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#FFD700" d="M0,160 C360,240 1080,80 1440,160 L1440,320 L0,320 Z"></path>
+            </svg>
+
+            <svg class="wave wave2" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#C0C0C0" d="M0,200 C360,100 1080,300 1440,200 L1440,320 L0,320 Z"></path>
+            </svg>
+        </div>
+    </div>
+
+
+    
 </div>
