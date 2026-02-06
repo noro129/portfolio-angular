@@ -12,6 +12,8 @@ import { NotifType } from '../../models/NotifType';
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
   @ViewChild("menuItemsManager") menuItemsManager !: ElementRef<HTMLDivElement>;
+  @ViewChild("watch", {static : false}) watch !: ElementRef<HTMLDivElement>;
+  @ViewChild("bgWatch", {static : false}) bgWatch !: ElementRef<HTMLDivElement>;
   @Output() openApp = new EventEmitter<number>();
   @Output() addNotification = new EventEmitter<{message : string, type : NotifType}>();
   battery = Math.floor(Math.random()*101);
@@ -21,7 +23,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   dateMonth = "06";
   dateYear = "2025";
   time = "12:09";
-  currentHour = 0; currentMinute = 0; currentSecond = 0;
+  private WatchInterval !: any;
   showMenu = false;
   private interval : any;
   menuItems!: MenuItem[];
@@ -60,6 +62,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
+    clearInterval(this.WatchInterval);
   }
 
   fillTheMenu(el: HTMLDivElement, menuItems : MenuItem[] , leftMargin : number) {
@@ -144,11 +147,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   setWatch() {
+    this.setWatchHands(this.watch.nativeElement);
+    this.setWatchHands(this.bgWatch.nativeElement);
+
+    this.WatchInterval = setInterval(()=> {
+      this.setWatchHands(this.watch.nativeElement);
+      this.setWatchHands(this.bgWatch.nativeElement);
+    }, 1000);
+  }
+
+  setWatchHands(watch : HTMLDivElement) {
+    const hours = watch.querySelector('.hours') as HTMLElement;
+    const minutes = watch.querySelector('.minutes') as HTMLElement;
+    const seconds = watch.querySelector('.seconds') as HTMLElement;
+
     const now = new Date();
-    this.currentHour = now.getHours() % 12;
-    this.currentMinute = now.getMinutes();
-    this.currentSecond = now.getSeconds();
-    console.log(this.currentHour + ' ' + this.currentMinute + ' ' + this.currentSecond);
+    const hour = now.getHours() % 12;
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
+
+    this.renderer.setStyle(hours, 'transform' , 'translate(-50%, -50%) rotateZ('+(30*hour + 30*minute/60)+'deg)');
+    this.renderer.setStyle(minutes, 'transform' , 'translate(-50%, -50%) rotateZ('+(6*minute + 6*second/60)+'deg)');
+    this.renderer.setStyle(seconds, 'transform' , 'translate(-50%, -50%) rotateZ('+(6*second)+'deg)');
   }
 
   open(appName : string) {
