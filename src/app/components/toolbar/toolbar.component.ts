@@ -30,6 +30,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   cover = false; showConnectWindow = false; mouseLeft = true; connecting = false; emptyPassword = false;
   shuttingDown = false;
   info = '';
+  musicIsPlaying = true;
   
   constructor(private http : HttpClient, private renderer : Renderer2, private el : ElementRef) {}
 
@@ -143,6 +144,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.connecting = false;
     }, 2000);
     
+  }
+
+  playPauseMusic() {
+    this.musicIsPlaying = !this.musicIsPlaying;
   }
 
   powerOff() {

@@ -141,5 +141,22 @@
 
         <div class="close-connect-window" (click)="toggleConnectWindow(false)">X</div>
     </div>
+
+    <div class="side-cards">
+        <div class="weather-card card">
+            
+        </div>
+
+        <div class="music-card card">
+            <p class="music-title">Title Here</p>
+            <p class="music-author">author here</p>
+            <div class="music-player"></div>
+            <div class="controls">
+                <div class="prev control"><img src="prev.png" alt="previous button icon"></div>
+                <div class="play-pause control" (click)="playPauseMusic()"><img src="{{musicIsPlaying ? 'pause-button.png' : 'play-button.png'}}" alt="play or pause button icon"></div>
+                <div class="next control"><img src="next.png" alt="next button icon"></div>
+            </div>
+        </div>
+    </div>
     
 </div>

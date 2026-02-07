@@ -98,7 +98,7 @@
             display: flex; justify-content: center; align-items: center;
             background: linear-gradient(-45deg, transparent 50%, var(--color-1-light) 50%);
             color: var(--color-1);
-            font-weight: bold;
+            font-size: .8em;
             aspect-ratio: 1 / 1;
         }
 
@@ -633,6 +633,79 @@
 
             &:active{
                 scale: .95;
+            }
+        }
+    }
+
+    .side-cards{
+        position: absolute;
+        top: 5%; left: 2%;
+        width: 25%; height: 90%;
+        background-color: var(--color-1-lighter);
+        border-radius: 20px;
+        overflow: hidden;
+
+        .card{
+            position: absolute; left: 5%; width: 90%;
+            border-radius: 20px;
+            background-color: var(--color-1-lighter); backdrop-filter: blur(10px);
+        }
+
+        .weather-card{
+            top: 20px;
+            height: 40%;
+        }
+        
+        .music-card{
+            bottom: 20px;
+            height: 30%;
+
+            .music-title{
+                position: absolute;
+                left: 0;
+                padding-left: 30px;
+                top: 20px; height: 35%;
+                color: var(--color-1);
+                font-size: 4em;
+            }
+
+            .music-author{
+                position: absolute;
+                left: 0;
+                padding-left: 60px;
+                top: calc( 20px + 35%);
+                color: var(--color-1);
+                opacity: .6;
+                font-size: 1.5em;
+            }
+
+            .music-player{
+                position: absolute;
+                bottom: 55px;
+                left: 5%;
+                width: 90%; height: 4px; border-radius: 10px;
+                background-color: var(--color-1-light);
+            }
+
+            .controls{
+                position: absolute;
+                bottom: 10px;
+                left: 50%; transform: translateX(-50%);
+                display: flex; flex-direction: row; column-gap: 10px;
+
+                .control{
+                    cursor: pointer;
+                    width: 30px; aspect-ratio: 1 / 1;
+                    opacity: .7;
+
+                    &:hover{
+                        opacity: .9;
+                    }
+
+                    img{
+                        width: 100%; aspect-ratio: 1 / 1;
+                    }
+                }
             }
         }
     }
