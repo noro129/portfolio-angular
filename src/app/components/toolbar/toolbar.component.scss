@@ -299,28 +299,19 @@
         border: 10px solid var(--color-1-light); box-shadow: 0px 0px 0px 2px var(--color-1);
         background-color: var(--color-1-lighter);
         overflow: hidden;
+        filter: blur(1px);
         
 
-        &::after, &::before{
+        &::before{
             content: '';
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             border-radius: 100%;
             aspect-ratio: 1 / 1;
-            z-index: -1;
-        }
-
-        &::after{
-            width: 100%;
-            border-top: 20px solid var(--color-1);
-            transform: translate(-50%, -50%) rotate(-45deg);
-            opacity: .2;
-        }
-
-        &::before{
             width: 100%;
             border: 60px solid var(--bg-color-1);
             border-left: none;
             border-top: none;
+            z-index: -1;
         }
 
         .hours, .minutes, .seconds{
@@ -522,12 +513,12 @@
     .bg-watch{
         position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(3);
         opacity: .1;
-        filter: blur(1.5px);
+        filter: blur(2px);
     }
 
     .connect-window{
         transition: transform .1s linear;
-        width: 500px; aspect-ratio: 2 / 1;
+        width: 500px; aspect-ratio: 2 / 1; z-index: 9999;
         background-color: transparent; backdrop-filter: blur(10px);
         position: absolute; top: 50%; left: 50%;
         border: 2px solid var(--color-1-lighter); border-radius: 10px;
@@ -641,11 +632,19 @@
         background-color: var(--color-1-lighter);
         border-radius: 20px;
         overflow: hidden;
+        perspective: 800px;
 
         .card{
             position: absolute; left: 5%; width: 90%;
             border-radius: 20px;
             background-color: var(--color-1-lighter); backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            transform: translateZ(-20px);
+            transition: transform .3s;
+
+            &:hover{
+                transform: translateZ(0px);
+            }
         }
 
         .weather-card{
