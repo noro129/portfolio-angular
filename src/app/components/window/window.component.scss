@@ -38,7 +38,7 @@
         }
 
         .dragging-bar{
-            cursor: pointer;
+            cursor: grab;
             display: block;
             position: absolute;top: 0; height: 70%; left: 25%; right: 15%;
             background-color: var(--color-2);

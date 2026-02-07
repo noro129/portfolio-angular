@@ -150,7 +150,10 @@
         <div class="music-card card">
             <p class="music-title">Title Here</p>
             <p class="music-author">author here</p>
-            <div class="music-player"></div>
+            <div class="music-player">
+                <div class="progress"></div>
+                <div class="seek-bar"></div>
+            </div>
             <div class="controls">
                 <div class="prev control"><img src="prev.png" alt="previous button icon"></div>
                 <div class="play-pause control" (click)="playPauseMusic()"><img src="{{musicIsPlaying ? 'pause-button.png' : 'play-button.png'}}" alt="play or pause button icon"></div>
