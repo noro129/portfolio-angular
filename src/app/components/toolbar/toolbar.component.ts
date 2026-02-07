@@ -27,7 +27,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   showMenu = false;
   private interval : any;
   menuItems!: MenuItem[];
-  cover = false;
+  cover = false; showConnectWindow = false; mouseLeft = true; connecting = false;
   shuttingDown = false;
   info = '';
   
@@ -117,6 +117,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   menuToggle(){
     this.showMenu = !this.showMenu;
+  }
+
+  toggleConnectWindow(b : boolean) {
+    if (!this.mouseLeft) return;
+    this.showConnectWindow = b;
+    this.mouseLeft = false;
+  }
+
+  mouseLeave() {
+    this.mouseLeft = true;
+  }
+
+  connect(event : any) {
+    if (event.target.value === '') return;
+    this.connecting = true;
+    setTimeout(() => {
+      this.cover = false;
+      this.showConnectWindow = false;
+      this.mouseLeft = true;
+      this.connecting = false;
+    }, 2000);
+    
   }
 
   powerOff() {

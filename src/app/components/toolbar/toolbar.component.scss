@@ -527,6 +527,111 @@
         position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(3);
         opacity: .1;
     }
+
+    .connect-window{
+        transition: transform .1s linear;
+        width: 500px; aspect-ratio: 2 / 1;
+        background-color: transparent; backdrop-filter: blur(10px);
+        position: absolute; top: 50%; left: 50%;
+        border: 2px solid var(--color-1-lighter); border-radius: 10px;
+
+        .user-profile{
+            position: absolute; top: 20px;
+            left: 50%; transform: translateX(-50%);
+            width: max-content;
+            display: flex; flex-direction: column; row-gap: 25px;
+            align-items: center;
+            opacity: .5;
+
+            .user-logo{
+                width: 60px; aspect-ratio: 1 / 1;
+            }
+
+            .user-fullname{
+                width: max-content;
+                padding: 5px 10px;
+                color: var(--color-1);
+                background-color: var(--color-1-light);
+                border-radius: 10px; border: 1px solid var(--color-1-light);
+            }
+        }
+
+        .password-input{
+            position: absolute;
+            bottom: 40px;
+            left: 50%; transform: translateX(-50%);
+            height: 35px;
+            border: unset; outline: unset;
+            background-color: var(--bg-color-2);
+            border-radius: 5px;
+            color: var(--color-1); text-align: center; font-size: 1.1em;
+            width: 200px;
+            border: 2px solid var(--color-1-lighter);
+        }
+
+        .connecting{
+            position: absolute;
+            bottom: 40px;
+            left: 50%; transform: translateX(-50%);
+            width: 10px;
+            
+            
+
+            .dot{
+                position: absolute;
+                left: 0; top: 0;
+                width: 100%;
+                animation: rotation 1.5s ease-in-out infinite;
+
+                &::after{
+                    content: '';
+                    position: absolute;
+                    left: 0; top: -20px;
+                    width: 100%; aspect-ratio: 1 / 1;
+                    border-radius: 100%;
+                    background-color: var(--color-1);
+                }
+            }
+
+            .dot1{
+                animation-delay: .1s;
+            }
+
+            .dot2{
+                animation-delay: .15s;
+                opacity: .7;
+            }
+
+            .dot3{
+                animation-delay: .2s;
+                opacity: .5;
+            }
+
+            .dot4{
+                animation-delay: .3s;
+                opacity: .3;
+            }
+
+            .dot5{
+                animation-delay: .4s;
+                opacity: .2;
+            }
+        }
+
+        .close-connect-window{
+            position: absolute; top: 10px; right: 10px;
+            font-weight: bolder; color: var(--color-1);
+            cursor: pointer;
+            border-bottom: 2px solid var(--color-1); border-left: 2px solid var(--color-1);
+            aspect-ratio: 1 / 1; width: 20px; display: flex; justify-content: center; align-items: center;
+            opacity: .3;
+            transition: scale .1s linear;
+
+            &:active{
+                scale: .95;
+            }
+        }
+    }
 }
 
 
@@ -539,5 +644,11 @@
 @keyframes translation2 {
     100%{
         transform: translateX(10%);
+    }
+}
+
+@keyframes rotation {
+    100%{
+        transform: rotateZ(-360deg);
     }
 }
