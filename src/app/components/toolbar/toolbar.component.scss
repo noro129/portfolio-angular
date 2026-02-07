@@ -516,6 +516,13 @@
         filter: blur(2px);
     }
 
+    .connect-window-underlay{
+        position: fixed; width: 100%; height: 100%;
+        z-index: 9998;
+        background-color: var(--bg-color-2);
+        backdrop-filter: blur(5px);
+    }
+
     .connect-window{
         transition: transform .1s linear;
         width: 500px; aspect-ratio: 2 / 1; z-index: 9999;

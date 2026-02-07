@@ -123,6 +123,7 @@
         </div>
     </div>
 
+    <div class="connect-window-underlay" *ngIf="!shuttingDown && showConnectWindow"></div>
     <div class="connect-window" *ngIf="!shuttingDown" [ngStyle]="{'transform' : showConnectWindow ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(0)'}">
         <div class="user-profile">
             <img src="user.png" alt="user logo" class="user-logo">
