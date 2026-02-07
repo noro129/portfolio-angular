@@ -569,6 +569,10 @@
             border: 2px solid var(--color-1-lighter);
         }
 
+        .shake{
+            animation: shaking .2s steps(10);
+        }
+
         .connecting{
             position: absolute;
             bottom: 40px;
@@ -650,5 +654,23 @@
 @keyframes rotation {
     100%{
         transform: rotateZ(-360deg);
+    }
+}
+
+@keyframes shaking {
+    20%{
+        transform: translateX(-51%);
+    }
+    40%{
+        transform: translateX(-48%);
+    }
+    60%{
+        transform: translateX(-46%);
+    }
+    80%{
+        transform: translateX(-52%);
+    }
+    100%{
+        transform: translateX(-49%);
     }
 }

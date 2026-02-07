@@ -27,7 +27,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   showMenu = false;
   private interval : any;
   menuItems!: MenuItem[];
-  cover = false; showConnectWindow = false; mouseLeft = true; connecting = false;
+  cover = false; showConnectWindow = false; mouseLeft = true; connecting = false; emptyPassword = false;
   shuttingDown = false;
   info = '';
   
@@ -130,7 +130,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   connect(event : any) {
-    if (event.target.value === '') return;
+    if (event.target.value === '') {
+      this.emptyPassword = true;
+      setTimeout(()=>{this.emptyPassword = false;}, 200);
+      return;
+    }
     this.connecting = true;
     setTimeout(() => {
       this.cover = false;

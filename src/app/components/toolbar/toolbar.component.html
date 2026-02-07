@@ -129,7 +129,7 @@
             <p class="user-fullname">Oussama Errazi</p>
         </div>
 
-        <input *ngIf="!connecting" type="password" class="password-input" (focus)="true" (keyup.enter)="connect($event)">
+        <input *ngIf="!connecting" type="password" class="password-input" (focus)="true" (keyup.enter)="connect($event)" [ngClass]="{'shake' : emptyPassword}">
         
         <div class="connecting" *ngIf="connecting">
             <div class="dot dot1"></div>
