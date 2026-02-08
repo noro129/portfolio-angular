@@ -143,7 +143,7 @@
         <div class="close-connect-window" (click)="toggleConnectWindow(false)">X</div>
     </div>
 
-    <div class="side-cards">
+    <div class="side-cards" *ngIf="!shuttingDown">
         <div class="weather-card card">
             
         </div>

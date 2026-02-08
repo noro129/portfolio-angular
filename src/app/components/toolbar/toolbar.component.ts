@@ -145,11 +145,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   playPrevMusic() {
+    if(this.prevMusic || this.nextMusic) return;
     this.prevMusic = true;
     setTimeout(() => {this.prevMusic = false;}, 400);
   }
 
   playNextMusic() {
+    if(this.prevMusic || this.nextMusic) return;
     this.nextMusic = true;
     setTimeout(() => {this.nextMusic = false;}, 400);
   }
@@ -241,6 +243,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   @HostListener('document:keydown')
   onKeyPressed(){
-    this.showConnectWindow = true;
+    if(this.cover && !this.shuttingDown) this.showConnectWindow = true;
   }
 }
