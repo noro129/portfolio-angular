@@ -144,7 +144,12 @@
     </div>
 
     <div class="side-cards" *ngIf="!shuttingDown">
-        <div class="weather-card card">
+        <div class="weather-card card"
+        [class.sunny]="selectedWeather==='sunny'"
+        [class.night-time]="selectedWeather==='night time'"
+        [class.cloudy]="selectedWeather==='cloudy'"
+        [class.rainy]="selectedWeather==='rainy'"
+        >
             <p class="date">{{weatherCardDate}}</p>
             <p class="weather">{{selectedWeather}}</p>
             <div class="weather-icon"><img src="{{weatherIcon}}" alt="weather icon" class="icon"></div>
