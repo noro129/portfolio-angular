@@ -149,16 +149,16 @@
         </div>
 
         <div class="music-card card">
-            <p class="music-title">Title Here</p>
-            <p class="music-author">author here</p>
+            <p class="music-title" [attr.next]="'Title Here'" [attr.prev]="'Title Here'" [ngStyle]="{'transform' : nextMusic ? 'translateX(-100%)' : prevMusic ? 'translateX(100%)' :'', 'transition' : nextMusic || prevMusic ? 'transform .4s ease' : ''}">Title Here</p>
+            <p class="music-author" [attr.next]="'author here'" [attr.prev]="'author here'" [ngStyle]="{'transform' : nextMusic ? 'translateX(-100%)' : prevMusic ? 'translateX(100%)' : '', 'transition' : nextMusic || prevMusic ? 'transform .3s .1s ease' : ''}">author here</p>
             <div class="music-player">
                 <div class="progress"></div>
                 <div class="seek-bar"></div>
             </div>
             <div class="controls">
-                <div class="prev control"><img src="prev.png" alt="previous button icon"></div>
+                <div class="prev control" (click)="playPrevMusic()"><img src="prev.png" alt="previous button icon"></div>
                 <div class="play-pause control" (click)="playPauseMusic()"><img src="{{musicIsPlaying ? 'pause-button.png' : 'play-button.png'}}" alt="play or pause button icon"></div>
-                <div class="next control"><img src="next.png" alt="next button icon"></div>
+                <div class="next control" (click)="playNextMusic()"><img src="next.png" alt="next button icon"></div>
             </div>
         </div>
     </div>

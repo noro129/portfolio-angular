@@ -30,7 +30,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   cover = false; showConnectWindow = false; mouseLeft = true; connecting = false; emptyPassword = false;
   shuttingDown = false;
   info = '';
-  musicIsPlaying = true;
+  musicIsPlaying = true; nextMusic = false; prevMusic = false;
   
   constructor(private http : HttpClient, private renderer : Renderer2, private el : ElementRef) {}
 
@@ -142,6 +142,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   playPauseMusic() {
     this.musicIsPlaying = !this.musicIsPlaying;
+  }
+
+  playPrevMusic() {
+    this.prevMusic = true;
+    setTimeout(() => {this.prevMusic = false;}, 400);
+  }
+
+  playNextMusic() {
+    this.nextMusic = true;
+    setTimeout(() => {this.nextMusic = false;}, 400);
   }
 
   powerOff() {

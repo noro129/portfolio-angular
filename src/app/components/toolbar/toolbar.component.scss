@@ -648,6 +648,7 @@
             transform-style: preserve-3d;
             transform: translateZ(-20px);
             transition: transform .3s;
+            overflow: hidden;
 
             &:hover{
                 transform: translateZ(0px);
@@ -667,19 +668,55 @@
                 position: absolute;
                 left: 0;
                 padding-left: 30px;
-                top: 20px; height: 35%;
+                top: 20px; height: 35%; width: 100%; transform: translateX(0px);
                 color: var(--color-1);
                 font-size: 4em;
+
+                &::after{
+                    content: attr(next);
+                    transform: translateX(100%);
+                }
+
+                &::before{
+                    content: attr(prev);
+                    transform: translateX(-100%);
+                }
+
+                &::after, &::before{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%; height: 100%;
+                    font-size: inherit; font-style: inherit; font-weight: inherit; padding-left: inherit;
+                }
             }
 
             .music-author{
-                position: absolute;
+                position: absolute; width: 100%; transform: translateX(0px);
                 left: 0;
                 padding-left: 60px;
                 top: calc( 20px + 35%);
                 color: var(--color-1);
                 opacity: .6;
                 font-size: 1.5em;
+
+                &::after{
+                    content: attr(next);
+                    transform: translateX(100%);
+                }
+
+                &::before{
+                    content: attr(prev);
+                    transform: translateX(-100%);
+                }
+
+                &::after, &::before{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%; height: 100%;
+                    font-size: inherit; font-style: inherit; font-weight: inherit; padding-left: inherit;
+                }
             }
 
             .music-player{
