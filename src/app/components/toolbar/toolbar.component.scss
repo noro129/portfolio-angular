@@ -649,6 +649,7 @@
             transform: translateZ(-20px);
             transition: transform .3s;
             overflow: hidden;
+            opacity: .8;
 
             &:hover{
                 transform: translateZ(0px);

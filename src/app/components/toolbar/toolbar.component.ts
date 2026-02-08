@@ -164,8 +164,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.playNextMusic();
       this.musicElapsedTime = 0;
     }
-    this.musicElapsedTime++;
     if(!this.musicIsPlaying) return;
+    this.musicElapsedTime++;
+    
     setTimeout(()=>{
       this.playingMusic();
     },1000);
