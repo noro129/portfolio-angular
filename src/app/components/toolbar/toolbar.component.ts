@@ -30,7 +30,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   cover = false; showConnectWindow = false; mouseLeft = true; connecting = false; emptyPassword = false;
   shuttingDown = false;
   info = '';
-  musicIsPlaying = true; nextMusic = false; prevMusic = false;
+  musicIsPlaying = true; nextMusic = false; prevMusic = false; musicTrackLength = 203; musicElapsedTime = 0;
   selectedWeather = ''; weatherIcon = ''; weatherDegree = 0; weatherCardDate = '';
   
   constructor(private http : HttpClient, private renderer : Renderer2, private el : ElementRef) {}
@@ -121,6 +121,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.showMenu = !this.showMenu;
   }
 
+  get trackLength() : string {
+    const minutes = Math.floor(this.musicTrackLength / 60);
+    const seconds = this.musicTrackLength - 60*minutes;
+    if(seconds < 10) return '0' + minutes+':0'+seconds;
+    return '0' + minutes+':'+seconds;
+  }
+
+  get elapsedTime() : string {
+    const minutes = Math.floor(this.musicElapsedTime / 60);
+    const seconds = this.musicElapsedTime - 60*minutes;
+    if(seconds < 10) return '0' + minutes+':0'+seconds;
+    return '0' + minutes+':'+seconds;
+  }
+
   toggleConnectWindow(b : boolean) {
     this.showConnectWindow = b;
   }
@@ -138,11 +152,23 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.mouseLeft = true;
       this.connecting = false;
     }, 2000);
-    
   }
 
   playPauseMusic() {
     this.musicIsPlaying = !this.musicIsPlaying;
+    if(this.musicIsPlaying) this.playingMusic();
+  }
+
+  playingMusic() {
+    if(this.musicElapsedTime === this.musicTrackLength) {
+      this.playNextMusic();
+      this.musicElapsedTime = 0;
+    }
+    this.musicElapsedTime++;
+    if(!this.musicIsPlaying) return;
+    setTimeout(()=>{
+      this.playingMusic();
+    },1000);
   }
 
   playPrevMusic() {
@@ -183,6 +209,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.showMenu = false;
     this.setWatch();
     this.setWeather();
+    this.playingMusic();
   }
 
   setWatch() {

@@ -860,12 +860,23 @@
                 width: 90%; height: 4px; border-radius: 10px;
                 background-color: var(--color-1-light);
 
+                &::before{
+                    content: attr(elapsedTime);
+                    position: absolute; top: 0; left: 0; transform: translate(2px, -150%);
+                    color: var(--color-1);
+                }
+
+                &::after{
+                    content: attr(trackLength);
+                    position: absolute; top: 0; right: 0; transform: translate(2px, -150%);
+                    color: var(--color-1);
+                }
+
                 .progress{
                     position: absolute;
                     left: 0;
                     border-radius: 10px;
                     height: 4px;
-                    width: 20%;
                     background-color: var(--color-1);
                 }
 
@@ -873,7 +884,6 @@
                     cursor: grab;
                     position: absolute;
                     top: 50%; transform: translate(-50% ,-50%);
-                    left: 20%;
                     width: 15px; aspect-ratio: 1 / 1;
                     border-radius: 100%;
                     background-color: var(--color-gold);
