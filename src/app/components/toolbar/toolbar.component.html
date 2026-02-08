@@ -145,7 +145,10 @@
 
     <div class="side-cards" *ngIf="!shuttingDown">
         <div class="weather-card card">
-            
+            <p class="date">{{weatherCardDate}}</p>
+            <p class="weather">{{selectedWeather}}</p>
+            <div class="weather-icon"><img src="{{weatherIcon}}" alt="weather icon" class="icon"></div>
+            <p class="weather-degree">{{weatherDegree}}</p>
         </div>
 
         <div class="music-card card">

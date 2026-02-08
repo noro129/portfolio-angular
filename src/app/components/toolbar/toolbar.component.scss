@@ -658,6 +658,48 @@
         .weather-card{
             top: 20px;
             height: 40%;
+
+            .date{
+                position: absolute; top: 5%; right: 5%;
+                text-align: end;
+                color: var(--color-1);
+                font-family: "Open Sans", sans-serif;
+                font-size: 1em;
+                font-weight: lighter;
+                opacity: .5;
+            }
+
+            .weather{
+                position: absolute; top: 10%; left: 10%;
+                color: var(--color-1);
+                font-family: "Open Sans", sans-serif;
+                font-size: 1.5em;
+                font-weight: lighter;
+                opacity: .7;
+            }
+
+            .weather-icon{
+                position: absolute; top: 0%; left: 50%; transform: translate(-50%, 5%);
+                width: max-content; height: 90%;
+                opacity: .1;
+
+                .icon{
+                    height: 100%;
+                }
+            }
+
+            .weather-degree{
+                position: absolute; bottom: 5%; left: 10%; display: flex; justify-content: center; align-items: center;
+                font-size: 10em;
+                color: var(--color-1);
+                opacity: .7;
+
+                &::after{
+                    content: '°C';
+                    font-size: 0.5em;
+                    position: absolute; top: 0; right: 0; transform: translateX(100%);
+                }
+            }
         }
         
         .music-card{
@@ -720,6 +762,7 @@
             }
 
             .music-player{
+                cursor: pointer;
                 position: absolute;
                 bottom: 55px;
                 left: 5%;

@@ -31,6 +31,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   shuttingDown = false;
   info = '';
   musicIsPlaying = true; nextMusic = false; prevMusic = false;
+  selectedWeather = ''; weatherIcon = ''; weatherDegree = 0; weatherCardDate = '';
   
   constructor(private http : HttpClient, private renderer : Renderer2, private el : ElementRef) {}
 
@@ -181,6 +182,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.cover = true;
     this.showMenu = false;
     this.setWatch();
+    this.setWeather();
   }
 
   setWatch() {
@@ -206,6 +208,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.renderer.setStyle(hours, 'transform' , 'translate(-50%, -50%) rotateZ('+(30*hour + 30*minute/60)+'deg)');
     this.renderer.setStyle(minutes, 'transform' , 'translate(-50%, -50%) rotateZ('+(6*minute + 6*second/60)+'deg)');
     this.renderer.setStyle(seconds, 'transform' , 'translate(-50%, -50%) rotateZ('+(6*second)+'deg)');
+  }
+
+  setWeather() {
+    const weatherList = ['sunny', 'night time', 'cloudy', 'rainy'];
+    const weatherIconList = ['sunny.png', 'night-time.png', 'cloudy.png', 'rainy.png'];
+    const minDegree = [20, 10, 6, 10];
+    const maxDegree = [40, 25, 25, 20];
+    const randInt = Math.floor(Math.random() * 4);
+    
+    this.selectedWeather = weatherList[randInt];
+    this.weatherIcon = weatherIconList[randInt];
+    this.weatherDegree = Math.floor(Math.random() * (maxDegree[randInt] - minDegree[randInt] + 1)) + minDegree[randInt];
+
+    const months = ["January", "February", "Mars", "April", "May", "June", "Jully", "August", "Sptember", "October", "November", "December"]; 
+    const weekdays: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const today = new Date();
+
+    this.weatherCardDate = weekdays[today.getDay()] + ' ' + today.getDate() + ' ' + months[today.getMonth()] ;
+
   }
 
   open(appName : string) {
