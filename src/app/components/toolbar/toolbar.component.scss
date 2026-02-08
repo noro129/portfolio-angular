@@ -492,19 +492,19 @@
                 }
             }
 
-            .w{
+            .e{
                 transform: translate(-50%, -50px) rotateZ(15deg);
             }
             .a{
                 transform: translate(-50%, -50px) rotateZ(5deg);
             }
-            .t{
+            .l{
                 transform: translate(-50%, -50px) rotateZ(-5deg);
             }
-            .c{
+            .O{
                 transform: translate(-50%, -50px) rotateZ(-15deg);
             }
-            .h{
+            .s{
                 transform: translate(-50%, -50px) rotateZ(-25deg);
             }
         }
@@ -524,7 +524,7 @@
     }
 
     .connect-window{
-        transition: transform .1s linear;
+        transition: transform .2s linear;
         width: 500px; aspect-ratio: 2 / 1; z-index: 9999;
         background-color: transparent; backdrop-filter: blur(10px);
         position: absolute; top: 50%; left: 50%;

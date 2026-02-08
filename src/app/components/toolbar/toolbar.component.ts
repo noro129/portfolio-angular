@@ -121,13 +121,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   toggleConnectWindow(b : boolean) {
-    if (!this.mouseLeft) return;
     this.showConnectWindow = b;
-    this.mouseLeft = false;
-  }
-
-  mouseLeave() {
-    this.mouseLeft = true;
   }
 
   connect(event : any) {
@@ -233,5 +227,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     if(!this.el.nativeElement.contains(event.target)){
       this.showMenu = false;
     }
+  }
+
+  @HostListener('document:keydown')
+  onKeyPressed(){
+    this.showConnectWindow = true;
   }
 }
