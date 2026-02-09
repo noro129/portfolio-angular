@@ -39,7 +39,8 @@ export class DesktopComponent implements OnInit{
         'xPosition' : 0,
         'yPosition' : 0,
         'defaultHeight' : 450,
-        'defaultWidth' : 700
+        'defaultWidth' : 700,
+        'resizeable' : true
       },
       {
         'id' : 1,
@@ -50,7 +51,8 @@ export class DesktopComponent implements OnInit{
         'xPosition' : 1,
         'yPosition' : 0,
         'defaultHeight' : 450,
-        'defaultWidth' : 700
+        'defaultWidth' : 700,
+        'resizeable' : true
       },
       {
         'id' : 2,
@@ -61,7 +63,8 @@ export class DesktopComponent implements OnInit{
         'xPosition' : 2,
         'yPosition' : 0,
         'defaultHeight' : 600,
-        'defaultWidth' : 460
+        'defaultWidth' : 460,
+        'resizeable' : false
       },
       {
         'id' : 3,
@@ -72,7 +75,8 @@ export class DesktopComponent implements OnInit{
         'xPosition' : 3,
         'yPosition' : 0,
         'defaultHeight' : 450,
-        'defaultWidth' : 800
+        'defaultWidth' : 800,
+        'resizeable' : true
       },
       {
         'id' : 4,
@@ -83,7 +87,8 @@ export class DesktopComponent implements OnInit{
         'xPosition' : 4,
         'yPosition' : 0,
         'defaultHeight' : 450,
-        'defaultWidth' : 700
+        'defaultWidth' : 700,
+        'resizeable' : true
       }
   ];
   applicationsMatrix = new Map<number, AppsObject>();
@@ -107,7 +112,7 @@ export class DesktopComponent implements OnInit{
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
       const uuid = crypto.randomUUID();
-      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : app.defaultWidth, windowHeight : app.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
+      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : app.defaultWidth, windowHeight : app.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false, resizeable : app.resizeable};
       this.XOffsetPosition = this.XOffsetPosition + 10;
       this.YOffsetPosition = this.YOffsetPosition + 10;
       this.ZOffsetPosition++;
@@ -142,7 +147,8 @@ export class DesktopComponent implements OnInit{
         'focused' : false,
         'systemApp' : app.systemApp,
         'defaultHeight' : app.defaultHeight,
-        'defaultWidth' : app.defaultWidth
+        'defaultWidth' : app.defaultWidth,
+        'resizeable' : app.resizeable
       });
     }
     //app not on desktop
@@ -154,7 +160,8 @@ export class DesktopComponent implements OnInit{
       'systemApp' : false,
       'focused' : false,
       'defaultHeight' : 700,
-      'defaultWidth' : 700
+      'defaultWidth' : 700,
+      'resizeable' : false
     });
 
     this.http.get<Experience[]>("./experience.json").subscribe({
@@ -169,7 +176,8 @@ export class DesktopComponent implements OnInit{
                 'systemApp' : false,
                 'focused' : false,
                 'defaultHeight' : 700,
-                'defaultWidth' : 600
+                'defaultWidth' : 600,
+                'resizeable' : true
               });
               id--;
             }
@@ -210,7 +218,7 @@ export class DesktopComponent implements OnInit{
     const toOpen = this.applicationsMatrix.get(index);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
-    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
+    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false, resizeable : toOpen.resizeable};
     this.XOffsetPosition = this.XOffsetPosition + 10;
     this.YOffsetPosition = this.YOffsetPosition + 10;
     this.ZOffsetPosition++;

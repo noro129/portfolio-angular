@@ -9,4 +9,5 @@ export interface AppsObject {
   focused : boolean;
   defaultHeight : number;
   defaultWidth : number;
+  resizeable : boolean;
 }

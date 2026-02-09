@@ -1,6 +1,8 @@
 <div class="container"
     [ngStyle]="{'min-width': openInstance.windowWidth+'px' , 
                 'min-height': openInstance.windowHeight+'px' ,
+                'resize' : openInstance.resizeable ? 'both' : 'none',
+                'overflow' : openInstance.resizeable ? 'auto' : 'hidden',
                 'top': openInstance.positionY+'px', 
                 'left': openInstance.positionX+'px', 
                 'display' : openInstance.hidden && !openInstance.focusedOn ? 'none' : 'block', 

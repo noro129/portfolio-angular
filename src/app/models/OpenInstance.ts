@@ -9,4 +9,5 @@ export interface OpenInstance {
     windowWidth : number;
     windowHeight : number;
     focusedOn : boolean;
+    resizeable : boolean;
 }

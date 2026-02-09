@@ -10,4 +10,5 @@ export interface Application{
     yPosition : number;
     defaultWidth : number;
     defaultHeight : number;
+    resizeable : boolean;
 }
