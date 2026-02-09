@@ -19,14 +19,14 @@
         .title{
             position: absolute; top: 50%; left: 10px; transform: translateY(-50%);
             height: 80%;
-            width: max-content;
+            width: 20%;
             color: var(--color-1);
             display: flex;
             flex-direction: row;
             column-gap: 5px;
             flex-wrap: nowrap;
             align-items: center;
-            justify-content: center;
+            justify-content: start;
 
             .icon-logo{
                 height: 70%;
@@ -34,6 +34,9 @@
 
             .name{
                 cursor: default;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
         }
 
