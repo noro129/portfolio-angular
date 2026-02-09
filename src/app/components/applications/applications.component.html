@@ -34,7 +34,7 @@
 
             <ng-container *ngSwitchCase="AppType.File.toString()">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-file-reader class="application-body"/>
+                    <app-file-reader class="application-body" [company]="instance.name" />
                 </app-window>
             </ng-container>
             

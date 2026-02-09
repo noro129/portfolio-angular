@@ -1,1 +1,28 @@
-<p>file-reader works!</p>
+<div class="container">
+    <div class="header">
+        <div class="left">{{experience?.company}}</div>
+        <div class="center">
+            <div class="text-effect">
+                <div class="effect bold" [ngStyle]="{'opacity' : bold ? '1' : '.7', 'scale' : bold ? '1' : '.9', 'color' : bold ? 'var(--color-1)' : 'var(--bg-color-1)'}" (click)="boldEffect()">B</div>
+                <div class="effect italic" [ngStyle]="{'opacity' : italic ? '1' : '.7', 'scale' : italic ? '1' : '.9', 'color' : italic ? 'var(--color-1)' : 'var(--bg-color-1)'}" (click)="italicEffect()">I</div>
+                <div class="effect underline" [ngStyle]="{'opacity' : underline ? '1' : '.7', 'scale' : underline ? '1' : '.9', 'color' : underline ? 'var(--color-1)' : 'var(--bg-color-1)'}" (click)="underlineEffect()">U</div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="location">{{experience?.location}}</div>
+            <div class="start-date">from: <span class="date">{{experience?.startDate}}</span></div>
+            <div class="end-date">to: <span class="date">{{experience?.endDate}}</span></div>
+        </div>
+    </div>
+    <div class="body" [class.isBold]="bold" [class.isItalic]="italic" [class.isUnderline]="underline">
+        <div class="title">{{experience?.role}}</div>
+        <div class="description">
+            <div class="item" *ngFor="let item of experience?.description">
+                • {{item}}
+            </div>
+        </div>
+        <div class="tools-technologies">Tools & Technologies:&nbsp;
+            <span *ngFor="let item of experience?.tools_technologies">{{item}}&nbsp;</span>
+        </div>
+    </div>
+</div>
