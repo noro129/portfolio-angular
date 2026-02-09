@@ -20,7 +20,7 @@
                 </app-window>
             </ng-container>
 
-            <ng-container *ngSwitchCase="'Dr. Trash'">
+            <ng-container *ngSwitchCase="'bin'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
                     <app-trash class="application-body" [deletedApps]="deletedApps" [restoreApp]="restoreApp"/>
                 </app-window>

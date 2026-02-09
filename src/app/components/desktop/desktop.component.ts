@@ -76,7 +76,7 @@ export class DesktopComponent implements OnInit{
       },
       {
         'id' : 4,
-        'name' : 'Dr. Trash',
+        'name' : 'bin',
         'type' : AppType.Application,
         'systemApp' : true,
         'icon' : './trash-can.png',
@@ -331,7 +331,7 @@ export class DesktopComponent implements OnInit{
 
     if(draggedApp) {
       const dragTo = this.applicationsMatrix.get(key);
-      if(dragTo && dragTo.name === 'Dr. Trash') {
+      if(dragTo && dragTo.name === 'bin') {
         draggedApp.focused = false;
         if(draggedApp.systemApp) {
           this.addNotification("cannot delete "+draggedApp.name, NotifType.Error);
