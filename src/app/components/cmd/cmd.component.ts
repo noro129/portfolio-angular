@@ -31,7 +31,6 @@ export class CMDComponent implements OnInit, OnDestroy {
     setTimeout(()=>this.commandInput.nativeElement.focus(), 0);
     this.focusSubscriber = this.appFocusService.activeSubject$.subscribe(data => {
       this.isActive = data;
-      console.log(data);
       if(this.isActive) {
         setTimeout(()=>this.commandInput.nativeElement.focus(), 0);
       } else {

@@ -52,12 +52,10 @@ export class TrashComponent implements OnDestroy {
   }
 
   restoreItem(key : number) {
-    console.log("restoring item "+key);
     this.restoreApp(key);
   }
 
   deleteItem(key : number) {
-    console.log("deleting item "+ key);
     this.deletedApps.delete(key);
   }
 
