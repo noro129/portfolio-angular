@@ -1,0 +1,29 @@
+[{
+    "company" : "AWS - Amazon Web Services",
+    "role" : "Software Dev Engineer Intern",
+    "startDate" : "19-02-2024",
+    "endDate" : "16-08-2024",
+    "location" : "Rabat, Morocco",
+    "description" : ["In application modernization projects, the client provides data samples to test the modernized system against the legacy version. However, these samples often do not fully cover the entire codebase, leaving gaps in testing critical scenarios.",
+        "I was tasked with creating a tool to generate additional test data to achieve full test coverage for equivalence testing.",
+        "I developed a tool that analyzed the code, identified gaps, and generated the missing test data to cover all scenarios automatically.",
+        "This tool ensured full coverage, enabling accurate equivalence testing and validating the modernization process."],
+    "tools_technologies" : ["Java", "Python", "AWS Cloud", "Jacoco"]
+},{
+    "company" : "L'ODJ Media",
+    "role" : "Software Development Intern",
+    "startDate" : "01-07-2023",
+    "endDate" : "30-09-2023",
+    "location" : "Rabat, Morocco",
+    "description" : ["Journalists face pressure to produce timely, engaging content, with traditional manual processes being too slow and resource-intensive. We developed an AI platform to automate content generation (text, images, videos), significantly boosting efficiency.",
+        "Development of a real-time AI-enhanced news article generation platform."],
+    "tools_technologies" : ["Angular", "Spring Boot", "APIs (Feedly, OpenAI, DAL-E ...)", "Flask", "Git", "Docker"]
+},{
+    "company" : "Technocolabs Softwares",
+    "role" : "Artificial Intelligence Development Intern",
+    "startDate" : "01-08-2022",
+    "endDate" : "30-09-2022",
+    "location" : "Remote",
+    "description" : ["Built a model to predict whether a song will be skipped by the user on Spotify, aiding in improving the recommendation system."],
+    "tools_technologies" : ["Python", "Django", "Git", "Heroku"]
+}]

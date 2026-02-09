@@ -1,0 +1,34 @@
+[{
+    "item_name" : "Contact & URLs",
+    "content" : [
+    {
+        "item_name" : "github",
+        "content" : null
+    },
+    {
+        "item_name" : "linkedin",
+        "content" : null
+    },
+    {
+        "item_name" : "email",
+        "content" : null
+    },
+    {
+        "item_name" : "phone number",
+        "content" : null
+    }]
+},
+{
+    "item_name" : "Games",
+    "content" : [{
+        "item_name" : "bloDest",
+        "content" : null
+    }]
+},
+{
+    "item_name" : "Files",
+    "content" : [{
+        "item_name" : "oussama_errazi_resume.pdf",
+        "content" : null
+    }]
+}]

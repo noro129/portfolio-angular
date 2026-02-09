@@ -1,0 +1,16 @@
+[{
+    "project" : "Design and implementation of an electric cars rental website",
+    "description" : "Developed a full-stack website for electric car rentals using Spring Boot and React. Automated CI/CD pipelines with Jenkins and Docker for seamless deployment."
+},
+{
+    "project" : "Design and implementation of a mobile application",
+    "description" : "Created a mobile application to manage events for ENSIAS school clubs using Android Studio and Java and Firebase."
+},
+{
+    "project" : "Design and implementation of a management platform",
+    "description" : "Developed a web application to streamline management processes for a research institution. Utilized Merise methodology, Oracle APEX, and Oracle SQL for efficient data handling."
+},
+{
+    "project" : "Implementation of a deployment architecture",
+    "description" : "Implemented a scalable 3-tier architecture using AWS Cloud services."
+}]
