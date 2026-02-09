@@ -18,7 +18,7 @@ export class BlodestComponent{
   
   upperBlocks: boolean[] = new Array<boolean>(9).fill(false);
   lowerBlocks: boolean[] = new Array<boolean>(9).fill(false);
-  blockWidth = 0;
+  blockWidth = 0; blockHeight = 40;
 
   gameStarted : boolean = false;
   gameOver : boolean = false;

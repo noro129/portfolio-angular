@@ -117,6 +117,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  moveSeekBar(event : MouseEvent) {
+    const el = event.currentTarget as HTMLElement;
+    const rect = el.getBoundingClientRect();
+    const width = rect.width;
+    const x = event.clientX - rect.left;
+
+    this.musicElapsedTime = Math.floor(this.musicTrackLength * x / width);
+  }
+
   menuToggle(){
     this.showMenu = !this.showMenu;
   }
