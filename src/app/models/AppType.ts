@@ -1,1 +1,1 @@
-export enum AppType { Folder, Application}
+export enum AppType { Folder, Application, File}
