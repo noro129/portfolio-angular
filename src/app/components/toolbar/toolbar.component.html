@@ -163,9 +163,10 @@
             [attr.elapsedTime]="elapsedTime"
             [attr.trackLength]="trackLength"
             (click)="moveSeekBar($event)"
+            #bar
             >
                 <div class="progress" [ngStyle]="{'width' : musicElapsedTime * 100 / musicTrackLength + '%'}"></div>
-                <div class="seek-bar" [ngStyle]="{'left' : musicElapsedTime * 100 / musicTrackLength + '%'}"></div>
+                <div class="seek-bar" [ngStyle]="{'left' : musicElapsedTime * 100 / musicTrackLength + '%'}" (mousedown)="onMouseDown($event, bar)"></div>
             </div>
             <div class="controls">
                 <div class="prev control" (click)="playPrevMusic()"><img src="prev.png" alt="previous button icon"></div>

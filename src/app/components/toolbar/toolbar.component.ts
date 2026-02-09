@@ -1,5 +1,5 @@
 import { NgClass, NgStyle, NgIf } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { MenuItem } from '../../models/MenuItem';
 import { HttpClient } from '@angular/common/http';
 import { NotifType } from '../../models/NotifType';
@@ -30,7 +30,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   cover = false; showConnectWindow = false; mouseLeft = true; connecting = false; emptyPassword = false;
   shuttingDown = false;
   info = '';
-  musicIsPlaying = true; nextMusic = false; prevMusic = false; musicTrackLength = 203; musicElapsedTime = 0;
+  musicIsPlaying = true; nextMusic = false; prevMusic = false; musicTrackLength = 203; musicElapsedTime = 0; dragSeekBar = false;
   selectedWeather = ''; weatherIcon = ''; weatherDegree = 0; weatherCardDate = '';
   
   constructor(private http : HttpClient, private renderer : Renderer2, private el : ElementRef) {}
@@ -117,6 +117,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  onMouseDown(event : MouseEvent, bar : HTMLElement) {
+    const barWidth = bar.getBoundingClientRect().width;
+    const pxPerSec = barWidth / this.musicTrackLength;
+    const startX = event.clientX;
+    const startSec = this.musicElapsedTime;
+    this.dragSeekBar = true;
+    
+    const onMouseMove = (event : MouseEvent) => {
+      const deltaPx = event.clientX - startX;
+      const deltaSec = Math.floor(deltaPx / pxPerSec);
+      if(deltaSec<0) {
+        this.musicElapsedTime = Math.max(0, startSec + deltaSec);
+      } else {
+        this.musicElapsedTime = Math.min(this.musicTrackLength, startSec + deltaSec);
+      }
+    }
+
+    const onMouseUp = () => {
+      this.dragSeekBar = false;
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }
+
   moveSeekBar(event : MouseEvent) {
     const el = event.currentTarget as HTMLElement;
     const rect = el.getBoundingClientRect();
@@ -174,7 +201,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.musicElapsedTime = 0;
     }
     if(!this.musicIsPlaying) return;
-    this.musicElapsedTime++;
+    if(!this.dragSeekBar) this.musicElapsedTime++;
     
     setTimeout(()=>{
       this.playingMusic();
