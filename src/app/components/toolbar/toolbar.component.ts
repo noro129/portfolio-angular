@@ -175,12 +175,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   playPrevMusic() {
     if(this.prevMusic || this.nextMusic) return;
     this.prevMusic = true;
+    this.musicElapsedTime = 0;
+    this.musicTrackLength = Math.floor(Math.random()*121) + 120;
     setTimeout(() => {this.prevMusic = false;}, 400);
   }
 
   playNextMusic() {
     if(this.prevMusic || this.nextMusic) return;
     this.nextMusic = true;
+    this.musicElapsedTime = 0;
+    this.musicTrackLength = Math.floor(Math.random()*121) + 120;
     setTimeout(() => {this.nextMusic = false;}, 400);
   }
 
