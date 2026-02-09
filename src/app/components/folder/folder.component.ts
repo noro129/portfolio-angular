@@ -16,7 +16,7 @@ export class FolderComponent implements OnInit{
   @ViewChild("folderTab") folderTab!: ElementRef<HTMLDivElement>;
   @Input() folder !: OpenInstance;
   @Input() open !: (id : number) => void;
-  foldersStructureFile = "/folders-structure.json";
+  foldersStructureFile = "./fstructure.json";
   foldersStructure!: FolderStructure[];
 
   constructor(private httpClient : HttpClient) {}
@@ -25,6 +25,9 @@ export class FolderComponent implements OnInit{
     this.httpClient.get<FolderStructure[]>(this.foldersStructureFile).subscribe({
       next: (response) => {
         this.foldersStructure = response;
+      },
+      error: (err) => {
+        console.log(err);
       }
     })
   }
