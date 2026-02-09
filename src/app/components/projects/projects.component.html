@@ -18,7 +18,7 @@
     <span class="slide toLeft" (click)="toRight()">&lt;</span>
     <span class="slide toRight" (click)="toLeft()">&gt;</span>
 
-    <div class="pagination-pointers">
+    <div class="pagination-pointers" [ngStyle]="{'max-width' : (projects.length * 100) + 'px'}">
         <div class="wrap" *ngFor="let project of projects;let i = index" [ngClass]="{'current-project' : i === projectCarouselIndex}">
             <app-project class="pointer"
                 [projectName]="project.project" [projectDescription]="project.description" [carousel]="true"

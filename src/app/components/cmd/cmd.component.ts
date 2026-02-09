@@ -59,6 +59,8 @@ export class CMDComponent implements OnInit, OnDestroy {
   }
 
   setCommandResultData() {
+    this.commandsResult.set('', ['']);
+
     this.commandsResult.set('help', [
                                          'Available commands:',
                                          ' ',

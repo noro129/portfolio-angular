@@ -7,7 +7,7 @@
         </div>
         <div class="commands">
             <ng-container *ngFor="let command of enteredCommands">
-                <p class="command"><span class="shell-prompt">{{shellPrompt}}</span> {{command}}</p>
+                <p class="command"><span class="shell-prompt">{{shellPrompt}}</span> <span>&nbsp;{{command}}</span></p>
                 <div class="command-result" *ngFor="let text of commandsResult.get(commandToKey(command))">{{text}}</div>
                 <div *ngIf="!commandsResult.has(command)" class="command-result unavailable-command">{{getErrorMessage(command)}}</div>
             </ng-container>

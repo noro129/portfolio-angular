@@ -48,6 +48,7 @@ export class InstancesStackComponent {
   putFront(itemId : string) {
     this.hoverEnd();
     this.putInstanceFront(this.stackId, itemId);
+    this.removeFocusOnWindow(this.stackId, itemId);
   }
 
   onMouseEnterInstance(itemId : string) {
