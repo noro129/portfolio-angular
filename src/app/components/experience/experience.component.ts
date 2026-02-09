@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Experience } from '../../models/Experience';
 import { HttpClient } from '@angular/common/http';
 import { NgFor } from '@angular/common';
@@ -11,6 +11,7 @@ import { NgFor } from '@angular/common';
 })
 export class ExperienceComponent implements OnInit {
   experience !: Experience[];
+  @Input() open !: (id : number) => void;
 
   constructor(private http : HttpClient) {}
 
@@ -24,5 +25,9 @@ export class ExperienceComponent implements OnInit {
         console.log(error);
       }
     })
+  }
+
+  openFile(index : number) {
+    this.open(index);
   }
 }

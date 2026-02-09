@@ -7,7 +7,7 @@
                     <app-blodest class="application-body"/>
                 </app-window>
             </ng-container>
-            
+
             <ng-container *ngSwitchCase="'CMD'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
                     <app-cmd class="application-body" [exit]="removeOpenInstance" [key1]="'CMD'" [key2]="instance.id" />
@@ -16,7 +16,7 @@
 
             <ng-container *ngSwitchCase="AppType.Folder.toString()">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-folder [folder]="instance" class="application-body"/>
+                    <app-folder [folder]="instance" class="application-body" [open]="open"/>
                 </app-window>
             </ng-container>
 
@@ -29,6 +29,12 @@
             <ng-container *ngSwitchCase="'WhoAmI'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
                     <app-whoami class="application-body"/>
+                </app-window>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="AppType.File.toString()">
+                <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
+                    <app-file-reader class="application-body"/>
                 </app-window>
             </ng-container>
             

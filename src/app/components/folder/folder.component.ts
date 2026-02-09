@@ -15,6 +15,7 @@ import { OpenInstance } from '../../models/OpenInstance';
 export class FolderComponent implements OnInit{
   @ViewChild("folderTab") folderTab!: ElementRef<HTMLDivElement>;
   @Input() folder !: OpenInstance;
+  @Input() open !: (id : number) => void;
   foldersStructureFile = "/folders-structure.json";
   foldersStructure!: FolderStructure[];
 

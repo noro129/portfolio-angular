@@ -11,6 +11,6 @@
     </div>
     <div class="content">
         <app-projects *ngIf="folder.name === 'Projects'"></app-projects>
-        <app-experience *ngIf="folder.name === 'Experience'"/>
+        <app-experience *ngIf="folder.name === 'Experience'" [open]="open"/>
     </div>
 </div>

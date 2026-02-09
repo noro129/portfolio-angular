@@ -9,6 +9,8 @@ import { AppsObject } from '../../models/AppsObject';
 import { NotificationComponent } from "../notification/notification.component";
 import { NotifType } from '../../models/NotifType';
 import { Notification } from '../../models/Notification';
+import { HttpClient } from '@angular/common/http';
+import { Experience } from '../../models/Experience';
 
 @Component({
   selector: 'app-desktop',
@@ -91,7 +93,7 @@ export class DesktopComponent implements OnInit{
   draggedIndex =-1;
   hoveredAppPosition = {'row' : -1, 'column' : -1};
 
-  constructor(private renderer : Renderer2) {
+  constructor(private renderer : Renderer2, private http : HttpClient) {
     this.gridColumns = window.innerWidth / 100;
     this.gridRows = window.innerHeight / 100;
   }
@@ -154,6 +156,28 @@ export class DesktopComponent implements OnInit{
       'defaultHeight' : 700,
       'defaultWidth' : 700
     });
+
+    this.http.get<Experience[]>("./experience.json").subscribe({
+          next: (response) => {
+            let id = -2;
+            for(let res of response) {
+              this.applicationsMatrix.set(id, {
+                'id' : id,
+                'name' : res.company,
+                'icon' : './file.png',
+                'type' : AppType.File,
+                'systemApp' : false,
+                'focused' : false,
+                'defaultHeight' : 700,
+                'defaultWidth' : 600
+              });
+              id--;
+            }
+          },
+          error: (error) => {
+            console.log(error);
+          }
+    });
   }
 
   addNotification(message : string, notifType : NotifType){
@@ -178,6 +202,10 @@ export class DesktopComponent implements OnInit{
     }
   }
 
+  openItem = (id : number) => {
+    this.open(id);
+  }
+
   open(index : number) {
     const toOpen = this.applicationsMatrix.get(index);
     if(!toOpen) return;
@@ -191,6 +219,12 @@ export class DesktopComponent implements OnInit{
         this.stacksMap.get(AppType.Folder.toString())?.unshift(app);
       } else {
         this.stacksMap.set(AppType.Folder.toString(), [app]);
+      }
+    } else if (toOpen.type === AppType.File) {
+      if(this.stacksMap.has(AppType.File.toString())){
+        this.stacksMap.get(AppType.File.toString())?.unshift(app);
+      } else {
+        this.stacksMap.set(AppType.File.toString(), [app]);
       }
     }
     else {
