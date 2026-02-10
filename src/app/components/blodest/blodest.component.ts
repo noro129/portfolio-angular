@@ -93,6 +93,7 @@ export class BlodestComponent{
         this.moveBallByY = this.ballSpeed;
       } else if (ball.bottom == bar.top) {
         console.log("ball hit bottom");
+        if(this.ballSpeed<9) this.ballSpeed++;
         if(ball.right < bar.left || ball.left > bar.right) {
           this.gameOver = true;
           return;
