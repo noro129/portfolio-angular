@@ -16,6 +16,7 @@ export class FolderComponent implements OnInit{
   @ViewChild("folderTab") folderTab!: ElementRef<HTMLDivElement>;
   @Input() folder !: OpenInstance;
   @Input() open !: (id : number) => void;
+  @Input() desktopFolders !: Set<string>;
   foldersStructureFile = "./fstructure.json";
   foldersStructure!: FolderStructure[];
 

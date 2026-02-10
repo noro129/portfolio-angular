@@ -3,9 +3,12 @@
         <div *ngFor="let fs of foldersStructure" class="folders">
             <span class="folder-name"><span class="folder">{{fs.name}}</span><span class="show-sub-folders-button" *ngIf="fs.subContent.length != 0">&gt;</span></span>
             <span *ngIf="fs.subContent.length != 0">
-                <div *ngFor="let subfolder of fs.subContent">
-                    <span class="sub-folder-name" [ngClass]="{'opened-folder' : folder.name === subfolder.name}" (click)="changeFolder(subfolder.name)">{{subfolder.name}}</span>
-                </div>
+                <ng-container *ngFor="let subfolder of fs.subContent">
+                    <div *ngIf="desktopFolders.has(subfolder.name)">
+                        <span class="sub-folder-name" [ngClass]="{'opened-folder' : folder.name === subfolder.name}" (click)="changeFolder(subfolder.name)">{{subfolder.name}}</span>
+                    </div>
+                </ng-container>
+                
             </span>
         </div>
     </div>

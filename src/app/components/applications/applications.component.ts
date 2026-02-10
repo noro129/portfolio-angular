@@ -24,6 +24,7 @@ export class ApplicationsComponent {
   @Input() putOpenInstanceFront !: (key: string, itemId: string)=> void;
   @Input() restoreApp !: (key : number)=> void;
   @Input() open !: (id : number) => void;
+  @Input() desktopFolders !: Set<string>;
   AppType = AppType;
   keepOrder = () => 0;
 

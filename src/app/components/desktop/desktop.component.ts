@@ -97,6 +97,7 @@ export class DesktopComponent implements OnInit{
   stacksMap = new Map<string, OpenInstance[]>;
   draggedIndex =-1;
   hoveredAppPosition = {'row' : -1, 'column' : -1};
+  desktopFolders = new Set<string>();
 
   constructor(private renderer : Renderer2, private http : HttpClient) {
     this.gridColumns = window.innerWidth / 100;
@@ -139,6 +140,7 @@ export class DesktopComponent implements OnInit{
     for(let appIndex = 0; appIndex<this.applications.length; appIndex++) {
       const app = this.applications[appIndex];
       const index = app.yPosition + app.xPosition*this.gridColumns;
+      if(app.type === AppType.Folder) this.desktopFolders.add(app.name);
       this.applicationsMatrix.set(index, {
         'id' : app.id,
         'name' : app.name,
@@ -253,7 +255,6 @@ export class DesktopComponent implements OnInit{
     if(val.length == 0) this.stacksMap.delete(key);
   }
 
-
   putInstanceFront = (key : string, itemId : string) => {
     const instances = this.stacksMap.get(key) || [];
     var index = instances.findIndex(item => item.id === itemId);
@@ -355,6 +356,7 @@ export class DesktopComponent implements OnInit{
               return;
             }
           }
+          this.desktopFolders.delete(draggedApp.name);
         } else if (this.stacksMap.has(draggedApp.name)) {
           this.addNotification("cannot delete '"+draggedApp.name+"', it is open", NotifType.Warning);
           return;
@@ -382,6 +384,7 @@ export class DesktopComponent implements OnInit{
   restoreApp = (key : number) => {
     const app = this.deletedApps.get(key);
     if(!app) return;
+    if(app.type === AppType.Folder) this.desktopFolders.add(app.name);
     for(let c=0; c<this.gridColumns; c++) {
       for(let r =0; r<this.gridRows; r++) {
         if(!this.applicationsMatrix.has(r*this.gridColumns + c)) {

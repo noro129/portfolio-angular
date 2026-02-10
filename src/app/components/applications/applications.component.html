@@ -16,7 +16,7 @@
 
             <ng-container *ngSwitchCase="AppType.Folder.toString()">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-folder [folder]="instance" class="application-body" [open]="open"/>
+                    <app-folder [folder]="instance" class="application-body" [open]="open" [desktopFolders]="desktopFolders"/>
                 </app-window>
             </ng-container>
 
