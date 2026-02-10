@@ -277,18 +277,19 @@
                 border: 3px solid var(--color-green);
                 border-radius: 10px;
                 animation: flactuationsScreen 5s infinite;
-                transition: background-color .2s linear;
+                transition: background-color .2s linear, transform .1s linear;
 
                 img{
                     position: absolute; top: 5%; left: 5%;
+                    z-index: 13;
                     width: 90%; height: 90%;
                     filter: invert(37%) sepia(8%) saturate(1917%) hue-rotate(67deg) brightness(97%) contrast(85%);
-                    opacity: .3;
                     animation: flactuationsText 4s infinite;
                 }
 
                 &:hover{
                     background-color: var(--color-green);
+                    transform: rotateZ(-10deg);
 
                     img{
                         filter: unset;

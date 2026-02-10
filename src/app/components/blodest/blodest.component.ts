@@ -59,6 +59,28 @@ export class BlodestComponent{
     });
   }
 
+  replay() {
+    this.gameStarted = true;
+    this.gameOver = false;
+    this.moveBallByX = 0;
+    this.ballSpeed = 2;
+    this.moveBallByY = this.ballSpeed;
+    this.ballX = 0;
+    this.ballY = 0;
+    this.barSpeed = 0;
+    this.currentScore = 0;
+    requestAnimationFrame(()=>{
+      this.yDistance = this.gameContainer.nativeElement.getBoundingClientRect().height - this.playingBar.nativeElement.getBoundingClientRect().height - this.gameBall.nativeElement.getBoundingClientRect().height;
+      this.xDistance = this.gameContainer.nativeElement.getBoundingClientRect().width - this.gameBall.nativeElement.getBoundingClientRect().width;
+      this.renderer.setStyle(this.gameBall.nativeElement, 'top', Math.floor(this.yDistance/2)+'px');
+      this.renderer.setStyle(this.gameBall.nativeElement, 'left', Math.floor(this.xDistance/2)+'px');
+      this.renderer.setStyle(this.gameBall.nativeElement, 'transform', 'translate(0,0)');
+    });
+    setTimeout(()=> {
+      this.animateBall();
+    }, 200)
+  }
+
   setBlocksPositionsMatrix() {
     const containerRect = this.gameContainer.nativeElement.getBoundingClientRect();
     this.upperBlocksPos = [];
@@ -96,6 +118,7 @@ export class BlodestComponent{
         if(this.ballSpeed<9) this.ballSpeed++;
         if(ball.right < bar.left || ball.left > bar.right) {
           this.gameOver = true;
+          this.maxScore = Math.max(this.maxScore, this.currentScore);
           return;
         }
         if(this.barSpeed < 0) this.moveBallByX = -this.ballSpeed;
