@@ -39,24 +39,44 @@ export class BlodestComponent{
   yDistance = 0;
   xDistance = 0;
   barSpeed : number = 0;
+  loadingGame = false;
+  loading = [false, false, false, false, false, false, false, false, false, false];
 
   constructor(private renderer : Renderer2, private el : ElementRef) {}
 
 
   startGame() {
     this.undoPlusOne();
-    this.gameStarted = true;
-    
-    requestAnimationFrame(()=>{
-      this.yDistance = this.gameContainer.nativeElement.getBoundingClientRect().height - this.playingBar.nativeElement.getBoundingClientRect().height - this.gameBall.nativeElement.getBoundingClientRect().height;
-      this.xDistance = this.gameContainer.nativeElement.getBoundingClientRect().width - this.gameBall.nativeElement.getBoundingClientRect().width;
-      this.blockWidth = Math.floor(this.gameContainer.nativeElement.getBoundingClientRect().width/5) - 5;
-      this.renderer.setStyle(this.gameBall.nativeElement, 'top', Math.floor(this.yDistance/2)+'px');
-      this.renderer.setStyle(this.gameBall.nativeElement, 'left', Math.floor(this.xDistance/2)+'px');
-      this.animateBall();
+    this.loadingGame = true;
+    this.loadingPhase(0, 300);
+    setTimeout(()=> {
+      this.loadingGame = false;
+      this.gameStarted = true;
+        requestAnimationFrame(()=>{
+        this.yDistance = this.gameContainer.nativeElement.getBoundingClientRect().height - this.playingBar.nativeElement.getBoundingClientRect().height - this.gameBall.nativeElement.getBoundingClientRect().height;
+        this.xDistance = this.gameContainer.nativeElement.getBoundingClientRect().width - this.gameBall.nativeElement.getBoundingClientRect().width;
+        this.blockWidth = Math.floor(this.gameContainer.nativeElement.getBoundingClientRect().width/5) - 5;
+        this.renderer.setStyle(this.gameBall.nativeElement, 'top', Math.floor(this.yDistance/2)+'px');
+        this.renderer.setStyle(this.gameBall.nativeElement, 'left', Math.floor(this.xDistance/2)+'px');
+        this.animateBall();
 
-      setTimeout(() => {this.setBlocksPositionsMatrix()}, 400);
-    });
+        setTimeout(() => {this.setBlocksPositionsMatrix()}, 400);
+      });
+
+    }, 300*12);
+    
+    
+    
+  }
+
+  loadingPhase(index : number, duration : number) {
+    if(index>= this.loading.length) return;
+    this.loading[index] = true;
+    setTimeout(()=>{
+      if(index == 3) duration = duration*3;
+      if(index == 4) duration = duration/6;
+      this.loadingPhase(index+1, duration);
+    }, duration);
   }
 
   replay() {

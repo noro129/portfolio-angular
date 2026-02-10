@@ -41,9 +41,12 @@
             <div class="el" style="background-color: var(--bg-color-1);"></div>
         </div>
     </div>
-    <span *ngIf="!gameStarted" class="start-button-underlay">
+    <span *ngIf="!gameStarted && !loadingGame" class="start-button-underlay">
         <div class="start-button" (click)="startGame()">START</div>
     </span>
+    <div class="game-loading" *ngIf="loadingGame">
+        <div class="percentage" *ngFor="let l of loading" [ngStyle]="{'background-color' : l ? 'var(--bg-color-1)' : 'transparent'}"></div>
+    </div>
     <div class="body" *ngIf="gameStarted">
         <div class="score-screen">
             <div class="score">
