@@ -20,6 +20,9 @@ export class BlodestComponent{
   lowerBlocks: boolean[] = new Array<boolean>(9).fill(false);
   blockWidth = 0; blockHeight = 40;
 
+  upperBlocksPos !: number[][];
+  lowerBlocksPos !: number[][];
+
   gameStarted : boolean = false;
   gameOver : boolean = false;
 
@@ -37,7 +40,7 @@ export class BlodestComponent{
   xDistance = 0;
   barSpeed : number = 0;
 
-  constructor(private renderer : Renderer2) {}
+  constructor(private renderer : Renderer2, private el : ElementRef) {}
 
 
   startGame() {
@@ -51,10 +54,28 @@ export class BlodestComponent{
       this.renderer.setStyle(this.gameBall.nativeElement, 'top', Math.floor(this.yDistance/2)+'px');
       this.renderer.setStyle(this.gameBall.nativeElement, 'left', Math.floor(this.xDistance/2)+'px');
       this.animateBall();
+
+      setTimeout(() => {this.setBlocksPositionsMatrix()}, 400);
     });
   }
 
-  onMouseMove(event : MouseEvent) {
+  setBlocksPositionsMatrix() {
+    const containerRect = this.gameContainer.nativeElement.getBoundingClientRect();
+    this.upperBlocksPos = [];
+    this.lowerBlocksPos = [];
+    
+    let i =0;
+    this.el.nativeElement.querySelectorAll(".block").forEach((item : HTMLDivElement) => {
+      const blockRect = item.getBoundingClientRect();
+      if(i<9) this.upperBlocksPos.push([blockRect.left- containerRect.left, blockRect.top - containerRect.top]);
+      else this.lowerBlocksPos.push([blockRect.left- containerRect.left, blockRect.top - containerRect.top]);
+      i++;
+    });
+
+    
+  }
+
+  async onMouseMove(event : MouseEvent) {
     if(!this.gameOver && this.gameStarted) {
       const rect = this.gameContainer.nativeElement.getBoundingClientRect();
       this.barSpeed = (event.clientX - this.playingBar.nativeElement.getBoundingClientRect().left - this.playingBar.nativeElement.getBoundingClientRect().width/2 - this.gameBall.nativeElement.getBoundingClientRect().width/2) / rect.width;
@@ -71,11 +92,8 @@ export class BlodestComponent{
         if(ball.top == container.top) {
         this.moveBallByY = this.ballSpeed;
       } else if (ball.bottom == bar.top) {
-        if (this.ballSpeed<10) this.ballSpeed++;
         console.log("ball hit bottom");
-        this.plusOne();
-        setTimeout(()=> this.undoPlusOne(), 500);
-        if(ball.left + ball.width < bar.left || ball.left + ball.width > bar.right) {
+        if(ball.right < bar.left || ball.left > bar.right) {
           this.gameOver = true;
           return;
         }
@@ -90,6 +108,10 @@ export class BlodestComponent{
       } else if (ball.right == container.right) {
         this.moveBallByX = -this.ballSpeed;
       }
+    } else {
+      console.log("ball hit a block");
+      this.plusOne();
+      setTimeout(()=> this.undoPlusOne(), 500);
     }
     
 
@@ -104,6 +126,107 @@ export class BlodestComponent{
   }
 
   hitsABlock() {
+    if(!this.upperBlocksPos || !this.lowerBlocksPos) return false;
+    const ballRect = this.gameBall.nativeElement.getBoundingClientRect();
+    const containerRect = this.gameContainer.nativeElement.getBoundingClientRect();
+    
+    const ballLeft = ballRect.left - containerRect.left;
+    const ballRight = ballRect.right - containerRect.left;
+
+    const ballTop = ballRect.top - containerRect.top;
+    const ballBottom = ballRect.bottom - containerRect.top;
+    
+    let i =0;
+
+    for(let blockPos of this.lowerBlocksPos) {
+      if(this.lowerBlocks[i]) {
+        i++;
+        continue;
+      }
+      const left = blockPos[0];
+      const top = blockPos[1];
+      const right = left + this.blockWidth;
+      const bottom = top + this.blockHeight;
+
+      // top and bottom sides collisions
+      if(left <= ballRight && ballLeft <= right) {
+        // top side collision
+        if (ballTop < top && ballBottom >= top) {
+          this.lowerBlocks[i]=true;
+          this.moveBallByY = -this.ballSpeed;
+          return true;
+        }
+        // bottom side collision
+        if (ballBottom > bottom && ballTop <= bottom) {
+          this.lowerBlocks[i]=true;
+          this.moveBallByY = this.ballSpeed;
+          return true;
+        }
+      }
+      // left and right sides collisions
+      if(ballBottom >= top && ballTop <= bottom) {
+        //left side collision
+        if(ballLeft < left && ballRight >= left) {
+          this.lowerBlocks[i]=true;
+          this.moveBallByX = -this.ballSpeed;
+          return true;
+        }
+        //right side collision
+        if(ballRight > right && ballLeft <= right) {
+          this.lowerBlocks[i]=true;
+          this.moveBallByX = this.ballSpeed;
+          return true;
+        }
+      }
+      i++;
+    }
+
+    i=0;
+    for(let blockPos of this.upperBlocksPos) {
+      if(this.upperBlocks[i]) {
+        i++;
+        continue;
+      }
+      const left = blockPos[0];
+      const top = blockPos[1];
+      const right = left + this.blockWidth;
+      const bottom = top + this.blockHeight;
+
+      // top and bottom sides collisions
+      if(left <= ballRight && ballLeft <= right) {
+        // top side collision
+        if (ballTop < top && ballBottom >= top) {
+          this.upperBlocks[i]=true;
+          this.moveBallByY = -this.ballSpeed;
+          return true;
+        }
+        // bottom side collision
+        if (ballBottom > bottom && ballTop <= bottom) {
+          this.upperBlocks[i]=true;
+          this.moveBallByY = this.ballSpeed;
+          return true;
+        }
+      }
+
+      // left and right sides collisions
+      if(ballBottom >= top && ballTop <= bottom) {
+        //left side collision
+        if(ballLeft < left && ballRight >= left) {
+          this.upperBlocks[i]=true;
+          this.moveBallByX = -this.ballSpeed;
+          return true;
+        }
+        //right side collision
+        if(ballRight > right && ballLeft <= right) {
+          this.upperBlocks[i]=true;
+          this.moveBallByX = this.ballSpeed;
+          return true;
+        }
+      }
+      i++;
+    }
+    
+    
     return false;
   }
 
@@ -127,9 +250,7 @@ export class BlodestComponent{
     this.blockScoreMatrix[6][15] = true;
     this.blockScoreMatrix[7][15] = true;
     this.blockScoreMatrix[8][15] = true;this.blockScoreMatrix[8][14] = true;this.blockScoreMatrix[8][16] = true;this.blockScoreMatrix[8][13] = true;this.blockScoreMatrix[8][17] = true;
-
-
-    console.log(this.blockScoreMatrix);
+    this.currentScore++;
   }
 
   undoPlusOne() {
