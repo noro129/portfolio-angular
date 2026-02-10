@@ -345,6 +345,10 @@ export class DesktopComponent implements OnInit{
           this.addNotification("cannot delete "+draggedApp.name, NotifType.Error);
           return;
         } else if (draggedApp.type === AppType.Folder){
+          if(draggedApp.name === 'Experience' && this.stacksMap.has(AppType.File.toString())) {
+            this.addNotification("unable to delete '"+draggedApp.name+"', it is in use.", NotifType.Warning);
+            return;
+          }
           for(let folder of this.stacksMap.get(AppType.Folder.toString()) || []) {
             if(folder.name === draggedApp.name) {
               this.addNotification("unable to delete '"+draggedApp.name+"', it is in use.", NotifType.Warning);
