@@ -14,7 +14,7 @@ export class BlodestComponent{
   @ViewChild("gameContainer", {static: false}) gameContainer !: ElementRef;
   @ViewChild("playingBar", {static: false}) playingBar !: ElementRef;
 
-  blockScoreMatrix: boolean[][] = new Array<boolean[]>(11);
+  blockScoreMatrix: boolean[][] = new Array<boolean[]>(15);
   
   upperBlocks: boolean[] = new Array<boolean>(9).fill(false);
   lowerBlocks: boolean[] = new Array<boolean>(9).fill(false);
@@ -232,24 +232,31 @@ export class BlodestComponent{
 
   plusOne() {
     //plus sign
-    this.blockScoreMatrix[6][9] = true;
-    this.blockScoreMatrix[6][10] = true;
-    this.blockScoreMatrix[6][11] = true;
-
-    this.blockScoreMatrix[5][10] = true;
+    this.blockScoreMatrix[7][9] = true;
     this.blockScoreMatrix[7][10] = true;
+    this.blockScoreMatrix[7][11] = true;
+
+    this.blockScoreMatrix[6][10] = true;
+    this.blockScoreMatrix[8][10] = true;
 
     //digit 1 sign
-    this.blockScoreMatrix[2][14] = true;
-    this.blockScoreMatrix[3][13] = true;
+    this.blockScoreMatrix[4][14] = true;
     
-    this.blockScoreMatrix[2][15] = true;
     this.blockScoreMatrix[3][15] = true;
     this.blockScoreMatrix[4][15] = true;
     this.blockScoreMatrix[5][15] = true;
     this.blockScoreMatrix[6][15] = true;
     this.blockScoreMatrix[7][15] = true;
-    this.blockScoreMatrix[8][15] = true;this.blockScoreMatrix[8][14] = true;this.blockScoreMatrix[8][16] = true;this.blockScoreMatrix[8][13] = true;this.blockScoreMatrix[8][17] = true;
+    this.blockScoreMatrix[8][15] = true;
+    this.blockScoreMatrix[9][15] = true;
+    this.blockScoreMatrix[10][15] = true;
+    this.blockScoreMatrix[11][15] = true;this.blockScoreMatrix[11][14] = true;this.blockScoreMatrix[11][16] = true;
+
+    for(let i =2; i<=12; i++) {
+      for (let j=8; j<=17; j++) {
+        this.blockScoreMatrix[i][j] = !this.blockScoreMatrix[i][j];
+      }
+    }
     this.currentScore++;
   }
 
