@@ -60,6 +60,7 @@ export class BlodestComponent{
   }
 
   replay() {
+    this.restoreBlocks();
     this.gameStarted = true;
     this.gameOver = false;
     this.moveBallByX = 0;
@@ -282,11 +283,19 @@ export class BlodestComponent{
       }
     }
     this.currentScore++;
+    if(this.currentScore % 18 === 0 ) {
+      this.restoreBlocks();
+    }
   }
 
   undoPlusOne() {
     for(let i=0; i<this.blockScoreMatrix.length; i++) {
       this.blockScoreMatrix[i] = new Array<boolean>(35).fill(false);
     }
+  }
+
+  restoreBlocks() {
+    this.upperBlocks= new Array<boolean>(9).fill(false);
+    this.lowerBlocks= new Array<boolean>(9).fill(false);
   }
 }
