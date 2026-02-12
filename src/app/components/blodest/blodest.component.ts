@@ -304,7 +304,7 @@ export class BlodestComponent{
     }
     this.currentScore++;
     if(this.currentScore % 18 === 0 ) {
-      this.restoreBlocks();
+      setTimeout(()=> this.restoreBlocks(), 500);
     }
   }
 

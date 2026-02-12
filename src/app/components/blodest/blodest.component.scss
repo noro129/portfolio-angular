@@ -252,14 +252,17 @@
 
             animation: flactuationsScreen 4s infinite;
 
-            &::after{
-                content: '';
-                opacity: 0.2;
+            
+
+            .glass-overlay{
+                opacity: 0.3;
                 position: absolute; left: 0; top: 0;
                 width: 100%; height: 100%;
-                background-image: url("/brokenGlass.png");
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
+                z-index: 1;
+
+                img{
+                    width: 100%; height: 100%;
+                }
             }
 
             .head{

@@ -150,10 +150,12 @@
         [class.cloudy]="selectedWeather==='cloudy'"
         [class.rainy]="selectedWeather==='rainy'"
         >
+            <div class="cloud" *ngIf="selectedWeather==='cloudy'"><img src="cloudy.png" alt="cloud image"></div>
             <p class="date">{{weatherCardDate}}</p>
             <p class="weather">{{selectedWeather}}</p>
             <div class="weather-icon"><img src="{{weatherIcon}}" alt="weather icon" class="icon"></div>
             <p class="weather-degree">{{weatherDegree}}</p>
+            <div class="rain" *ngIf="selectedWeather==='rainy'"><img src="rain.jpg" alt="rain image"></div>
         </div>
 
         <div class="music-card card">
