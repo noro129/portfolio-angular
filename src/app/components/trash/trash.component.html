@@ -4,7 +4,7 @@
         <div class="delete-button" [ngClass]="{'disabled' : focusedApps === 0}" (click)="delete()">delete<img src="delete-icon.png" class="icon" alt="delete icon"/></div>
     </div>
     <div class="deleted-apps">
-        <div class="deleted-app" *ngFor="let deletedApp of deletedApps | keyvalue : keepOrder; trackBy: trackByKey" draggable="true" (click)="onClick(deletedApp.key)" [ngClass]="{'focused' : deletedApp.value.focused}">
+        <div class="deleted-app" *ngFor="let deletedApp of deletedApps | keyvalue : keepOrder; trackBy: trackByKey" draggable="true" title="{{deletedApp.value.name}}" (click)="onClick(deletedApp.key)" [ngClass]="{'focused' : deletedApp.value.focused}">
             <div class="app-icon"><img src="{{deletedApp.value.icon}}" alt="app icon" draggable="false"></div>
             <div class="app-info">
                 <div class="app-title">{{deletedApp.value.name}}</div>

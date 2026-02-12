@@ -33,10 +33,10 @@
                 (dragover)="onDragOver($event, row, column)"
                 (drop)="onDrop($event, column + row*gridColumns)">
             <span *ngIf="applicationsMatrix.get(column + row*gridColumns) as app" 
-                        class="app-wrapper" 
+                    class="app-wrapper" 
                     draggable="true"
                     (dragstart)="onDragStart($event, column + row*gridColumns)"
-                    
+                    title="{{app.name}}"
                     [ngClass]="{'focused' : app?.focused, 'not-focused' : !app?.focused}">
                 <img src="{{app?.icon}}" alt="" class="icon">
                 <p class="name">{{app?.name}}</p>
