@@ -36,7 +36,7 @@
                     class="app-wrapper" 
                     draggable="true"
                     (dragstart)="onDragStart($event, column + row*gridColumns)"
-                    title="{{app.name}}"
+                    title="{{app.name}}{{app.type === AppType.File ? '.txt' : ''}}"
                     [ngClass]="{'focused' : app?.focused, 'not-focused' : !app?.focused}">
                 <img src="{{app?.icon}}" alt="" class="icon">
                 <p class="name">{{app?.name}}</p>

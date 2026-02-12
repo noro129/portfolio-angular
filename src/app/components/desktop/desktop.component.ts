@@ -98,6 +98,7 @@ export class DesktopComponent implements OnInit{
   draggedIndex =-1;
   hoveredAppPosition = {'row' : -1, 'column' : -1};
   desktopFolders = new Set<string>();
+  AppType = AppType;
 
   constructor(private renderer : Renderer2, private http : HttpClient) {
     this.gridColumns = window.innerWidth / 100;
