@@ -1,5 +1,5 @@
 import { NgStyle, NgForOf, NgFor } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Experience } from '../../models/Experience';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './file-reader.component.html',
   styleUrl: './file-reader.component.scss'
 })
-export class FileReaderComponent implements OnInit{
+export class FileReaderComponent implements OnInit, AfterViewInit{
   bold = false;
   italic = false;
   underline = false;
@@ -17,7 +17,7 @@ export class FileReaderComponent implements OnInit{
 
   experience !: Experience | undefined;
 
-  constructor(private http : HttpClient) {}
+  constructor(private http : HttpClient, private el : ElementRef) {}
 
   ngOnInit(): void {
     this.http.get<Experience[]>("./experience.json").subscribe({
@@ -32,6 +32,10 @@ export class FileReaderComponent implements OnInit{
             console.log(error);
           }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.el.nativeElement.querySelector(".wrapper").focus();
   }
 
   boldEffect() {

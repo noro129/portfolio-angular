@@ -17,9 +17,12 @@
     <div class="body" [class.isBold]="bold" [class.isItalic]="italic" [class.isUnderline]="underline">
         <div class="title">{{experience?.role}}</div>
         <div class="description">
-            <div class="item" *ngFor="let item of experience?.description">
-                • {{item}}
-            </div>
+            <span class="wrapper" contenteditable="true" [class.isUnderline]="underline">
+                <ng-container *ngFor="let item of experience?.description">
+                    -&nbsp;{{item}}
+                    <br><br>
+                </ng-container>
+            </span>
         </div>
         <div class="tools-technologies">Tools & Technologies:&nbsp;
             <span *ngFor="let item of experience?.tools_technologies">{{item}}&nbsp;</span>

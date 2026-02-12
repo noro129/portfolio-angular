@@ -21,7 +21,7 @@
     }
     
     .slide-left, .slide-right{
-        transition: transform .5s linear;
+        transition: transform .3s linear;
     }
 
     .slide-left{
@@ -81,6 +81,7 @@
             background-color: var(--bg-color-1);
         
             .pointer{
+                cursor: pointer;
                 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
                 display: block;
                 overflow: hidden;

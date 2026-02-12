@@ -73,8 +73,7 @@
             width: 23%;
             height: 60px;
             display: flex; flex-direction: row;
-            border-bottom: 2px solid var(--color-1-light); 
-            border-right: 2px solid var(--color-1-light);
+            border: 2px solid var(--color-1-light);
             transition: all .1s linear;
             position: relative;
 

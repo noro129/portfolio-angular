@@ -51,7 +51,7 @@ export class ProjectsComponent implements OnInit {
         this.projectAfterIndex = (this.projectAfterIndex+1)%this.projects.length;
         this.projectBeforeIndex = temp;
       }
-    }, 500);
+    }, 300);
   }
 
   toRight() {
@@ -67,6 +67,17 @@ export class ProjectsComponent implements OnInit {
         this.projectBeforeIndex = (this.projects.length+this.projectBeforeIndex-1)%this.projects.length;
         this.projectAfterIndex = temp;
       }
-    }, 500);
+    }, 300);
+  }
+
+  goto(i : number) {
+    if(i === this.projectIndex) return;
+    if(i<this.projectIndex) {
+      this.toRight();
+      setTimeout(()=>{this.goto(i)}, 320);
+    }else{
+      this.toLeft();
+      setTimeout(()=>{this.goto(i) }, 320);
+    }
   }
 }
