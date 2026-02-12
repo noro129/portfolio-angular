@@ -300,7 +300,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   open(appName : string) {
     switch (appName) {
       case "bloDest" : 
-        this.openApp.emit(-1);
+        this.openApp.emit(-999);
         break;
       case "github" :
         navigator.clipboard.writeText("https://github.com/noro129");

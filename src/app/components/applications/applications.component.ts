@@ -25,6 +25,7 @@ export class ApplicationsComponent {
   @Input() restoreApp !: (key : number)=> void;
   @Input() open !: (id : number) => void;
   @Input() desktopFolders !: Set<string>;
+  @Input() deleteDraggedItem !: () => void;
   AppType = AppType;
   keepOrder = () => 0;
 
@@ -34,5 +35,16 @@ export class ApplicationsComponent {
 
   trackById (index: number, item : OpenInstance) : string {
     return item.id;
+  }
+
+  dragOver(event : DragEvent) {
+    event.preventDefault();
+    console.log("dragging over");
+  }
+
+  drop(event : DragEvent) {
+    event.preventDefault();
+    this.deleteDraggedItem();
+    console.log("dropping");
   }
 }

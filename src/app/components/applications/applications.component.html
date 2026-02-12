@@ -22,7 +22,7 @@
 
             <ng-container *ngSwitchCase="'bin'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-trash class="application-body" [deletedApps]="deletedApps" [restoreApp]="restoreApp"/>
+                    <app-trash class="application-body" [deletedApps]="deletedApps" [restoreApp]="restoreApp" (dragover)="dragOver($event)" (drop)="drop($event)"/>
                 </app-window>
             </ng-container>
 

@@ -154,8 +154,8 @@ export class DesktopComponent implements OnInit{
       });
     }
     //app not on desktop
-    this.applicationsMatrix.set(-1, {
-      'id' : -1,
+    this.applicationsMatrix.set(-999, {
+      'id' : -999,
       'name' : 'BloDest',
       'icon' : './BloDest.png',
       'type' : AppType.Application,
@@ -341,28 +341,7 @@ export class DesktopComponent implements OnInit{
     if(draggedApp) {
       const dragTo = this.applicationsMatrix.get(key);
       if(dragTo && dragTo.name === 'bin') {
-        draggedApp.focused = false;
-        if(draggedApp.systemApp) {
-          this.addNotification("cannot delete "+draggedApp.name, NotifType.Error);
-          return;
-        } else if (draggedApp.type === AppType.Folder){
-          if(draggedApp.name === 'Experience' && this.stacksMap.has(AppType.File.toString())) {
-            this.addNotification("unable to delete '"+draggedApp.name+"', it is in use.", NotifType.Warning);
-            return;
-          }
-          for(let folder of this.stacksMap.get(AppType.Folder.toString()) || []) {
-            if(folder.name === draggedApp.name) {
-              this.addNotification("unable to delete '"+draggedApp.name+"', it is in use.", NotifType.Warning);
-              return;
-            }
-          }
-          this.desktopFolders.delete(draggedApp.name);
-        } else if (this.stacksMap.has(draggedApp.name)) {
-          this.addNotification("cannot delete '"+draggedApp.name+"', it is open", NotifType.Warning);
-          return;
-        }
-        this.deletedApps.set(this.draggedIndex, draggedApp);
-        this.applicationsMatrix.delete(this.draggedIndex);
+        this.deleteApp(draggedApp);
         return;
       }
       this.applicationsMatrix.set(key, draggedApp);
@@ -375,6 +354,38 @@ export class DesktopComponent implements OnInit{
     }
     this.draggedIndex = -1;
     this.hoveredAppPosition = {'row' : -1, 'column' : -1};
+  }
+
+  deleteDraggedItem = () => {
+    console.log("delete this item "+this.draggedIndex + "?");
+    this.deleteApp(this.applicationsMatrix.get(this.draggedIndex));
+    this.draggedIndex = -1;
+  }
+
+  deleteApp(app : AppsObject | undefined) {
+    if(!app) return;
+    app.focused = false;
+    if(app.systemApp) {
+      this.addNotification("cannot delete "+app.name, NotifType.Error);
+      return;
+    } else if (app.type === AppType.Folder){
+      if(app.name === 'Experience' && this.stacksMap.has(AppType.File.toString())) {
+        this.addNotification("unable to delete '"+app.name+"', it is in use.", NotifType.Warning);
+        return;
+      }
+      for(let folder of this.stacksMap.get(AppType.Folder.toString()) || []) {
+        if(folder.name === app.name) {
+          this.addNotification("unable to delete '"+app.name+"', it is in use.", NotifType.Warning);
+          return;
+        }
+      }
+      this.desktopFolders.delete(app.name);
+    } else if (this.stacksMap.has(app.name)) {
+      this.addNotification("cannot delete '"+app.name+"', it is open", NotifType.Warning);
+      return;
+    }
+    this.deletedApps.set(this.draggedIndex, app);
+    this.applicationsMatrix.delete(this.draggedIndex);
   }
 
   isSameKey(key : number, row : number, column : number) : boolean {
