@@ -17,6 +17,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   @ViewChild("connectWindow", {static : false}) connectWindow !: ElementRef;
   @Output() openApp = new EventEmitter<number>();
   @Output() addNotification = new EventEmitter<{message : string, type : NotifType}>();
+  openItems : Set<ElementRef<HTMLElement>> = new Set<ElementRef<HTMLElement>>;
   battery = Math.floor(Math.random()*101);
   readonly fullName = "Oussama Errazi";
   readonly occupation = "software engineer";
@@ -100,9 +101,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         this.renderer.listen(spanItem, 'click', () => {
           if(revealButton.textContent === '▼') {
+            this.openItems.add(spanItem);
             this.renderer.setProperty(revealButton, 'textContent', '▲');
             this.renderer.setStyle(subItemsContainerDiv, 'max-height', `${menuItem.content.length*25}px`);
           } else {
+            this.openItems.delete(spanItem);
             this.renderer.setProperty(revealButton, 'textContent', '▼');
             this.renderer.setStyle(subItemsContainerDiv, 'max-height', '0');
           }
@@ -111,7 +114,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.renderer.setStyle(spanItem, 'cursor', 'pointer');
         this.renderer.listen(spanItem, 'click', () => {
           this.open(menuItem.item_name);
-          this.showMenu = false;
+          this.menuToggle();
         })
       }
       this.renderer.appendChild(el, container);
@@ -155,7 +158,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   menuToggle(){
+    if(this.showMenu) {
+      this.openItems.forEach((item : any) => {
+        const el = item.nativeElement || item;
+        el.dispatchEvent(new MouseEvent('click', {bubbles : true}));
+      })
+    }
     this.showMenu = !this.showMenu;
+    
   }
 
   get trackLength() : string {
@@ -227,7 +237,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   powerOff() {
     this.cover = true;
-    this.showMenu = false;
+    this.menuToggle();
     this.shuttingDown = true;
     setTimeout(() => {
       this.info = 'shutting down';
@@ -248,7 +258,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   sleepMode() {
     this.cover = true;
-    this.showMenu = false;
+    this.menuToggle();
     this.setWatch();
     this.setWeather();
     this.playingMusic();
@@ -327,7 +337,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event'])
   clickout(event : MouseEvent) {
     if(!this.el.nativeElement.contains(event.target)){
-      this.showMenu = false;
+      if(this.showMenu) {
+        this.openItems.forEach((item : any) => {
+          const el = item.nativeElement || item;
+          el.dispatchEvent(new MouseEvent('click', {bubbles : true}));
+        })
+        this.showMenu = false;
+      }
     }
   }
 
