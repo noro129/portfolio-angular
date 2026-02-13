@@ -14,6 +14,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   @ViewChild("menuItemsManager") menuItemsManager !: ElementRef<HTMLDivElement>;
   @ViewChild("watch", {static : false}) watch !: ElementRef<HTMLDivElement>;
   @ViewChild("bgWatch", {static : false}) bgWatch !: ElementRef<HTMLDivElement>;
+  @ViewChild("connectWindow", {static : false}) connectWindow !: ElementRef;
   @Output() openApp = new EventEmitter<number>();
   @Output() addNotification = new EventEmitter<{message : string, type : NotifType}>();
   battery = Math.floor(Math.random()*101);
@@ -332,6 +333,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   @HostListener('document:keydown')
   onKeyPressed(){
-    if(this.cover && !this.shuttingDown) this.showConnectWindow = true;
+    if(this.cover && !this.shuttingDown && !this.showConnectWindow) {
+      this.connectWindow.nativeElement.focus();
+      this.showConnectWindow = true;
+      setTimeout(()=>this.connectWindow.nativeElement.value = "", 50);
+    }
   }
 }
