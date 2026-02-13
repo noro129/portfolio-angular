@@ -21,8 +21,6 @@ import { Experience } from '../../models/Experience';
 })
 export class DesktopComponent implements OnInit{
   @ViewChild("desktop" ,{ static: true }) desktop!: ElementRef;
-  day = 1;
-  weekDay = "Sunday";
   XOffsetPosition = 150;
   YOffsetPosition = 50;
   ZOffsetPosition = 10;
@@ -137,7 +135,6 @@ export class DesktopComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.setDate();
     for(let appIndex = 0; appIndex<this.applications.length; appIndex++) {
       const app = this.applications[appIndex];
       const index = app.yPosition + app.xPosition*this.gridColumns;
@@ -197,13 +194,6 @@ export class DesktopComponent implements OnInit{
     setTimeout(()=>{
       this.notifications.delete(uuid);
     },2500);
-  }
-
-  setDate() {
-    const weekdays: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const today = new Date();
-    this.day = today.getDate();
-    this.weekDay = weekdays[today.getDay()]
   }
 
   appFocus(index : number) {

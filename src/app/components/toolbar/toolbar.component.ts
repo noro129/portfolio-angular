@@ -21,6 +21,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   battery = Math.floor(Math.random()*101);
   readonly fullName = "Oussama Errazi";
   readonly occupation = "software engineer";
+  day = "Mon";
   dateDay = "12";
   dateMonth = "06";
   dateYear = "2025";
@@ -58,6 +59,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         else this.time = ":"+this.time;
         this.time = now.getHours()+this.time;
         if(this.time.length===4) this.time="0"+this.time;
+        
+        const days = ["Sun", "Mon", "Tues", "Wed", "thur", "Fri", "Sat"];
+        this.day = days[now.getDay()];
       },
       1000
     );

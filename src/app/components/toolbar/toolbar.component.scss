@@ -70,7 +70,7 @@
     .wifi-battery-language{
         width: 100%;
         position: absolute;
-        bottom: 120px;
+        bottom: 160px;
         display: flex;
         flex-direction: column;
         row-gap: 10px;
@@ -137,6 +137,12 @@
 
         .date{
             padding-top: 10px;
+        }
+
+        .day{
+            margin-left: 15%;
+            width: 70%;
+            border-bottom: 1px solid var(--color-1);
         }
     }
 
