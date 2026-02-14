@@ -1,17 +1,18 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, Renderer2, ViewChild } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
-import { NgStyle } from '@angular/common';
+import { NgStyle, NgIf } from '@angular/common';
 import { AppFocusService } from '../../services/app-focus.service';
 
 @Component({
   selector: 'app-window',
-  imports: [NgStyle],
+  imports: [NgStyle, NgIf],
   templateUrl: './window.component.html',
   styleUrl: './window.component.scss',
   providers: [AppFocusService]
 })
 export class WindowComponent implements AfterViewInit{
   @ViewChild("window") window!: ElementRef<HTMLDivElement>;
+  @ViewChild("contextmenu", {static : false}) contextmenu!: ElementRef;
   @Input() openInstance !: OpenInstance;
   @Input() instanceType !: string;
   @Input() removeOpenInstance !: (key : string, openInstanceId : string) => void;
@@ -19,6 +20,7 @@ export class WindowComponent implements AfterViewInit{
   isDragging = false;
   xOffset=0;
   yOffset=0;
+  showContextMenu = false;
 
   @HostListener('document:click', ['$event'])
   onClick(event : MouseEvent) {
@@ -28,9 +30,21 @@ export class WindowComponent implements AfterViewInit{
     } else {
       this.appFocusService.notifyApp(false);
     }
+    this.showContextMenu = false;
   }
 
-  constructor(private el : ElementRef, private appFocusService : AppFocusService) {}
+  @HostListener('contextmenu', ['$event'])
+  onRightClick(event : MouseEvent) {
+    event.preventDefault();
+    this.showContextMenu = true;
+    requestAnimationFrame(()=> {
+      this.renderer.setStyle(this.contextmenu.nativeElement, 'left', `${event.clientX}px`);
+      this.renderer.setStyle(this.contextmenu.nativeElement, 'top', `${event.clientY}px`);
+    });
+    
+  }
+
+  constructor(private el : ElementRef, private appFocusService : AppFocusService, private renderer : Renderer2) {}
 
   ngAfterViewInit(): void {
     document.addEventListener('mousemove', this.onMouseMove);
