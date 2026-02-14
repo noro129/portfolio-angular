@@ -12,6 +12,7 @@ import { AppFocusService } from '../../services/app-focus.service';
 })
 export class WindowComponent implements AfterViewInit{
   @ViewChild("window") window!: ElementRef<HTMLDivElement>;
+  @ViewChild("header") header!: ElementRef;
   @ViewChild("contextmenu", {static : false}) contextmenu!: ElementRef;
   @Input() openInstance !: OpenInstance;
   @Input() instanceType !: string;
@@ -33,14 +34,23 @@ export class WindowComponent implements AfterViewInit{
     this.showContextMenu = false;
   }
 
-  @HostListener('contextmenu', ['$event'])
+  @HostListener('document:contextmenu', ['$event'])
   onRightClick(event : MouseEvent) {
-    event.preventDefault();
-    this.showContextMenu = true;
-    requestAnimationFrame(()=> {
-      this.renderer.setStyle(this.contextmenu.nativeElement, 'left', `${event.clientX}px`);
-      this.renderer.setStyle(this.contextmenu.nativeElement, 'top', `${event.clientY}px`);
-    });
+    if(!this.header) return;
+    const headerRect = this.header.nativeElement.getBoundingClientRect();
+    const x = event.clientX;
+    const y = event.clientY;
+    if(x>=headerRect.left && x<=headerRect.right && y>=headerRect.top && y<=headerRect.bottom) {
+      event.preventDefault();
+      this.showContextMenu = true;
+      requestAnimationFrame(()=> {
+        this.renderer.setStyle(this.contextmenu.nativeElement, 'left', `${event.clientX}px`);
+        this.renderer.setStyle(this.contextmenu.nativeElement, 'top', `${event.clientY}px`);
+      });
+    } else {
+      this.showContextMenu = false;
+    }
+    
     
   }
 

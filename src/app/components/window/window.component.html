@@ -8,7 +8,7 @@
                 'display' : openInstance.hidden && !openInstance.focusedOn ? 'none' : 'block', 
                 'z-index' : openInstance.focusedOn ? '10000' : openInstance.positionZ}"
     #window>
-    <div class="header">
+    <div class="header" #header>
         <div class="title">
             <img src="{{openInstance.icon}}" alt="logo" class="icon-logo">
             <p class="name" title="{{openInstance.name}}">{{openInstance.name}}</p>
