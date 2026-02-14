@@ -118,25 +118,7 @@ export class DesktopComponent implements OnInit{
   handleEnterKey() {
     for(let [key, app] of this.applicationsMatrix) {
       if(!app.focused) continue;
-      const uuid = crypto.randomUUID();
-      const instance :OpenInstance = { id : uuid, name : app.name, hidden : false, icon : app.icon, windowWidth : app.defaultWidth, windowHeight : app.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false, resizeable : app.resizeable};
-      this.XOffsetPosition = this.XOffsetPosition + 10;
-      this.YOffsetPosition = this.YOffsetPosition + 10;
-      this.ZOffsetPosition++;
-      if(app.type === AppType.Folder) {
-        if(this.stacksMap.has(AppType.Folder.toString())){
-          this.stacksMap.get(AppType.Folder.toString())?.unshift(instance);
-        } else {
-          this.stacksMap.set(AppType.Folder.toString(), [instance]);
-        }
-      } else {
-        if(this.stacksMap.has(app.name)){
-          this.stacksMap.get(app.name)?.unshift(instance);
-        } else {
-          this.stacksMap.set(app.name, [instance]);
-        }
-      }
-      app.focused = false;
+      this.open(key);
       break;
     }
   }
@@ -208,8 +190,6 @@ export class DesktopComponent implements OnInit{
                 'defaultWidth' : 600,
                 'resizeable' : true
               });
-              id--;
-              
               this.folderContentStructure.get(this.desktopFolderName)?.content?.get("Experience")?.content?.set(
                 res.company,
                 {
@@ -221,6 +201,7 @@ export class DesktopComponent implements OnInit{
                   content : undefined
                 }
               );
+              id--;
             }
           },
           error: (error) => {
