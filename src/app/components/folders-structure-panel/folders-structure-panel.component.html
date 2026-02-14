@@ -1,0 +1,7 @@
+<div class="folder">
+    <p class="folder-name" [class.selected]="folderStructure.name === selectedFolder" (click)="openFolder()">{{folderStructure.name}}</p>
+    <div class="show-sub-folders" *ngIf="folderStructure.subContent.length !== 0" (click)="hideReveal()">{{ showSubFolders ? '&#9650;' : '&#9660;' }}</div>
+</div>
+<div class="sub-folders" *ngIf="folderStructure.subContent.length !== 0 && showSubFolders" [ngStyle]="{'padding-left' : '10px'}">
+    <app-folders-structure-panel *ngFor="let subFolder of folderStructure.subContent;" [folderStructure]="subFolder" [changeFolder]="changeFolder" [selectedFolder]="selectedFolder"></app-folders-structure-panel>
+</div>

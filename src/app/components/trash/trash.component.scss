@@ -77,18 +77,22 @@
             transition: all .1s linear;
             position: relative;
 
+            &:hover{
+                background-color: var(--color-1-light) !important;
+            }
+
             .app-button{
                 position: absolute;
-                background-color: var(--color-1-light);
                 border-radius: 20px;
                 transition: scale .1s linear;
                 display: flex; justify-content: center; align-items: center;
                 right: 0;
-                width: 20px; height: 20px;
+                width: 25px; aspect-ratio: 1 / 1;
                 scale: 0;
 
                 .icon{
                     width: 60%;
+                    filter: invert(80%);
                     opacity: .7;
                 }
 
@@ -99,21 +103,23 @@
 
             .app-delete-button{
                 top: 0;
-                transform: translate(50%, -44%);
+                transform: translate(50%, -50%);
+                background-color: var(--color-red);
             }
 
             .app-restore-button{
                 bottom: 0;
-                transform: translate(50%, 44%);
+                transform: translate(50%, 50%);
+                background-color: var(--color-green);
             }
 
             &:hover:not(.focused){
                 background: none;
                 corner-top-right-shape: scoop;
-                border-top-right-radius: 15px;
+                border-top-right-radius: 20px;
 
                 corner-bottom-right-shape: scoop;
-                border-bottom-right-radius: 15px;
+                border-bottom-right-radius: 20px;
 
                 &:not(.focused) .app-button{
                     scale: 1;
@@ -135,7 +141,7 @@
                 overflow: hidden;
 
                 .app-title{
-                    width: 100%; text-align: center;
+                    width: 100%; text-align: start;
                     font-size: 1.1em;
                     white-space: nowrap;
                     text-overflow: ellipsis;

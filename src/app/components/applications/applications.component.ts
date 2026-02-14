@@ -10,6 +10,7 @@ import { WhoamiComponent } from "../whoami/whoami.component";
 import { TrashComponent } from "../trash/trash.component";
 import { AppsObject } from '../../models/AppsObject';
 import { FileReaderComponent } from "../file-reader/file-reader.component";
+import { FolderStructure } from '../../models/FolderStructure';
 
 @Component({
   selector: 'app-applications',
@@ -26,6 +27,7 @@ export class ApplicationsComponent {
   @Input() open !: (id : number) => void;
   @Input() desktopFolders !: Set<string>;
   @Input() deleteDraggedItem !: () => void;
+  @Input() foldersStructure!: FolderStructure[];
   AppType = AppType;
   keepOrder = () => 0;
 
@@ -39,12 +41,15 @@ export class ApplicationsComponent {
 
   dragOver(event : DragEvent) {
     event.preventDefault();
-    console.log("dragging over");
   }
 
-  drop(event : DragEvent) {
+  dropToDelete(event : DragEvent) {
     event.preventDefault();
     this.deleteDraggedItem();
-    console.log("dropping");
+  }
+
+  dropToMove(event : DragEvent) {
+    event.preventDefault();
+    console.log("dropping ");
   }
 }

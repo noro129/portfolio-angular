@@ -1,39 +1,28 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FolderStructure } from '../../models/FolderStructure';
 import { ProjectsComponent } from "../projects/projects.component";
 import { ExperienceComponent } from "../experience/experience.component";
 import { OpenInstance } from '../../models/OpenInstance';
+import { FoldersStructurePanelComponent } from '../folders-structure-panel/folders-structure-panel.component';
 
 @Component({
   selector: 'app-folder',
-  imports: [NgClass, NgFor, NgIf, ProjectsComponent, ExperienceComponent],
+  imports: [ NgFor, NgIf, ProjectsComponent, ExperienceComponent, FoldersStructurePanelComponent],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.scss'
 })
-export class FolderComponent implements OnInit{
+export class FolderComponent{
   @ViewChild("folderTab") folderTab!: ElementRef<HTMLDivElement>;
   @Input() folder !: OpenInstance;
   @Input() open !: (id : number) => void;
   @Input() desktopFolders !: Set<string>;
-  foldersStructureFile = "./fstructure.json";
-  foldersStructure!: FolderStructure[];
+  @Input() dragOver !: (event : DragEvent) => void;
+  @Input() dropToMove !: (event : DragEvent) => void;
+  @Input() foldersStructure!: FolderStructure[];
 
-  constructor(private httpClient : HttpClient) {}
-
-  ngOnInit(): void {
-    this.httpClient.get<FolderStructure[]>(this.foldersStructureFile).subscribe({
-      next: (response) => {
-        this.foldersStructure = response;
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
-  }
-
-  changeFolder(folderName : string) {
+  changeFolder = (folderName : string) => {
     if(folderName === this.folder.name) return;
     this.folder.name = folderName;
   }

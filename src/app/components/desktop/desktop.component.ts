@@ -11,6 +11,7 @@ import { NotifType } from '../../models/NotifType';
 import { Notification } from '../../models/Notification';
 import { HttpClient } from '@angular/common/http';
 import { Experience } from '../../models/Experience';
+import { FolderStructure } from '../../models/FolderStructure';
 
 @Component({
   selector: 'app-desktop',
@@ -97,6 +98,8 @@ export class DesktopComponent implements OnInit{
   hoveredAppPosition = {'row' : -1, 'column' : -1};
   desktopFolders = new Set<string>();
   AppType = AppType;
+  foldersStructureFile = "./fstructure.json";
+  foldersStructure!: FolderStructure[];
 
   constructor(private renderer : Renderer2, private http : HttpClient) {
     this.gridColumns = window.innerWidth / 100;
@@ -163,6 +166,15 @@ export class DesktopComponent implements OnInit{
       'defaultWidth' : 700,
       'resizeable' : false
     });
+
+    this.http.get<FolderStructure[]>(this.foldersStructureFile).subscribe({
+      next: (response) => {
+        this.foldersStructure = response;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
 
     this.http.get<Experience[]>("./experience.json").subscribe({
           next: (response) => {

@@ -11,41 +11,13 @@
         border-right: 1px solid var(--bg-color-1);
         color: var(--bg-color-1);
         padding: 5px;
+        overflow-y: scroll;
+        overflow-x: hidden;
 
-        .folders{
-            display: block;
-            width: 100%; height: 100%; background-color: var(--color-3);
-
-            .folder-name{
-                display: block;
-                width: 100%; height: max-content;
-                position: relative;
-                font-weight: bolder;
-                .folder{
-                    cursor: default;
-                }
-
-                .show-sub-folders-button{
-                    transform: rotateZ(90deg);
-                    position: absolute; top: 0; right: 10px;
-                    cursor: pointer;
-                }
-                
-            }
-
-            .sub-folder-name{
-                display: block;
-                padding-left: 10px;
-                margin-top: 5px;
-                width: calc( 100% - 10px);
-                cursor: pointer;
-            }
-
-            .opened-folder{
-                font-weight: bolder;
-                color: var(--color-2);
-                font-style: italic;
-            }
+        .fs{
+            display: flex; flex-direction: column;
+            height: 100%;
+            background-color: var(--color-3);
         }
     }
 

@@ -16,13 +16,13 @@
 
             <ng-container *ngSwitchCase="AppType.Folder.toString()">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-folder [folder]="instance" class="application-body" [open]="open" [desktopFolders]="desktopFolders"/>
+                    <app-folder [folder]="instance" class="application-body" [open]="open" [desktopFolders]="desktopFolders" [dragOver]="dragOver" [dropToMove]="dropToMove" [foldersStructure]="foldersStructure"/>
                 </app-window>
             </ng-container>
 
             <ng-container *ngSwitchCase="'bin'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-trash class="application-body" [deletedApps]="deletedApps" [restoreApp]="restoreApp" (dragover)="dragOver($event)" (drop)="drop($event)"/>
+                    <app-trash class="application-body" [deletedApps]="deletedApps" [restoreApp]="restoreApp" (dragover)="dragOver($event)" (drop)="dropToDelete($event)"/>
                 </app-window>
             </ng-container>
 
