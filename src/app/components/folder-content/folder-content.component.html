@@ -1,0 +1,6 @@
+<div class="container">
+    <div class="item" *ngFor="let item of openedFolder?.content | keyvalue : keepOrder; trackBy: trackByKey" title="{{item.value.name}}{{item.value.isFile ? '.txt' : ''}}" (dblclick)="open(item.value)">
+        <img src="{{item.value.icon}}" alt="icon logo" class="item-icon">
+        <p class="item-name">{{item.value.name}}{{item.value.isFile ? '.txt' : ''}}</p>
+    </div>
+</div>

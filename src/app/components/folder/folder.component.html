@@ -1,11 +1,18 @@
 <div class="body">
     <div class="left-panel">
         <span class="fs">
-            <app-folders-structure-panel *ngFor="let fs of foldersStructure;" [folderStructure]="fs" [selectedFolder]="folder.name" [changeFolder]="changeFolder"/>
+            <ng-container *ngFor="let fsc of folderContentStructure | keyvalue : keepOrder; trackBy: trackByKey">
+                <app-folders-structure-panel *ngIf="fsc.value.isFolder" [key]="fsc.key" [value]="fsc.value" [openedFolder]="openedFolder" [switchToFolder]="switchToFolder"/>
+            </ng-container>
         </span>
     </div>
     <div class="content">
-        <app-projects *ngIf="folder.name === 'Projects'"></app-projects>
-        <app-experience *ngIf="folder.name === 'Experience'" [open]="open" (dragover)="dragOver($event)" (drop)="dropToMove($event)"/>
+        @if (folder.name === 'Projects') {
+            <app-projects></app-projects>
+        } @else {
+            <app-folder-content [openedFolder]="openedFolder" [switchToFolder]="switchToFolder"/>
+        }
     </div>
 </div>
+
+<!-- [selectedFolder]="folder.name" [changeFolder]="changeFolder" -->

@@ -12,6 +12,8 @@ import { Notification } from '../../models/Notification';
 import { HttpClient } from '@angular/common/http';
 import { Experience } from '../../models/Experience';
 import { FolderStructure } from '../../models/FolderStructure';
+import { lastValueFrom } from 'rxjs';
+import FolderContentStructure from '../../models/FolderContentStructure';
 
 @Component({
   selector: 'app-desktop',
@@ -96,10 +98,12 @@ export class DesktopComponent implements OnInit{
   stacksMap = new Map<string, OpenInstance[]>;
   draggedIndex =-1;
   hoveredAppPosition = {'row' : -1, 'column' : -1};
-  desktopFolders = new Set<string>();
   AppType = AppType;
   foldersStructureFile = "./fstructure.json";
   foldersStructure!: FolderStructure[];
+  folderContentStructure : Map<string, FolderContentStructure> = new Map<string, FolderContentStructure>();
+  openedFolders : Map<string, FolderContentStructure> = new Map<string, FolderContentStructure>();
+  desktopFolderName = "Desktop";
 
   constructor(private renderer : Renderer2, private http : HttpClient) {
     this.gridColumns = window.innerWidth / 100;
@@ -137,11 +141,31 @@ export class DesktopComponent implements OnInit{
     }
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const data = await lastValueFrom(this.http.get<FolderStructure[]>(this.foldersStructureFile));
+    this.foldersStructure = data;
+    this.desktopFolderName = this.foldersStructure[0].name;
+    this.folderContentStructure.set( this.desktopFolderName,{
+      id : 99999,
+      name : this.desktopFolderName,
+      icon : './home.png',
+      isFolder : true,
+      isFile : false,
+      content : new Map<string, FolderContentStructure>
+    });
     for(let appIndex = 0; appIndex<this.applications.length; appIndex++) {
       const app = this.applications[appIndex];
       const index = app.yPosition + app.xPosition*this.gridColumns;
-      if(app.type === AppType.Folder) this.desktopFolders.add(app.name);
+      this.folderContentStructure.get(this.desktopFolderName)?.content?.set(
+        app.name, {
+          id : app.id,
+          name : app.name,
+          icon : app.icon,
+          isFolder : app.type === AppType.Folder,
+          isFile : app.type === AppType.File,
+          content : app.type === AppType.Folder ? new Map<string, FolderContentStructure> : undefined
+        }
+      );
       this.applicationsMatrix.set(index, {
         'id' : app.id,
         'name' : app.name,
@@ -167,14 +191,7 @@ export class DesktopComponent implements OnInit{
       'resizeable' : false
     });
 
-    this.http.get<FolderStructure[]>(this.foldersStructureFile).subscribe({
-      next: (response) => {
-        this.foldersStructure = response;
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+    
 
     this.http.get<Experience[]>("./experience.json").subscribe({
           next: (response) => {
@@ -192,6 +209,18 @@ export class DesktopComponent implements OnInit{
                 'resizeable' : true
               });
               id--;
+              
+              this.folderContentStructure.get(this.desktopFolderName)?.content?.get("Experience")?.content?.set(
+                res.company,
+                {
+                  id : id,
+                  name : res.company,
+                  icon : "./file.png",
+                  isFolder : false,
+                  isFile : true,
+                  content : undefined
+                }
+              );
             }
           },
           error: (error) => {
@@ -228,6 +257,8 @@ export class DesktopComponent implements OnInit{
     this.YOffsetPosition = this.YOffsetPosition + 10;
     this.ZOffsetPosition++;
     if(toOpen.type === AppType.Folder) {
+      const val = this.folderContentStructure.get(this.desktopFolderName)?.content?.get(toOpen.name);
+      if(val) this.openedFolders.set(uuid, val);
       if(this.stacksMap.has(AppType.Folder.toString())){
         this.stacksMap.get(AppType.Folder.toString())?.unshift(app);
       } else {
@@ -382,13 +413,28 @@ export class DesktopComponent implements OnInit{
           return;
         }
       }
-      this.desktopFolders.delete(app.name);
+      // this.desktopFolders.delete(app.name);
+      this.deleteFolderFile(app.name);
     } else if (this.stacksMap.has(app.name)) {
       this.addNotification("cannot delete '"+app.name+"', it is open", NotifType.Warning);
       return;
     }
     this.deletedApps.set(this.draggedIndex, app);
     this.applicationsMatrix.delete(this.draggedIndex);
+  }
+
+  deleteFolderFile(name : string) {
+    if(name === 'Experience' && this.stacksMap.has(AppType.File.toString())) {
+      this.addNotification("unable to delete '"+name+"', it is in use.", NotifType.Warning);
+      return;
+    }
+    for(let folder of this.stacksMap.get(AppType.Folder.toString()) || []) {
+      if(folder.name === name) {
+        this.addNotification("unable to delete '"+name+"', it is in use.", NotifType.Warning);
+        return;
+      }
+    }
+    // this.desktopFolders.delete(name);
   }
 
   isSameKey(key : number, row : number, column : number) : boolean {
@@ -398,7 +444,7 @@ export class DesktopComponent implements OnInit{
   restoreApp = (key : number) => {
     const app = this.deletedApps.get(key);
     if(!app) return;
-    if(app.type === AppType.Folder) this.desktopFolders.add(app.name);
+    // if(app.type === AppType.Folder) this.desktopFolders.add(app.name);
     for(let c=0; c<this.gridColumns; c++) {
       for(let r =0; r<this.gridRows; r++) {
         if(!this.applicationsMatrix.has(r*this.gridColumns + c)) {
