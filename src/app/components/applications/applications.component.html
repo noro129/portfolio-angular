@@ -15,17 +15,7 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="AppType.Folder.toString()">
-                <app-window [openInstance]="{id : instance.id, 
-                                            name : instance.name,
-                                            hidden : instance.hidden,
-                                            positionX : instance.positionX,
-                                            positionY : instance.positionY,
-                                            positionZ : instance.positionZ,
-                                            windowWidth : instance.windowWidth,
-                                            windowHeight : instance.windowHeight,
-                                            resizeable : instance.resizeable,
-                                            focusedOn : instance.focusedOn,
-                                            icon : openedFolders.get(instance.id)?.icon || instance.icon}" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
+                <app-window [openInstance]="instance" [icon]="openedFolders.get(instance.id)?.icon" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
                     <app-folder [openedFolder]="openedFolders.get(instance.id)" [folder]="instance" class="application-body" [open]="open" [dragOver]="dragOver" [dropToMove]="dropToMove" [folderContentStructure]="folderContentStructure" [switchingToFolder]="switchingToFolder"/>
                 </app-window>
             </ng-container>

@@ -140,7 +140,7 @@ export class DesktopComponent implements OnInit{
       const index = app.yPosition + app.xPosition*this.gridColumns;
       this.folderContentStructure.get(this.desktopFolderName)?.content?.set(
         app.name, {
-          id : app.id,
+          id : index,
           name : app.name,
           icon : app.icon,
           isFolder : app.type === AppType.Folder,
@@ -226,11 +226,14 @@ export class DesktopComponent implements OnInit{
   }
 
   openItem = (id : number) => {
+    console.log(id);
     this.open(id);
   }
 
   open(index : number) {
+    console.log(index);
     const toOpen = this.applicationsMatrix.get(index);
+    console.log(toOpen);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
     const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false, resizeable : toOpen.resizeable};

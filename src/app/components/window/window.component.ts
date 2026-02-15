@@ -18,6 +18,7 @@ export class WindowComponent implements AfterViewInit{
   @Input() instanceType !: string;
   @Input() removeOpenInstance !: (key : string, openInstanceId : string) => void;
   @Input() putFront !: (key : string, openInstanceId : string) => void;
+  @Input() icon !: string | undefined;
   isDragging = false;
   xOffset=0;
   yOffset=0;

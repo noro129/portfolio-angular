@@ -11,6 +11,7 @@ import { KeyValuePipe, NgFor } from '@angular/common';
 export class FolderContentComponent {
   @Input() openedFolder !: FolderContentStructure | undefined;
   @Input() switchToFolder !: (f : FolderContentStructure) => void;
+  @Input() open !: (id : number) => void;
   showContextMenu = false
 
   keepOrder = () => 0;
@@ -24,9 +25,12 @@ export class FolderContentComponent {
     event.preventDefault();
   }
 
-  open(item : FolderContentStructure) {
+  openItem(item : FolderContentStructure) {
     if (item.isFolder) {
       this.switchToFolder(item);
+    } else {
+      console.log(item.id);
+      this.open(item.id);
     }
   }
 }
