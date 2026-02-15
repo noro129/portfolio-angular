@@ -6,7 +6,7 @@
     transition: background-color .1s , color .1s;
     
 
-    &:hover{
+    &:has(.folder-name:hover), &:has(.show-sub-folders:hover){
         background-color: var(--bg-color-3);
         color: var(--color-1);
     }
