@@ -3,8 +3,8 @@ import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@ang
 import { ProjectsComponent } from "../projects/projects.component";
 import { OpenInstance } from '../../models/OpenInstance';
 import { FoldersStructurePanelComponent } from '../folders-structure-panel/folders-structure-panel.component';
-import FolderContentStructure from '../../models/FolderContentStructure';
 import { FolderContentComponent } from '../folder-content/folder-content.component';
+import ContentTreeStructure from '../../models/ContentTreeStructure';
 
 @Component({
   selector: 'app-folder',
@@ -18,13 +18,13 @@ export class FolderComponent{
   @Input() open !: (id : number) => void;
   @Input() dragOver !: (event : DragEvent) => void;
   @Input() dropToMove !: (event : DragEvent) => void;
-  @Input() folderContentStructure !: Map<string, FolderContentStructure>;
-  @Input() openedFolder !: FolderContentStructure | undefined;
-  @Input() switchingToFolder !: (key : string, f : FolderContentStructure) => void;
+  @Input() contentTreeStructure !: Map<number, ContentTreeStructure>;
+  @Input() openedFolder !: ContentTreeStructure | undefined;
+  @Input() switchingToFolder !: (key : string, f : ContentTreeStructure) => void;
 
   keepOrder = () => 0;
 
-  trackByKey (index: number, item: { key: string; value: any }) : string {
+  trackByKey (index: number, item: { key: number; value: any }) : number {
     return item.key;
   }
 
@@ -33,7 +33,7 @@ export class FolderComponent{
     this.folder.name = folderName;
   }
 
-  switchToFolder = (f : FolderContentStructure) => {
+  switchToFolder = (f : ContentTreeStructure) => {
     this.switchingToFolder(this.folder.id ,f);
   }
 }

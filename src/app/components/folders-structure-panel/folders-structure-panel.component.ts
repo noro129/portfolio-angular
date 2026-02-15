@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { KeyValuePipe, NgFor, NgIf, NgStyle } from '@angular/common';
-import FolderContentStructure from '../../models/FolderContentStructure';
+import ContentTreeStructure from '../../models/ContentTreeStructure';
 
 @Component({
   selector: 'app-folders-structure-panel',
@@ -11,11 +11,11 @@ import FolderContentStructure from '../../models/FolderContentStructure';
 export class FoldersStructurePanelComponent implements OnInit {
   @Input() selectedFolder : string = "Desktop";
   @Input() changeFolder !: (name : string) => void;
-  @Input() folderContentStructure !: Map<string, FolderContentStructure>;
-  @Input() key !: string;
-  @Input() value !: FolderContentStructure;
-  @Input() openedFolder !: FolderContentStructure | undefined;
-  @Input() switchToFolder !: (f : FolderContentStructure) => void;
+  @Input() folderContentStructure !: Map<string, ContentTreeStructure>;
+  @Input() key !: number;
+  @Input() value !: ContentTreeStructure;
+  @Input() openedFolder !: ContentTreeStructure | undefined;
+  @Input() switchToFolder !: (f : ContentTreeStructure) => void;
 
 
   hasSubFolders = false;
@@ -23,7 +23,7 @@ export class FoldersStructurePanelComponent implements OnInit {
 
   keepOrder = () => 0;
 
-  trackByKey (index: number, item: { key: string; value: any }) : string {
+  trackByKey (index: number, item: { key: number; value: any }) : number {
     return item.key;
   }
 

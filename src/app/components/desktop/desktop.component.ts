@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { Experience } from '../../models/Experience';
 import { FolderStructure } from '../../models/FolderStructure';
 import { lastValueFrom } from 'rxjs';
-import FolderContentStructure from '../../models/FolderContentStructure';
+import ContentTreeStructure from '../../models/ContentTreeStructure';
 
 @Component({
   selector: 'app-desktop',
@@ -101,9 +101,10 @@ export class DesktopComponent implements OnInit{
   AppType = AppType;
   foldersStructureFile = "./fstructure.json";
   foldersStructure!: FolderStructure[];
-  folderContentStructure : Map<string, FolderContentStructure> = new Map<string, FolderContentStructure>();
-  openedFolders : Map<string, FolderContentStructure> = new Map<string, FolderContentStructure>();
-  desktopFolderName = "Desktop";
+  contentTreeStructure : Map<number, ContentTreeStructure> = new Map<number, ContentTreeStructure>();
+  openedFolders : Map<string, ContentTreeStructure> = new Map<string, ContentTreeStructure>();
+  desktopFolderName = "Desktop"; desktopFolderId = 999999;
+  experienceFolderName = "Experience";
 
   constructor(private renderer : Renderer2, private http : HttpClient) {
     this.gridColumns = window.innerWidth / 100;
@@ -124,28 +125,30 @@ export class DesktopComponent implements OnInit{
   }
 
   async ngOnInit(): Promise<void> {
+    let experienceId = 0;
     const data = await lastValueFrom(this.http.get<FolderStructure[]>(this.foldersStructureFile));
     this.foldersStructure = data;
     this.desktopFolderName = this.foldersStructure[0].name;
-    this.folderContentStructure.set( this.desktopFolderName,{
-      id : 99999,
+    this.contentTreeStructure.set( this.desktopFolderId,{
+      id : this.desktopFolderId,
       name : this.desktopFolderName,
       icon : './home.png',
       isFolder : true,
       isFile : false,
-      content : new Map<string, FolderContentStructure>
+      content : new Map<number, ContentTreeStructure>
     });
     for(let appIndex = 0; appIndex<this.applications.length; appIndex++) {
       const app = this.applications[appIndex];
       const index = app.yPosition + app.xPosition*this.gridColumns;
-      this.folderContentStructure.get(this.desktopFolderName)?.content?.set(
-        app.name, {
-          id : index,
+      if (app.name === this.experienceFolderName) experienceId = app.id;
+      this.contentTreeStructure.get(this.desktopFolderId)?.content?.set(
+        app.id, {
+          id : app.id,
           name : app.name,
           icon : app.icon,
           isFolder : app.type === AppType.Folder,
           isFile : app.type === AppType.File,
-          content : app.type === AppType.Folder ? new Map<string, FolderContentStructure> : undefined
+          content : app.type === AppType.Folder ? new Map<number, ContentTreeStructure> : undefined
         }
       );
       this.applicationsMatrix.set(index, {
@@ -190,8 +193,8 @@ export class DesktopComponent implements OnInit{
                 'defaultWidth' : 600,
                 'resizeable' : true
               });
-              this.folderContentStructure.get(this.desktopFolderName)?.content?.get("Experience")?.content?.set(
-                res.company,
+              this.contentTreeStructure.get(this.desktopFolderId)?.content?.get(experienceId)?.content?.set(
+                id,
                 {
                   id : id,
                   name : res.company,
@@ -226,14 +229,12 @@ export class DesktopComponent implements OnInit{
   }
 
   openItem = (id : number) => {
-    console.log(id);
     this.open(id);
   }
 
   open(index : number) {
     console.log(index);
     const toOpen = this.applicationsMatrix.get(index);
-    console.log(toOpen);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
     const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false, resizeable : toOpen.resizeable};
@@ -241,7 +242,7 @@ export class DesktopComponent implements OnInit{
     this.YOffsetPosition = this.YOffsetPosition + 10;
     this.ZOffsetPosition++;
     if(toOpen.type === AppType.Folder) {
-      const val = this.folderContentStructure.get(this.desktopFolderName)?.content?.get(toOpen.name);
+      const val = this.contentTreeStructure.get(this.desktopFolderId)?.content?.get(toOpen.id);
       if(val) this.openedFolders.set(uuid, val);
       if(this.stacksMap.has(AppType.Folder.toString())){
         this.stacksMap.get(AppType.Folder.toString())?.unshift(app);
@@ -269,6 +270,7 @@ export class DesktopComponent implements OnInit{
     const val = this.stacksMap.get(key) || [];
     var index = val.findIndex(item => item.id === itemId);
     if(index == -1) return;
+    if(key === AppType.Folder.toString()) this.openedFolders.delete(val[index].id);
     val.splice(index, 1);
     if(val.length == 0) this.stacksMap.delete(key);
   }

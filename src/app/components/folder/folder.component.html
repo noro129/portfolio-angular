@@ -1,7 +1,7 @@
 <div class="body">
     <div class="left-panel">
         <span class="fs">
-            <ng-container *ngFor="let fsc of folderContentStructure | keyvalue : keepOrder; trackBy: trackByKey">
+            <ng-container *ngFor="let fsc of contentTreeStructure | keyvalue : keepOrder; trackBy: trackByKey">
                 <app-folders-structure-panel *ngIf="fsc.value.isFolder" [key]="fsc.key" [value]="fsc.value" [openedFolder]="openedFolder" [switchToFolder]="switchToFolder"/>
             </ng-container>
         </span>

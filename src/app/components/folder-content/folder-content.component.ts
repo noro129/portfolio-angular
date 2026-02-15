@@ -1,6 +1,6 @@
 import { Component, HostListener, Input } from '@angular/core';
-import FolderContentStructure from '../../models/FolderContentStructure';
 import { KeyValuePipe, NgFor } from '@angular/common';
+import ContentTreeStructure from '../../models/ContentTreeStructure';
 
 @Component({
   selector: 'app-folder-content',
@@ -9,14 +9,14 @@ import { KeyValuePipe, NgFor } from '@angular/common';
   styleUrl: './folder-content.component.scss'
 })
 export class FolderContentComponent {
-  @Input() openedFolder !: FolderContentStructure | undefined;
-  @Input() switchToFolder !: (f : FolderContentStructure) => void;
+  @Input() openedFolder !: ContentTreeStructure | undefined;
+  @Input() switchToFolder !: (f : ContentTreeStructure) => void;
   @Input() open !: (id : number) => void;
   showContextMenu = false
 
   keepOrder = () => 0;
 
-  trackByKey (index: number, item: { key: string; value: any }) : string {
+  trackByKey (index: number, item: { key: number; value: any }) : number {
     return item.key;
   }
 
@@ -25,7 +25,7 @@ export class FolderContentComponent {
     event.preventDefault();
   }
 
-  openItem(item : FolderContentStructure) {
+  openItem(item : ContentTreeStructure) {
     if (item.isFolder) {
       this.switchToFolder(item);
     } else {

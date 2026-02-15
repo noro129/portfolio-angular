@@ -10,8 +10,7 @@ import { WhoamiComponent } from "../whoami/whoami.component";
 import { TrashComponent } from "../trash/trash.component";
 import { AppsObject } from '../../models/AppsObject';
 import { FileReaderComponent } from "../file-reader/file-reader.component";
-import { FolderStructure } from '../../models/FolderStructure';
-import FolderContentStructure from '../../models/FolderContentStructure';
+import ContentTreeStructure from '../../models/ContentTreeStructure';
 
 @Component({
   selector: 'app-applications',
@@ -27,9 +26,9 @@ export class ApplicationsComponent {
   @Input() restoreApp !: (key : number)=> void;
   @Input() open !: (id : number) => void;
   @Input() deleteDraggedItem !: () => void;
-  @Input() folderContentStructure !: Map<string, FolderContentStructure>;
+  @Input() contentTreeStructure !: Map<number, ContentTreeStructure>;
 
-  @Input() openedFolders !: Map<string, FolderContentStructure>;
+  @Input() openedFolders !: Map<string, ContentTreeStructure>;
   AppType = AppType;
   keepOrder = () => 0;
 
@@ -55,7 +54,7 @@ export class ApplicationsComponent {
     console.log("dropping ");
   }
 
-  switchingToFolder = (key : string, newF : FolderContentStructure) => {
+  switchingToFolder = (key : string, newF : ContentTreeStructure) => {
     this.openedFolders.set(key, newF);
     this.openedAplications.get(AppType.Folder.toString())?.forEach(
       (f) => {
