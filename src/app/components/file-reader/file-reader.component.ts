@@ -1,11 +1,9 @@
-import { NgStyle, NgForOf, NgFor } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, OnInit } from '@angular/core';
-import { Experience } from '../../models/Experience';
-import { HttpClient } from '@angular/common/http';
+import { NgStyle, NgFor, NgIf } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
 
 @Component({
   selector: 'app-file-reader',
-  imports: [NgStyle, NgFor],
+  imports: [NgStyle, NgFor, NgIf],
   templateUrl: './file-reader.component.html',
   styleUrl: './file-reader.component.scss'
 })

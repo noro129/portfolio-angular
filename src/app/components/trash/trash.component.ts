@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { AppsObject } from '../../models/AppsObject';
+import { AppObject } from '../../models/AppObject';
 import { KeyValuePipe, NgFor, NgClass } from '@angular/common';
 import { AppType } from '../../models/AppType';
 
@@ -10,7 +10,7 @@ import { AppType } from '../../models/AppType';
   styleUrl: './trash.component.scss'
 })
 export class TrashComponent implements OnDestroy {
-  @Input() deletedApps !: Map<number, AppsObject>;
+  @Input() deletedApps !: Map<number, AppObject>;
   @Input() restoreApp !: (key : number) => void;
   focusedApps = 0;
   AppType = AppType;

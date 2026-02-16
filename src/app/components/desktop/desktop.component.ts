@@ -5,7 +5,7 @@ import { AppType } from '../../models/AppType';
 import { ActiveItemsPanelComponent } from "../active-items-panel/active-items-panel.component";
 import { OpenInstance } from '../../models/OpenInstance';
 import { ApplicationsComponent } from "../applications/applications.component";
-import { AppsObject } from '../../models/AppsObject';
+import { AppObject } from '../../models/AppObject';
 import { NotificationComponent } from "../notification/notification.component";
 import { NotifType } from '../../models/NotifType';
 import { Notification } from '../../models/Notification';
@@ -88,9 +88,9 @@ export class DesktopComponent implements OnInit{
   //       'resizeable' : true
   //     }
   // ];
-  applicationsMatrix !: AppsObject[][] | undefined[][];
+  applicationsMatrix !: AppObject[][] | undefined[][];
   notifications = new Map<string, Notification>();
-  deletedApps = new Map<number, AppsObject>();
+  deletedApps = new Map<number, AppObject>();
   stacksMap = new Map<string, OpenInstance[]>;
   draggedPosition = {row : -1, column : -1};
   AppType = AppType;
@@ -182,15 +182,8 @@ export class DesktopComponent implements OnInit{
         if(i=== node.length) return;
         const item = node[i];
         this.applicationsMatrix[r][c] = {
-          id : item.id,
-          name : item.name,
-          icon : item.icon,
-          type : item.isFile ? AppType.File : (item.isFolder ? AppType.Folder : AppType.Application),
-          defaultHeight : item.defaultHeight,
-          defaultWidth : item.defaultWidth,
-          resizeable : item.resizeable,
-          focused : false,
-          canDelete : item.canDelete
+          app_id : item.id,
+          focused : false
         }
         i++;
       }
@@ -260,7 +253,7 @@ export class DesktopComponent implements OnInit{
     const app = this.applicationsMatrix[row][column]
     if (app){
       app.focused = false;
-      this.openWithId(app.id);
+      this.openWithId(app.app_id);
     }
   }
 
@@ -421,10 +414,12 @@ export class DesktopComponent implements OnInit{
     this.draggedPosition = {'row' : -1, 'column' : -1};
   }
 
-  deleteApp(app : AppsObject | undefined) {
+  deleteApp(appO : AppObject | undefined) {
+    if(!appO) return;
+    const app = this.appObjectToApplicationTransformer(appO);
     if(!app) return;
-    app.focused = false;
-    if(app.canDelete) {
+    appO.focused = false;
+    if(!app.canDelete) {
       this.addNotification("cannot delete "+app.name, NotifType.Error);
       return;
     } else if (app.type === AppType.Folder){
@@ -480,5 +475,10 @@ export class DesktopComponent implements OnInit{
       }
     }
     
-  } 
+  }
+
+  appObjectToApplicationTransformer(appObject : AppObject | undefined) : Application | undefined{
+    if(!appObject) return undefined;
+    return this.applications.get(appObject.app_id);
+  }
 }
