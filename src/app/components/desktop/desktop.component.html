@@ -17,12 +17,12 @@
                 (dblclick)="open(row, column)"
                 (dragover)="onDragOver($event)"
                 (drop)="onDrop($event, row, column)">
-            <span *ngIf="applicationsMatrix[row][column] as app"
+            <span *ngIf="appObjectToApplicationTransformer(applicationsMatrix[row][column]) as app"
                     class="app-wrapper" 
                     draggable="true"
                     (dragstart)="onDragStart($event, row, column)"
                     title="{{app.name}}{{app.type === AppType.File ? '.txt' : ''}}"
-                    [ngClass]="{'focused' : app?.focused, 'not-focused' : !app?.focused}">
+                    [ngClass]="{'focused' : applicationsMatrix[row][column]?.focused, 'not-focused' : !applicationsMatrix[row][column]?.focused}">
                 <img src="{{app?.icon}}" alt="" class="icon">
                 <p class="name">{{app?.name}}</p>
             </span>

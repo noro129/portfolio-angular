@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
-import { NgFor, KeyValuePipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { NgFor, KeyValuePipe, NgSwitch, NgSwitchCase } from '@angular/common';
 import { AppType } from '../../models/AppType';
 import { BlodestComponent } from "../blodest/blodest.component";
 import { WindowComponent } from "../window/window.component";
@@ -8,7 +8,7 @@ import { FolderComponent } from "../folder/folder.component";
 import { CMDComponent } from "../cmd/cmd.component";
 import { WhoamiComponent } from "../whoami/whoami.component";
 import { TrashComponent } from "../trash/trash.component";
-import { AppsObject } from '../../models/AppsObject';
+import { AppObject } from '../../models/AppObject';
 import { FileReaderComponent } from "../file-reader/file-reader.component";
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 
@@ -19,7 +19,7 @@ import ContentTreeStructure from '../../models/ContentTreeStructure';
   styleUrl: './applications.component.scss'
 })
 export class ApplicationsComponent {
-  @Input() deletedApps !: Map<number, AppsObject>;
+  @Input() deletedApps !: Map<number, AppObject>;
   @Input() openedAplications!: Map<string, OpenInstance[]>;
   @Input() removeOpenInstance !: (key: string, itemId: string)=> void;
   @Input() putOpenInstanceFront !: (key: string, itemId: string)=> void;
