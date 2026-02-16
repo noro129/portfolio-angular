@@ -5,16 +5,16 @@ import { AppType } from '../../models/AppType';
 import { ActiveItemsPanelComponent } from "../active-items-panel/active-items-panel.component";
 import { OpenInstance } from '../../models/OpenInstance';
 import { ApplicationsComponent } from "../applications/applications.component";
-import { AppObject } from '../../models/AppObject';
 import { NotificationComponent } from "../notification/notification.component";
 import { NotifType } from '../../models/NotifType';
 import { Notification } from '../../models/Notification';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
+import { AppTileComponent } from '../app-tile/app-tile.component';
 
 @Component({
   selector: 'app-desktop',
-  imports: [NgFor, NgIf, NgClass,
-    ActiveItemsPanelComponent, ApplicationsComponent, NotificationComponent],
+  imports: [NgFor, NgIf,
+    ActiveItemsPanelComponent, ApplicationsComponent, NotificationComponent, AppTileComponent],
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })
@@ -88,9 +88,9 @@ export class DesktopComponent implements OnInit{
   //       'resizeable' : true
   //     }
   // ];
-  applicationsMatrix !: AppObject[][] | undefined[][];
+  applicationsMatrix !: number[][] | undefined[][];
   notifications = new Map<string, Notification>();
-  deletedApps = new Map<number, AppObject>();
+  deletedApplications = new Map<number, Application>();
   stacksMap = new Map<string, OpenInstance[]>;
   draggedPosition = {row : -1, column : -1};
   AppType = AppType;
@@ -116,18 +116,23 @@ export class DesktopComponent implements OnInit{
     return Array.from({ length }, (_, i) => i);
   }
 
-  @HostListener('document:keydown.enter')
-  handleEnterKey() {
-    for(let row=0; row<this.gridRows; row++) {
-      for(let column=0; column<this.gridColumns; column++) {
-        const app = this.applicationsMatrix[row][column];
-        if (app && app.focused) {
-          this.open(row, column);
-          return;
-        }
-      }
-    }
+  getApplication(id : number | undefined) {
+    if (id !== undefined) return this.applications.get(id);
+    return undefined;
   }
+
+  // @HostListener('document:keydown.enter')
+  // handleEnterKey() {
+  //   for(let row=0; row<this.gridRows; row++) {
+  //     for(let column=0; column<this.gridColumns; column++) {
+  //       const app = this.applicationsMatrix[row][column];
+  //       if (app && app.focused) {
+  //         this.open(row, column);
+  //         return;
+  //       }
+  //     }
+  //   }
+  // }
 
   ngOnInit(): void {
     fetch(this.applicationsData).then(res=>res.json()).then(
@@ -148,6 +153,7 @@ export class DesktopComponent implements OnInit{
       treeNode.set(item.id, {
         id : item.id,
         name : item.name,
+        extension : item.extension,
         icon : item.icon,
         isFile : item.isFile,
         isFolder : item.isFolder,
@@ -181,10 +187,7 @@ export class DesktopComponent implements OnInit{
       for(let r=0; r<this.gridRows; r++) {
         if(i=== node.length) return;
         const item = node[i];
-        this.applicationsMatrix[r][c] = {
-          app_id : item.id,
-          focused : false
-        }
+        this.applicationsMatrix[r][c] = item.id;
         i++;
       }
     }
@@ -202,6 +205,7 @@ export class DesktopComponent implements OnInit{
           {
             id : id,
             name : item.company,
+            extension : ".txt",
             icon : "./file.png",
             isFolder : false,
             isFile : true,
@@ -235,26 +239,8 @@ export class DesktopComponent implements OnInit{
     },2500);
   }
 
-  appFocus(row : number, column : number) {
-    for(let i=0; i<this.gridRows; i++) {
-      for(let j=0; j<this.gridColumns; j++) {
-        const app = this.applicationsMatrix[i][j];
-        if(app) app.focused = false;
-      }
-    }
-    if(this.applicationsMatrix[row][column]) this.applicationsMatrix[row][column].focused = true;
-  }
-
   openItem = (id : number) => {
     this.openWithId(id);
-  }
-
-  open(row : number, column : number) {
-    const app = this.applicationsMatrix[row][column]
-    if (app){
-      app.focused = false;
-      this.openWithId(app.app_id);
-    }
   }
 
   openWithId(id : number) {
@@ -376,7 +362,7 @@ export class DesktopComponent implements OnInit{
     }
   }
 
-  onDragStart(event : DragEvent, row : number, column : number) {
+  onDragStart(row : number, column : number) {
     this.draggedPosition = { row : row , column : column};
     console.log(this.draggedPosition);
     //event.dataTransfer?.setData('plain/text', key.toString());
@@ -410,15 +396,14 @@ export class DesktopComponent implements OnInit{
 
   deleteDraggedItem = () => {
     console.log("delete this item "+this.draggedPosition + "?");
-    this.deleteApp(this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column]);
+    const app_id = this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column];
+    if(app_id) this.deleteApp(app_id);
     this.draggedPosition = {'row' : -1, 'column' : -1};
   }
 
-  deleteApp(appO : AppObject | undefined) {
-    if(!appO) return;
-    const app = this.appObjectToApplicationTransformer(appO);
+  deleteApp(app_id : number) {
+    const app = this.applications.get(app_id);
     if(!app) return;
-    appO.focused = false;
     if(!app.canDelete) {
       this.addNotification("cannot delete "+app.name, NotifType.Error);
       return;
@@ -462,23 +447,18 @@ export class DesktopComponent implements OnInit{
   }
 
   restoreApp = (key : number) => {
-    const app = this.deletedApps.get(key);
+    const app = this.deletedApplications.get(key);
     if(!app) return;
     // if(app.type === AppType.Folder) this.desktopFolders.add(app.name);
     for(let c=0; c<this.gridColumns; c++) {
       for(let r =0; r<this.gridRows; r++) {
         if(!this.applicationsMatrix[r][c]) {
-          this.applicationsMatrix[r][c] = app;
-          this.deletedApps.delete(key);
+          this.applicationsMatrix[r][c] = app.id;
+          this.deletedApplications.delete(key);
           return;
         }
       }
     }
     
-  }
-
-  appObjectToApplicationTransformer(appObject : AppObject | undefined) : Application | undefined{
-    if(!appObject) return undefined;
-    return this.applications.get(appObject.app_id);
   }
 }

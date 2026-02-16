@@ -13,19 +13,19 @@
     <div *ngFor="let column of arrayOfSize(gridColumns)" class="column">
         <div *ngFor="let row of arrayOfSize(gridRows)" 
                 class="row"
-                (click)="appFocus(row, column)"
-                (dblclick)="open(row, column)"
                 (dragover)="onDragOver($event)"
                 (drop)="onDrop($event, row, column)">
-            <span *ngIf="appObjectToApplicationTransformer(applicationsMatrix[row][column]) as app"
-                    class="app-wrapper" 
-                    draggable="true"
-                    (dragstart)="onDragStart($event, row, column)"
-                    title="{{app.name}}{{app.type === AppType.File ? '.txt' : ''}}"
-                    [ngClass]="{'focused' : applicationsMatrix[row][column]?.focused, 'not-focused' : !applicationsMatrix[row][column]?.focused}">
-                <img src="{{app?.icon}}" alt="" class="icon">
-                <p class="name">{{app?.name}}</p>
-            </span>
+
+            
+            <app-app-tile *ngIf="getApplication(applicationsMatrix[row][column]) as app"
+                draggable="true"
+                (dragstart)="onDragStart(row, column)"
+                [app_id]="app.id"
+                [app_name]="app.name"
+                [app_ext]="app.extension"
+                [app_icon]="app.icon"
+                [openWithId]="openItem"
+                 />
             
         </div>
     </div>
@@ -35,7 +35,7 @@
     [openedAplications]="stacksMap"
     [removeOpenInstance]="removeItem"
     [putOpenInstanceFront]="putInstanceFront"
-    [deletedApps]="deletedApps"
+    [deletedApplications]="deletedApplications"
     [restoreApp]="restoreApp"
     [open]="openItem"
     [deleteDraggedItem]="deleteDraggedItem"

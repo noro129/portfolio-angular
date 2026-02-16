@@ -8,9 +8,9 @@ import { FolderComponent } from "../folder/folder.component";
 import { CMDComponent } from "../cmd/cmd.component";
 import { WhoamiComponent } from "../whoami/whoami.component";
 import { TrashComponent } from "../trash/trash.component";
-import { AppObject } from '../../models/AppObject';
 import { FileReaderComponent } from "../file-reader/file-reader.component";
 import ContentTreeStructure from '../../models/ContentTreeStructure';
+import { Application } from '../../models/Application';
 
 @Component({
   selector: 'app-applications',
@@ -19,7 +19,7 @@ import ContentTreeStructure from '../../models/ContentTreeStructure';
   styleUrl: './applications.component.scss'
 })
 export class ApplicationsComponent {
-  @Input() deletedApps !: Map<number, AppObject>;
+  @Input() deletedApplications !: Map<number, Application>;
   @Input() openedAplications!: Map<string, OpenInstance[]>;
   @Input() removeOpenInstance !: (key: string, itemId: string)=> void;
   @Input() putOpenInstanceFront !: (key: string, itemId: string)=> void;

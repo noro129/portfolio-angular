@@ -1,10 +1,11 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { KeyValuePipe, NgFor } from '@angular/common';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
+import { AppTileComponent } from '../app-tile/app-tile.component';
 
 @Component({
   selector: 'app-folder-content',
-  imports: [NgFor, KeyValuePipe],
+  imports: [NgFor, KeyValuePipe, AppTileComponent],
   templateUrl: './folder-content.component.html',
   styleUrl: './folder-content.component.scss'
 })
