@@ -1,0 +1,190 @@
+[{
+    "id" : 1000000,
+    "name" : "root",
+    "isFolder" : true,
+    "isFile" : false,
+    "canDelete" : false,
+    "icon" : "./home.png",
+    "extension" : "",
+    "defaultHeight" : 450,
+    "defaultWidth" : 700,
+    "resizeable" : true,
+    "content" : [
+        {
+            "id" : 999999,
+            "name" : "Desktop",
+            "isFolder" : true,
+            "isFile" : false,
+            "canDelete" : false,
+            "icon" : "./home.png",
+            "extension" : "",
+            "defaultHeight" : 450,
+            "defaultWidth" : 700,
+            "resizeable" : true,
+            "content" : [
+                {
+                    "id" : 0,
+                    "name" : "Projects",
+                    "isFolder" : true,
+                    "isFile" : false,
+                    "canDelete" : true,
+                    "icon" : "./folder.png",
+                    "extension" : "",
+                    "defaultHeight" : 450,
+                    "defaultWidth" : 700,
+                    "resizeable" : true,
+                    "content" : null
+                },{
+                    "id" : 1,
+                    "name" : "Experience",
+                    "isFolder" : true,
+                    "isFile" : false,
+                    "canDelete" : true,
+                    "icon" : "./folder.png",
+                    "extension" : "",
+                    "defaultHeight" : 450,
+                    "defaultWidth" : 700,
+                    "resizeable" : true,
+                    "content" : []
+                },{
+                    "id" : 2,
+                    "name" : "WhoAmI",
+                    "isFolder" : false,
+                    "isFile" : false,
+                    "canDelete" : false,
+                    "icon" : "./question-mark.png",
+                    "extension" : "",
+                    "defaultHeight" : 600,
+                    "defaultWidth" : 460,
+                    "resizeable" : false,
+                    "content" : null
+                },{
+                    "id" : 3,
+                    "name" : "CMD",
+                    "isFolder" : false,
+                    "isFile" : false,
+                    "canDelete" : false,
+                    "icon" : "./command-line.png",
+                    "extension" : "",
+                    "defaultHeight" : 450,
+                    "defaultWidth" : 800,
+                    "resizeable" : true,
+                    "content" : null
+                },{
+                    "id" : 4,
+                    "name" : "recycle bin",
+                    "isFolder" : false,
+                    "isFile" : false,
+                    "canDelete" : false,
+                    "icon" : "./bin.png",
+                    "extension" : "",
+                    "defaultHeight" : 450,
+                    "defaultWidth" : 700,
+                    "resizeable" : true,
+                    "content" : null
+                }
+            ]
+        },
+        {
+            "id" : 999998,
+            "name" : "bin",
+            "isFolder" : true,
+            "isFile" : false,
+            "canDelete" : false,
+            "icon" : "./folder.png",
+            "extension" : "",
+            "defaultHeight" : 450,
+            "defaultWidth" : 700,
+            "resizeable" : true,
+            "content" : [
+                {
+                    "id" : -1,
+                    "name" : "whoami",
+                    "isFile" : true,
+                    "isFolder" : false,
+                    "extension" : "sc",
+                    "icon" : "./script.png",
+                    "defaultHeight" : 700,
+                    "defaultWidth" : 600,
+                    "resizeable" : true,
+                    "canDelete" : false,
+                    "content" : null
+                },{
+                    "id" : -2,
+                    "name" : "print",
+                    "isFile" : true,
+                    "isFolder" : false,
+                    "extension" : "sc",
+                    "icon" : "./script.png",
+                    "defaultHeight" : 700,
+                    "defaultWidth" : 600,
+                    "resizeable" : true,
+                    "canDelete" : false,
+                    "content" : null
+                },{
+                    "id" : -3,
+                    "name" : "clear",
+                    "isFile" : true,
+                    "isFolder" : false,
+                    "extension" : "sc",
+                    "icon" : "./script.png",
+                    "defaultHeight" : 700,
+                    "defaultWidth" : 600,
+                    "resizeable" : true,
+                    "canDelete" : false,
+                    "content" : null
+                },{
+                    "id" : -4,
+                    "name" : "exit",
+                    "isFile" : true,
+                    "isFolder" : false,
+                    "extension" : "sc",
+                    "icon" : "./script.png",
+                    "defaultHeight" : 700,
+                    "defaultWidth" : 600,
+                    "resizeable" : true,
+                    "canDelete" : false,
+                    "content" : null
+                },{
+                    "id" : -5,
+                    "name" : "help",
+                    "isFile" : true,
+                    "isFolder" : false,
+                    "extension" : "sc",
+                    "icon" : "./script.png",
+                    "defaultHeight" : 700,
+                    "defaultWidth" : 600,
+                    "resizeable" : true,
+                    "canDelete" : false,
+                    "content" : null
+                }
+            ]
+        },{
+            "id" : 999997,
+            "name" : "games",
+            "isFolder" : true,
+            "isFile" : false,
+            "canDelete" : false,
+            "icon" : "./folder.png",
+            "extension" : "",
+            "defaultHeight" : 450,
+            "defaultWidth" : 700,
+            "resizeable" : true,
+            "content" : [
+                {
+                    "id" : -999,
+                    "name" : "bloDest",
+                    "isFolder" : false,
+                    "isFile" : false,
+                    "canDelete" : false,
+                    "icon" : "./BloDest.png",
+                    "extension" : "",
+                    "defaultHeight" : 700,
+                    "defaultWidth" : 700,
+                    "resizeable" : false,
+                    "content" : null
+                }
+            ]
+        }
+    ]
+}]

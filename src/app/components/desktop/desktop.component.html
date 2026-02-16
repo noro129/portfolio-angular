@@ -13,14 +13,14 @@
     <div *ngFor="let column of arrayOfSize(gridColumns)" class="column">
         <div *ngFor="let row of arrayOfSize(gridRows)" 
                 class="row"
-                (click)="appFocus(column + row*gridColumns)"
-                (dblclick)="open(column + row*gridColumns)"
-                (dragover)="onDragOver($event, row, column)"
-                (drop)="onDrop($event, column + row*gridColumns)">
-            <span *ngIf="applicationsMatrix.get(column + row*gridColumns) as app" 
+                (click)="appFocus(row, column)"
+                (dblclick)="open(row, column)"
+                (dragover)="onDragOver($event)"
+                (drop)="onDrop($event, row, column)">
+            <span *ngIf="applicationsMatrix[row][column] as app"
                     class="app-wrapper" 
                     draggable="true"
-                    (dragstart)="onDragStart($event, column + row*gridColumns)"
+                    (dragstart)="onDragStart($event, row, column)"
                     title="{{app.name}}{{app.type === AppType.File ? '.txt' : ''}}"
                     [ngClass]="{'focused' : app?.focused, 'not-focused' : !app?.focused}">
                 <img src="{{app?.icon}}" alt="" class="icon">
@@ -41,6 +41,7 @@
     [deleteDraggedItem]="deleteDraggedItem"
     [contentTreeStructure]="contentTreeStructure"
     [openedFolders]="openedFolders"
+    [experience]="experience"
 />
 
 <app-active-items-panel

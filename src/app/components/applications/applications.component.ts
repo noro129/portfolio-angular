@@ -26,6 +26,7 @@ export class ApplicationsComponent {
   @Input() restoreApp !: (key : number)=> void;
   @Input() open !: (id : number) => void;
   @Input() deleteDraggedItem !: () => void;
+  @Input() experience !: any;
   @Input() contentTreeStructure !: Map<number, ContentTreeStructure>;
 
   @Input() openedFolders !: Map<string, ContentTreeStructure>;

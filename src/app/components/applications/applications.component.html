@@ -2,7 +2,7 @@
     <ng-container *ngFor="let instance of appInstances.value; trackBy: trackById">
         <ng-container [ngSwitch]="appInstances.key">
 
-            <ng-container *ngSwitchCase="'BloDest'">
+            <ng-container *ngSwitchCase="'bloDest'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
                     <app-blodest class="application-body"/>
                 </app-window>
@@ -20,7 +20,7 @@
                 </app-window>
             </ng-container>
 
-            <ng-container *ngSwitchCase="'bin'">
+            <ng-container *ngSwitchCase="'recycle bin'">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
                     <app-trash class="application-body" [deletedApps]="deletedApps" [restoreApp]="restoreApp" (dragover)="dragOver($event)" (drop)="dropToDelete($event)"/>
                 </app-window>
@@ -34,7 +34,7 @@
 
             <ng-container *ngSwitchCase="AppType.File.toString()">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-file-reader class="application-body" [company]="instance.name" />
+                    <app-file-reader class="application-body" [experience]="experience.get(instance.name)" />
                 </app-window>
             </ng-container>
             

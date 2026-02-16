@@ -9,10 +9,6 @@ import { AppsObject } from '../../models/AppsObject';
 import { NotificationComponent } from "../notification/notification.component";
 import { NotifType } from '../../models/NotifType';
 import { Notification } from '../../models/Notification';
-import { HttpClient } from '@angular/common/http';
-import { Experience } from '../../models/Experience';
-import { FolderStructure } from '../../models/FolderStructure';
-import { lastValueFrom } from 'rxjs';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 
 @Component({
@@ -30,85 +26,90 @@ export class DesktopComponent implements OnInit{
   gridColumns = 21;
   gridRows = 10;
   appFocusEl !: HTMLElement;
-  readonly applications : Application[] = [
-      {
-        'id' : 0,
-        'name' : 'Projects',
-        'type' : AppType.Folder,
-        'systemApp' : false,
-        'icon' : './folder.png',
-        'xPosition' : 0,
-        'yPosition' : 0,
-        'defaultHeight' : 450,
-        'defaultWidth' : 700,
-        'resizeable' : true
-      },
-      {
-        'id' : 1,
-        'name' : 'Experience',
-        'type' : AppType.Folder,
-        'systemApp' : false,
-        'icon' : './folder.png',
-        'xPosition' : 1,
-        'yPosition' : 0,
-        'defaultHeight' : 450,
-        'defaultWidth' : 700,
-        'resizeable' : true
-      },
-      {
-        'id' : 2,
-        'name' : 'WhoAmI',
-        'type' : AppType.Application,
-        'systemApp' : true,
-        'icon' : './question-mark.png',
-        'xPosition' : 2,
-        'yPosition' : 0,
-        'defaultHeight' : 600,
-        'defaultWidth' : 460,
-        'resizeable' : false
-      },
-      {
-        'id' : 3,
-        'name' : 'CMD',
-        'type' : AppType.Application,
-        'systemApp' : true,
-        'icon' : './command-line.png',
-        'xPosition' : 3,
-        'yPosition' : 0,
-        'defaultHeight' : 450,
-        'defaultWidth' : 800,
-        'resizeable' : true
-      },
-      {
-        'id' : 4,
-        'name' : 'bin',
-        'type' : AppType.Application,
-        'systemApp' : true,
-        'icon' : './trash-can.png',
-        'xPosition' : 4,
-        'yPosition' : 0,
-        'defaultHeight' : 450,
-        'defaultWidth' : 700,
-        'resizeable' : true
-      }
-  ];
-  applicationsMatrix = new Map<number, AppsObject>();
+  applications = new Map<number, Application>(); readonly applicationsData = "./applications.json";
+  //     {
+  //       'id' : 0,
+  //       'name' : 'Projects',
+  //       'type' : AppType.Folder,
+  //       'systemApp' : false,
+  //       'icon' : './folder.png',
+  //       'xPosition' : 0,
+  //       'yPosition' : 0,
+  //       'defaultHeight' : 450,
+  //       'defaultWidth' : 700,
+  //       'resizeable' : true
+  //     },
+  //     {
+  //       'id' : 1,
+  //       'name' : 'Experience',
+  //       'type' : AppType.Folder,
+  //       'systemApp' : false,
+  //       'icon' : './folder.png',
+  //       'xPosition' : 1,
+  //       'yPosition' : 0,
+  //       'defaultHeight' : 450,
+  //       'defaultWidth' : 700,
+  //       'resizeable' : true
+  //     },
+  //     {
+  //       'id' : 2,
+  //       'name' : 'WhoAmI',
+  //       'type' : AppType.Application,
+  //       'systemApp' : true,
+  //       'icon' : './question-mark.png',
+  //       'xPosition' : 2,
+  //       'yPosition' : 0,
+  //       'defaultHeight' : 600,
+  //       'defaultWidth' : 460,
+  //       'resizeable' : false
+  //     },
+  //     {
+  //       'id' : 3,
+  //       'name' : 'CMD',
+  //       'type' : AppType.Application,
+  //       'systemApp' : true,
+  //       'icon' : './command-line.png',
+  //       'xPosition' : 3,
+  //       'yPosition' : 0,
+  //       'defaultHeight' : 450,
+  //       'defaultWidth' : 800,
+  //       'resizeable' : true
+  //     },
+  //     {
+  //       'id' : 4,
+  //       'name' : 'bin',
+  //       'type' : AppType.Application,
+  //       'systemApp' : true,
+  //       'icon' : './trash-can.png',
+  //       'xPosition' : 4,
+  //       'yPosition' : 0,
+  //       'defaultHeight' : 450,
+  //       'defaultWidth' : 700,
+  //       'resizeable' : true
+  //     }
+  // ];
+  applicationsMatrix !: AppsObject[][] | undefined[][];
   notifications = new Map<string, Notification>();
   deletedApps = new Map<number, AppsObject>();
   stacksMap = new Map<string, OpenInstance[]>;
-  draggedIndex =-1;
-  hoveredAppPosition = {'row' : -1, 'column' : -1};
+  draggedPosition = {row : -1, column : -1};
   AppType = AppType;
-  foldersStructureFile = "./fstructure.json";
-  foldersStructure!: FolderStructure[];
   contentTreeStructure : Map<number, ContentTreeStructure> = new Map<number, ContentTreeStructure>();
   openedFolders : Map<string, ContentTreeStructure> = new Map<string, ContentTreeStructure>();
-  desktopFolderName = "Desktop"; desktopFolderId = 999999;
-  experienceFolderName = "Experience";
+  readonly desktopHomePath = ["root", "Desktop"]; appMatrixIsSet = false;
+  readonly experienceFolderPath = ["root", "Desktop", "Experience"]; experienceIsSet = false;
+  readonly experienceData = "./experience.json"; experience : Map<string, any> = new Map<string, any>();
 
-  constructor(private renderer : Renderer2, private http : HttpClient) {
-    this.gridColumns = window.innerWidth / 100;
-    this.gridRows = window.innerHeight / 100;
+  constructor(private renderer : Renderer2) {
+    this.gridColumns = Math.floor(window.innerWidth / 100);
+    this.gridRows = Math.floor(window.innerHeight / 100);
+    this.applicationsMatrix = [];
+    for(let i =0; i<this.gridRows; i++) {
+      this.applicationsMatrix[i] = [];
+      for(let j=0; j<this.gridColumns; j++) {
+        this.applicationsMatrix[i][j] = undefined;
+      }
+    }
   }
 
   arrayOfSize(length : number) : number[] {
@@ -117,100 +118,120 @@ export class DesktopComponent implements OnInit{
 
   @HostListener('document:keydown.enter')
   handleEnterKey() {
-    for(let [key, app] of this.applicationsMatrix) {
-      if(!app.focused) continue;
-      this.open(key);
-      break;
+    for(let row=0; row<this.gridRows; row++) {
+      for(let column=0; column<this.gridColumns; column++) {
+        const app = this.applicationsMatrix[row][column];
+        if (app && app.focused) {
+          this.open(row, column);
+          return;
+        }
+      }
     }
   }
 
-  async ngOnInit(): Promise<void> {
-    let experienceId = 0;
-    const data = await lastValueFrom(this.http.get<FolderStructure[]>(this.foldersStructureFile));
-    this.foldersStructure = data;
-    this.desktopFolderName = this.foldersStructure[0].name;
-    this.contentTreeStructure.set( this.desktopFolderId,{
-      id : this.desktopFolderId,
-      name : this.desktopFolderName,
-      icon : './home.png',
-      isFolder : true,
-      isFile : false,
-      content : new Map<number, ContentTreeStructure>
-    });
-    for(let appIndex = 0; appIndex<this.applications.length; appIndex++) {
-      const app = this.applications[appIndex];
-      const index = app.yPosition + app.xPosition*this.gridColumns;
-      if (app.name === this.experienceFolderName) experienceId = app.id;
-      this.contentTreeStructure.get(this.desktopFolderId)?.content?.set(
-        app.id, {
-          id : app.id,
-          name : app.name,
-          icon : app.icon,
-          isFolder : app.type === AppType.Folder,
-          isFile : app.type === AppType.File,
-          content : app.type === AppType.Folder ? new Map<number, ContentTreeStructure> : undefined
+  ngOnInit(): void {
+    fetch(this.applicationsData).then(res=>res.json()).then(
+      jsonData=> {
+        this.insertAppData(jsonData, this.contentTreeStructure, 0, 0);
+      }
+    );
+  }
+
+  insertAppData(jsonData : any, treeNode : Map<number, ContentTreeStructure> | undefined, desktopDepthIndex : number, experienceDepthIndex : number) {
+    if(!jsonData || !treeNode) return;
+    if (desktopDepthIndex === this.desktopHomePath.length) {
+      this.setApplicationsMatrix(jsonData);
+    }
+    if (experienceDepthIndex === this.experienceFolderPath.length) this.setExperienceFolderContent(treeNode);
+    for(let item of jsonData) {
+      let content = item.content === null ? undefined : new Map<number, ContentTreeStructure>();
+      treeNode.set(item.id, {
+        id : item.id,
+        name : item.name,
+        icon : item.icon,
+        isFile : item.isFile,
+        isFolder : item.isFolder,
+        content : content
+      });
+      if(item.content !== null) {
+        const desktopDepth = desktopDepthIndex + ( desktopDepthIndex < this.desktopHomePath.length && item.name === this.desktopHomePath[desktopDepthIndex] ? 1 : 0);
+        const experienceDepth = experienceDepthIndex + ( experienceDepthIndex < this.experienceFolderPath.length && item.name === this.experienceFolderPath[experienceDepthIndex] ? 1 : 0);
+        this.insertAppData(item.content, content, desktopDepth, experienceDepth);
+      }
+      this.applications.set(item.id,
+        {
+          id : item.id,
+          name : item.name,
+          icon : item.icon,
+          type : item.isFile ? AppType.File : (item.isFolder ? AppType.Folder : AppType.Application),
+          canDelete : item.canDelete,
+          extension : item.extension,
+          defaultHeight : item.defaultHeight,
+          defaultWidth : item.defaultWidth,
+          resizeable : item.resizeable
         }
       );
-      this.applicationsMatrix.set(index, {
-        'id' : app.id,
-        'name' : app.name,
-        'icon' : app.icon,
-        'type' : app.type,
-        'focused' : false,
-        'systemApp' : app.systemApp,
-        'defaultHeight' : app.defaultHeight,
-        'defaultWidth' : app.defaultWidth,
-        'resizeable' : app.resizeable
-      });
     }
-    //app not on desktop
-    this.applicationsMatrix.set(-999, {
-      'id' : -999,
-      'name' : 'BloDest',
-      'icon' : './BloDest.png',
-      'type' : AppType.Application,
-      'systemApp' : false,
-      'focused' : false,
-      'defaultHeight' : 700,
-      'defaultWidth' : 700,
-      'resizeable' : false
-    });
+  }
 
-    
+  setApplicationsMatrix(node : any) {
+    if(this.appMatrixIsSet) return; 
+    let i =0;
+    for(let c=0; c<this.gridColumns; c++) {
+      for(let r=0; r<this.gridRows; r++) {
+        if(i=== node.length) return;
+        const item = node[i];
+        this.applicationsMatrix[r][c] = {
+          id : item.id,
+          name : item.name,
+          icon : item.icon,
+          type : item.isFile ? AppType.File : (item.isFolder ? AppType.Folder : AppType.Application),
+          defaultHeight : item.defaultHeight,
+          defaultWidth : item.defaultWidth,
+          resizeable : item.resizeable,
+          focused : false,
+          canDelete : item.canDelete
+        }
+        i++;
+      }
+    }
+    this.appMatrixIsSet = true;
+  }
 
-    this.http.get<Experience[]>("./experience.json").subscribe({
-          next: (response) => {
-            let id = -2;
-            for(let res of response) {
-              this.applicationsMatrix.set(id, {
-                'id' : id,
-                'name' : res.company,
-                'icon' : './file.png',
-                'type' : AppType.File,
-                'systemApp' : false,
-                'focused' : false,
-                'defaultHeight' : 700,
-                'defaultWidth' : 600,
-                'resizeable' : true
-              });
-              this.contentTreeStructure.get(this.desktopFolderId)?.content?.get(experienceId)?.content?.set(
-                id,
-                {
-                  id : id,
-                  name : res.company,
-                  icon : "./file.png",
-                  isFolder : false,
-                  isFile : true,
-                  content : undefined
-                }
-              );
-              id--;
-            }
-          },
-          error: (error) => {
-            console.log(error);
+  setExperienceFolderContent(content : Map<number, ContentTreeStructure>) {
+    if(this.experienceIsSet) return;
+    fetch(this.experienceData).then(res => res.json()).then(json => {
+      let id =20;
+      for(let item of json) {
+        this.experience.set(item.company, item);
+        content.set(
+          id,
+          {
+            id : id,
+            name : item.company,
+            icon : "./file.png",
+            isFolder : false,
+            isFile : true,
+            content : undefined
           }
+        );
+        this.applications.set(id,
+          {
+            id : id,
+            name : item.company,
+            icon : "./file.png",
+            type : AppType.File,
+            canDelete : true,
+            extension : ".txt",
+            defaultHeight : 700,
+            defaultWidth : 600,
+            resizeable : true
+          }
+        );
+        id++;
+      }
     });
+    this.experienceIsSet = true;
   }
 
   addNotification(message : string, notifType : NotifType){
@@ -221,20 +242,30 @@ export class DesktopComponent implements OnInit{
     },2500);
   }
 
-  appFocus(index : number) {
-    for(let [key, app] of this.applicationsMatrix){
-      app.focused = (index === key);
-      this.applicationsMatrix.set(key, { ...app });
+  appFocus(row : number, column : number) {
+    for(let i=0; i<this.gridRows; i++) {
+      for(let j=0; j<this.gridColumns; j++) {
+        const app = this.applicationsMatrix[i][j];
+        if(app) app.focused = false;
+      }
     }
+    if(this.applicationsMatrix[row][column]) this.applicationsMatrix[row][column].focused = true;
   }
 
   openItem = (id : number) => {
-    this.open(id);
+    this.openWithId(id);
   }
 
-  open(index : number) {
-    console.log(index);
-    const toOpen = this.applicationsMatrix.get(index);
+  open(row : number, column : number) {
+    const app = this.applicationsMatrix[row][column]
+    if (app){
+      app.focused = false;
+      this.openWithId(app.id);
+    }
+  }
+
+  openWithId(id : number) {
+    const toOpen = this.applications.get(id);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
     const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false, resizeable : toOpen.resizeable};
@@ -242,7 +273,7 @@ export class DesktopComponent implements OnInit{
     this.YOffsetPosition = this.YOffsetPosition + 10;
     this.ZOffsetPosition++;
     if(toOpen.type === AppType.Folder) {
-      const val = this.contentTreeStructure.get(this.desktopFolderId)?.content?.get(toOpen.id);
+      const val = this.getDesktopFolderNode(this.contentTreeStructure, toOpen.name, 0);
       if(val) this.openedFolders.set(uuid, val);
       if(this.stacksMap.has(AppType.Folder.toString())){
         this.stacksMap.get(AppType.Folder.toString())?.unshift(app);
@@ -263,7 +294,21 @@ export class DesktopComponent implements OnInit{
         this.stacksMap.set(app.name, [app]);
       }
     }
-    toOpen.focused = false;
+  }
+
+  getDesktopFolderNode(treeNode : Map<number, ContentTreeStructure> | undefined, name : string, depth : number) : ContentTreeStructure | undefined {
+    if (!treeNode) return undefined;
+    for(let v of treeNode.values()) {
+      if (depth === this.desktopHomePath.length-1 && v.name === this.desktopHomePath[depth]) {
+        for(let v2 of v.content?.values() || []) {
+          if (v2.name === name) return v2;
+        }
+      }
+      if(v.name === this.desktopHomePath[depth]) {
+        return this.getDesktopFolderNode(v.content, name, depth+1);
+      }
+    }
+    return undefined;
   }
 
   removeItem = (key : string, itemId : string)  => {
@@ -338,54 +383,48 @@ export class DesktopComponent implements OnInit{
     }
   }
 
-  onDragStart(event : DragEvent, key : number) {
-    this.draggedIndex = key;
-    event.dataTransfer?.setData('plain/text', key.toString());
+  onDragStart(event : DragEvent, row : number, column : number) {
+    this.draggedPosition = { row : row , column : column};
+    console.log(this.draggedPosition);
+    //event.dataTransfer?.setData('plain/text', key.toString());
   }
 
-  onDragOver(event : DragEvent, row : number, column : number) {
+  onDragOver(event : DragEvent) {
     event.preventDefault();
-    this.hoveredAppPosition = {'row' : row, 'column' : column};
   }
 
 
-  onDrop(event : DragEvent, key : number) {
+  onDrop(event : DragEvent, row : number, column : number) {
     event.preventDefault();
-    if(this.draggedIndex === -1 || key === this.draggedIndex) {
-      this.draggedIndex = -1;
-      this.hoveredAppPosition = {'row' : -1, 'column' : -1};
+    if(row === this.draggedPosition.row && column === this.draggedPosition.column) {
+      this.draggedPosition = {row : -1, column : -1};
       return;
     }
-    const draggedApp = this.applicationsMatrix.get(this.draggedIndex);
+    const draggedApp = this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column];
 
     if(draggedApp) {
-      const dragTo = this.applicationsMatrix.get(key);
-      if(dragTo && dragTo.name === 'bin') {
-        this.deleteApp(draggedApp);
-        return;
-      }
-      this.applicationsMatrix.set(key, draggedApp);
-      if(dragTo) {
-        this.applicationsMatrix.set(this.draggedIndex, dragTo);
-      } else {
-        this.applicationsMatrix.delete(this.draggedIndex);
-      }
-      
+      const dragTo = this.applicationsMatrix[row][column];
+      this.applicationsMatrix[row][column] = draggedApp;
+      this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column] = dragTo;
+      // if(dragTo && dragTo.name === 'bin') {
+      //   this.deleteApp(draggedApp);
+      //   return;
+      // }
     }
-    this.draggedIndex = -1;
-    this.hoveredAppPosition = {'row' : -1, 'column' : -1};
+    
+    this.draggedPosition = {'row' : -1, 'column' : -1};
   }
 
   deleteDraggedItem = () => {
-    console.log("delete this item "+this.draggedIndex + "?");
-    this.deleteApp(this.applicationsMatrix.get(this.draggedIndex));
-    this.draggedIndex = -1;
+    console.log("delete this item "+this.draggedPosition + "?");
+    this.deleteApp(this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column]);
+    this.draggedPosition = {'row' : -1, 'column' : -1};
   }
 
   deleteApp(app : AppsObject | undefined) {
     if(!app) return;
     app.focused = false;
-    if(app.systemApp) {
+    if(app.canDelete) {
       this.addNotification("cannot delete "+app.name, NotifType.Error);
       return;
     } else if (app.type === AppType.Folder){
@@ -405,8 +444,8 @@ export class DesktopComponent implements OnInit{
       this.addNotification("cannot delete '"+app.name+"', it is open", NotifType.Warning);
       return;
     }
-    this.deletedApps.set(this.draggedIndex, app);
-    this.applicationsMatrix.delete(this.draggedIndex);
+    // this.deletedApps.set(this.dagge, app);
+    // this.applicationsMatrix.delete(this.draggedIndex);
   }
 
   deleteFolderFile(name : string) {
@@ -433,8 +472,8 @@ export class DesktopComponent implements OnInit{
     // if(app.type === AppType.Folder) this.desktopFolders.add(app.name);
     for(let c=0; c<this.gridColumns; c++) {
       for(let r =0; r<this.gridRows; r++) {
-        if(!this.applicationsMatrix.has(r*this.gridColumns + c)) {
-          this.applicationsMatrix.set(r*this.gridColumns + c, app);
+        if(!this.applicationsMatrix[r][c]) {
+          this.applicationsMatrix[r][c] = app;
           this.deletedApps.delete(key);
           return;
         }

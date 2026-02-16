@@ -5,9 +5,8 @@ export interface Application{
     name : string;
     icon : string;
     type : AppType;
-    systemApp : boolean;
-    xPosition : number;
-    yPosition : number;
+    canDelete : boolean;
+    extension : string,
     defaultWidth : number;
     defaultHeight : number;
     resizeable : boolean;

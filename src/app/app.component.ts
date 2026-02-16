@@ -14,7 +14,7 @@ export class AppComponent {
   @ViewChild("desktop") desktop !: DesktopComponent;
 
   openApp(id: number) {
-    this.desktop.open(id);
+    this.desktop.openWithId(id);
   }
 
   addNotification(messageObject : {message : string, type : NotifType}) {

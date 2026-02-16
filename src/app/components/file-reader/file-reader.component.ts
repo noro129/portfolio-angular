@@ -9,30 +9,14 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './file-reader.component.html',
   styleUrl: './file-reader.component.scss'
 })
-export class FileReaderComponent implements OnInit, AfterViewInit{
+export class FileReaderComponent implements AfterViewInit{
   bold = false;
   italic = false;
   underline = false;
-  @Input() company!: string;
 
-  experience !: Experience | undefined;
+  @Input() experience !: any;
 
-  constructor(private http : HttpClient, private el : ElementRef) {}
-
-  ngOnInit(): void {
-    this.http.get<Experience[]>("./experience.json").subscribe({
-      next: (response) => {
-            for(let res of response) {
-              if (res.company === this.company) {
-                this.experience = res;
-              } 
-            }
-          },
-      error: (error) => {
-            console.log(error);
-          }
-    });
-  }
+  constructor(private el : ElementRef) {}
 
   ngAfterViewInit(): void {
     this.el.nativeElement.querySelector(".wrapper").focus();
