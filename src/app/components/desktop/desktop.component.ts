@@ -121,19 +121,6 @@ export class DesktopComponent implements OnInit{
     return undefined;
   }
 
-  // @HostListener('document:keydown.enter')
-  // handleEnterKey() {
-  //   for(let row=0; row<this.gridRows; row++) {
-  //     for(let column=0; column<this.gridColumns; column++) {
-  //       const app = this.applicationsMatrix[row][column];
-  //       if (app && app.focused) {
-  //         this.open(row, column);
-  //         return;
-  //       }
-  //     }
-  //   }
-  // }
-
   ngOnInit(): void {
     fetch(this.applicationsData).then(res=>res.json()).then(
       jsonData=> {
@@ -364,8 +351,6 @@ export class DesktopComponent implements OnInit{
 
   onDragStart(row : number, column : number) {
     this.draggedPosition = { row : row , column : column};
-    console.log(this.draggedPosition);
-    //event.dataTransfer?.setData('plain/text', key.toString());
   }
 
   onDragOver(event : DragEvent) {
@@ -381,10 +366,15 @@ export class DesktopComponent implements OnInit{
     }
     const draggedApp = this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column];
 
-    if(draggedApp) {
+    if(draggedApp !== undefined) {
       const dragTo = this.applicationsMatrix[row][column];
-      this.applicationsMatrix[row][column] = draggedApp;
-      this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column] = dragTo;
+      if(dragTo !== undefined && this.applications.get(dragTo)?.name === 'recycle bin') {
+        this.deleteApp(draggedApp);
+      } else {
+        this.applicationsMatrix[row][column] = draggedApp;
+        this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column] = dragTo;
+      }
+      
       // if(dragTo && dragTo.name === 'bin') {
       //   this.deleteApp(draggedApp);
       //   return;
