@@ -13,6 +13,13 @@ export class FolderContentComponent {
   @Input() openedFolder !: ContentTreeStructure | undefined;
   @Input() switchToFolder !: (f : ContentTreeStructure) => void;
   @Input() open !: (id : number) => void;
+  
+  @Input() setDraggedId !: (input : number) => void;
+  @Input() setDragSource !: (input : ContentTreeStructure) => void;
+  @Input() setDragDestination !: (input : ContentTreeStructure) => void;
+  @Input() moveContentInTree !: () => void;
+
+
   showContextMenu = false
 
   keepOrder = () => 0;
@@ -33,5 +40,19 @@ export class FolderContentComponent {
       console.log(item.id);
       this.open(item.id);
     }
+  }
+
+  onDragStart() {
+    if(this.openedFolder) this.setDragSource(this.openedFolder);
+  }
+
+  onDragOver(event : DragEvent) {
+    event.preventDefault();
+  }
+
+  onDrop(event : DragEvent) {
+    event.preventDefault();
+    if(this.openedFolder) this.setDragDestination(this.openedFolder);
+    this.moveContentInTree();
   }
 }

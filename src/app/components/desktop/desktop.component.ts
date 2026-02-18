@@ -89,15 +89,15 @@ export class DesktopComponent implements OnInit{
   //       'resizeable' : true
   //     }
   // ];
-  applicationsMatrix !: number[][] | undefined[][];
+  applicationsMatrix !: number[][] | null[][];
   notifications = new Map<string, Notification>();
   deletedApplications = new Map<number, Application>();
   stacksMap = new Map<string, OpenInstance[]>;
-  draggedPosition = {row : -1, column : -1};
+  draggedPosition = {row : -1, column : -1};draggedPositionEnd = {row : -1, column : -1}; draggedId : number | null = null; dragSource : ContentTreeStructure | null = null; dragDestination : ContentTreeStructure | null = null;
   AppType = AppType;
   contentTreeStructure : Map<number, ContentTreeStructure> = new Map<number, ContentTreeStructure>();
   openedFolders : Map<string, ContentTreeStructure> = new Map<string, ContentTreeStructure>();
-  readonly desktopHomePath = ["root", "Desktop"]; appMatrixIsSet = false;
+  readonly desktopHomePath = ["root", "Desktop"]; appMatrixIsSet = false; desktopTreeObj !: ContentTreeStructure;
   readonly experienceFolderPath = ["root", "Desktop", "Experience"]; experienceIsSet = false;
   readonly experienceData = "./experience.json"; experience : Map<string, any> = new Map<string, any>();
   readonly scriptData = "./script.json"; script : Map<string, Script> = new Map<string, Script>();
@@ -109,7 +109,7 @@ export class DesktopComponent implements OnInit{
     for(let i =0; i<this.gridRows; i++) {
       this.applicationsMatrix[i] = [];
       for(let j=0; j<this.gridColumns; j++) {
-        this.applicationsMatrix[i][j] = undefined;
+        this.applicationsMatrix[i][j] = null;
       }
     }
   }
@@ -118,9 +118,9 @@ export class DesktopComponent implements OnInit{
     return Array.from({ length }, (_, i) => i);
   }
 
-  getApplication(id : number | undefined) {
-    if (id !== undefined) return this.applications.get(id);
-    return undefined;
+  getApplication(id : number | null) {
+    if (id !== null) return this.applications.get(id);
+    return null;
   }
 
   ngOnInit(): void {
@@ -145,15 +145,13 @@ export class DesktopComponent implements OnInit{
     )
   }
 
-  insertAppData(jsonData : any, treeNode : Map<number, ContentTreeStructure> | undefined, desktopDepthIndex : number, experienceDepthIndex : number) {
-    if(!jsonData || !treeNode) return;
-    if (desktopDepthIndex === this.desktopHomePath.length) {
-      this.setApplicationsMatrix(jsonData);
-    }
-    if (experienceDepthIndex === this.experienceFolderPath.length) this.setExperienceFolderContent(treeNode);
+  insertAppData(jsonData : any, treeNode : Map<number, ContentTreeStructure> | null, desktopDepthIndex : number, experienceDepthIndex : number) {
+    if(!jsonData || treeNode===null) return;
+    if (!this.appMatrixIsSet && desktopDepthIndex === this.desktopHomePath.length) this.setApplicationsMatrix(jsonData);
+    if (!this.experienceIsSet && experienceDepthIndex === this.experienceFolderPath.length) this.setExperienceFolderContent(treeNode);
     for(let item of jsonData) {
-      let content = item.content === null ? undefined : new Map<number, ContentTreeStructure>();
-      treeNode.set(item.id, {
+      let content = new Map<number, ContentTreeStructure>();
+      let node : ContentTreeStructure = {
         id : item.id,
         name : item.name,
         extension : item.extension,
@@ -161,7 +159,9 @@ export class DesktopComponent implements OnInit{
         isFile : item.isFile,
         isFolder : item.isFolder,
         content : content
-      });
+      };
+      if(item.name === this.desktopHomePath[this.desktopHomePath.length - 1] && desktopDepthIndex === this.desktopHomePath.length - 1) this.desktopTreeObj = node;
+      treeNode.set(item.id, node);
       if(item.content !== null) {
         const desktopDepth = desktopDepthIndex + ( desktopDepthIndex < this.desktopHomePath.length && item.name === this.desktopHomePath[desktopDepthIndex] ? 1 : 0);
         const experienceDepth = experienceDepthIndex + ( experienceDepthIndex < this.experienceFolderPath.length && item.name === this.experienceFolderPath[experienceDepthIndex] ? 1 : 0);
@@ -184,7 +184,6 @@ export class DesktopComponent implements OnInit{
   }
 
   setApplicationsMatrix(node : any) {
-    if(this.appMatrixIsSet) return; 
     let i =0;
     for(let c=0; c<this.gridColumns; c++) {
       for(let r=0; r<this.gridRows; r++) {
@@ -198,7 +197,6 @@ export class DesktopComponent implements OnInit{
   }
 
   setExperienceFolderContent(content : Map<number, ContentTreeStructure>) {
-    if(this.experienceIsSet) return;
     fetch(this.experienceData).then(res => res.json()).then(json => {
       let id =20;
       for(let item of json) {
@@ -212,7 +210,7 @@ export class DesktopComponent implements OnInit{
             icon : "./file.png",
             isFolder : false,
             isFile : true,
-            content : undefined
+            content : new Map<number, ContentTreeStructure>()
           }
         );
         this.applications.set(id,
@@ -232,6 +230,18 @@ export class DesktopComponent implements OnInit{
       }
     });
     this.experienceIsSet = true;
+  }
+
+  setDraggedId = (input : number) => {
+    this.draggedId = input;
+  }
+
+  setDragSource = (input : ContentTreeStructure) => {
+    this.dragSource = input;
+  }
+
+  setDragDestination = (input : ContentTreeStructure) => {
+    this.dragDestination = input;
   }
 
   addNotification(message : string, notifType : NotifType){
@@ -365,8 +375,10 @@ export class DesktopComponent implements OnInit{
     }
   }
 
-  onDragStart(row : number, column : number) {
+  onDragStart(app_id : number ,row : number, column : number) {
     this.draggedPosition = { row : row , column : column};
+    this.draggedId = app_id;
+    this.dragSource = this.desktopTreeObj;
   }
 
   onDragOver(event : DragEvent) {
@@ -376,28 +388,47 @@ export class DesktopComponent implements OnInit{
 
   onDrop(event : DragEvent, row : number, column : number) {
     event.preventDefault();
-    if(row === this.draggedPosition.row && column === this.draggedPosition.column) {
-      this.draggedPosition = {row : -1, column : -1};
+    this.dragDestination = this.desktopTreeObj;
+    this.draggedPositionEnd = {row : row , column : column};
+    
+
+    this.moveContentInTree();
+    
+  }
+
+  moveContentInTree = () => {
+    if(this.draggedId === undefined || this.dragSource === undefined || this.dragDestination === undefined) {
+      this.draggedPosition = {'row' : -1, 'column' : -1}; this.draggedPositionEnd = {'row' : -1, 'column' : -1}; this.draggedId = null;
+      this.dragSource = null; this.dragDestination = null;
       return;
     }
-    const draggedApp = this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column];
+    const fromR = this.draggedPosition.row; const fromC = this.draggedPosition.column;
+    const toR = this.draggedPositionEnd.row; const toC = this.draggedPositionEnd.column;
 
-    if(draggedApp !== undefined) {
-      const dragTo = this.applicationsMatrix[row][column];
-      if(dragTo !== undefined && this.applications.get(dragTo)?.name === 'recycle bin') {
-        this.deleteApp(draggedApp);
-      } else {
-        this.applicationsMatrix[row][column] = draggedApp;
-        this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column] = dragTo;
+    if(this.dragDestination === this.dragSource) {
+      if(this.dragSource === this.desktopTreeObj) {
+        const dragTo = this.applicationsMatrix[toR][toC];
+        this.applicationsMatrix[toR][toC] = this.draggedId;
+        this.applicationsMatrix[fromR][fromC] = dragTo;
+      }
+    } else {
+      if (this.dragSource === this.desktopTreeObj) {
+        this.applicationsMatrix[fromR][fromC] = null;
+      }
+      if (this.dragDestination === this.desktopTreeObj) {
+        this.applicationsMatrix[toR][toC] = this.draggedId;
       }
       
-      // if(dragTo && dragTo.name === 'bin') {
-      //   this.deleteApp(draggedApp);
-      //   return;
-      // }
+      if (this.draggedId !== null && this.dragSource !== null && this.dragDestination !== null) {
+        const draggedContent = this.dragSource.content.get(this.draggedId);
+        this.dragSource.content.delete(this.draggedId);
+        if(draggedContent !== undefined) this.dragDestination.content.set(this.draggedId, draggedContent);
+        console.log(this.dragSource);
+      }
     }
-    
-    this.draggedPosition = {'row' : -1, 'column' : -1};
+
+    this.draggedPosition = {'row' : -1, 'column' : -1};this.draggedPositionEnd = {'row' : -1, 'column' : -1}; this.draggedId = null;
+    this.dragSource = null; this.dragDestination = null;
   }
 
   deleteDraggedItem = () => {
@@ -446,10 +477,6 @@ export class DesktopComponent implements OnInit{
       }
     }
     // this.desktopFolders.delete(name);
-  }
-
-  isSameKey(key : number, row : number, column : number) : boolean {
-    return row<this.gridRows && row>=0 && column>=0 && column<this.gridColumns && key === row*this.gridColumns + column;
   }
 
   restoreApp = (key : number) => {

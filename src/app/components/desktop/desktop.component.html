@@ -18,13 +18,13 @@
 
             
             <app-app-tile *ngIf="getApplication(applicationsMatrix[row][column]) as app"
-                draggable="true"
-                (dragstart)="onDragStart(row, column)"
+                (dragstart)="onDragStart(app.id, row, column)"
                 [app_id]="app.id"
                 [app_name]="app.name"
                 [app_ext]="app.extension"
                 [app_icon]="app.icon"
                 [openWithId]="openItem"
+                [setDraggedId]="setDraggedId"
                  />
             
         </div>
@@ -43,6 +43,10 @@
     [openedFolders]="openedFolders"
     [experience]="experience"
     [script]="script"
+    [setDraggedId]="setDraggedId"
+    [setDragSource]="setDragSource"
+    [setDragDestination]="setDragDestination"
+    [moveContentInTree]="moveContentInTree"
 />
 
 <app-active-items-panel

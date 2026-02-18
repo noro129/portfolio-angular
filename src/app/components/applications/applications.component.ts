@@ -31,6 +31,11 @@ export class ApplicationsComponent {
   @Input() contentTreeStructure !: Map<number, ContentTreeStructure>;
   @Input() script !: Map<string, Script>;
 
+  @Input() setDraggedId !: (input : number) => void;
+  @Input() setDragSource !: (input : ContentTreeStructure) => void;
+  @Input() setDragDestination !: (input : ContentTreeStructure) => void;
+  @Input() moveContentInTree !: () => void;
+
   @Input() openedFolders !: Map<string, ContentTreeStructure>;
   AppType = AppType;
   keepOrder = () => 0;

@@ -1,8 +1,4 @@
-<div class="container">
-    <!-- <div class="item" *ngFor="let item of openedFolder?.content | keyvalue : keepOrder; trackBy: trackByKey" title="{{item.value.name}}{{item.value.isFile ? '.txt' : ''}}" (dblclick)="openItem(item.value)">
-        <img src="{{item.value.icon}}" alt="icon logo" class="item-icon">
-        <p class="item-name">{{item.value.name}}{{item.value.isFile ? '.txt' : ''}}</p>
-    </div> -->
+<div class="container" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
     <div class="item" *ngFor="let item of openedFolder?.content | keyvalue : keepOrder; trackBy: trackByKey">
         @if(item.value.isFolder) {
             <app-app-tile
@@ -10,7 +6,9 @@
                 [app_name]="item.value.name"
                 [app_ext]="item.value.extension"
                 [app_icon]="item.value.icon"
+                [setDraggedId]="setDraggedId"
                 (dblclick)="openItem(item.value)"
+                (dragstart)="onDragStart()"
             />
         } @else {
             <app-app-tile 
@@ -19,6 +17,8 @@
             [app_ext]="item.value.extension"
             [app_icon]="item.value.icon"
             [openWithId]="open"
+            [setDraggedId]="setDraggedId"
+            (dragstart)="onDragStart()"
             />
         }
     </div>

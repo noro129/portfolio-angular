@@ -5,5 +5,5 @@ export default interface ContentTreeStructure{
     icon : string;
     isFolder : boolean;
     isFile : boolean;
-    content : Map<number, ContentTreeStructure> | undefined
+    content : Map<number, ContentTreeStructure>;
 }

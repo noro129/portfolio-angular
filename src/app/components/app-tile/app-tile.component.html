@@ -1,4 +1,4 @@
-<div class="container" [ngClass]="{'focused' : focused}" (dblclick)="open()" title="{{app_name}}{{app_ext}}">
+<div class="container" draggable="true" (dragstart)="setIdDragged()" [ngClass]="{'focused' : focused}" (dblclick)="open()" title="{{app_name}}{{app_ext}}">
     <div class="logo"><img src="{{app_icon}}" alt="app logo" class="logo-image"></div>
     <p class="app-name">{{app_name}}{{app_ext}}</p>
 

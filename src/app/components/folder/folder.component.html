@@ -10,7 +10,7 @@
         @if (folder.name === 'Projects') {
             <app-projects></app-projects>
         } @else {
-            <app-folder-content [openedFolder]="openedFolder" [switchToFolder]="switchToFolder" [open]="open"/>
+            <app-folder-content [openedFolder]="openedFolder" [switchToFolder]="switchToFolder" [open]="open" [setDraggedId]="setDraggedId" [setDragSource]="setDragSource" [setDragDestination]="setDragDestination" [moveContentInTree]="moveContentInTree"/>
         }
     </div>
 </div>

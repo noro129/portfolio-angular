@@ -15,6 +15,7 @@ export class AppTileComponent {
   @Input() app_name !: string;
   @Input() app_ext !: string;
   @Input() openWithId !: (id : number) => void;
+  @Input() setDraggedId !: (id : number) => void;
   focused : boolean = false;
   showContextmenu = false;
 
@@ -45,6 +46,10 @@ export class AppTileComponent {
   }
 
   open() {this.openWithId(this.app_id); this.focused = false;}
+
+  setIdDragged() {
+    this.setDraggedId(this.app_id);
+  }
 
   @HostListener("document:click", ["$event"])
   onclick(event : MouseEvent) {
