@@ -26,7 +26,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   dateMonth = "06";
   dateYear = "2025";
   time = "12:09";
-  private WatchInterval !: any;
+  private WatchInterval !: any; private musicInterval !: any;
   showMenu = false;
   private interval : any;
   menuItems!: MenuItem[];
@@ -71,6 +71,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     clearInterval(this.interval);
     clearInterval(this.WatchInterval);
+    clearInterval(this.musicInterval);
   }
 
   fillTheMenu(el: HTMLDivElement, menuItems : MenuItem[] , leftMargin : number) {
@@ -217,10 +218,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     if(!this.musicIsPlaying) return;
     if(!this.dragSeekBar) this.musicElapsedTime++;
-    
-    setTimeout(()=>{
-      this.playingMusic();
-    },1000);
   }
 
   playPrevMusic() {
@@ -265,7 +262,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.menuToggle();
     this.setWatch();
     this.setWeather();
-    this.playingMusic();
+    if(!this.musicInterval) this.musicInterval = setInterval(()=> {
+      this.playingMusic();
+    },1000);
   }
 
   setWatch() {
