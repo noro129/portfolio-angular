@@ -203,6 +203,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.showConnectWindow = false;
       this.mouseLeft = true;
       this.connecting = false;
+      clearInterval(this.WatchInterval);
     }, 2000);
   }
 
