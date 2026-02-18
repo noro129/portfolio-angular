@@ -10,6 +10,7 @@ import { NotifType } from '../../models/NotifType';
 import { Notification } from '../../models/Notification';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 import { AppTileComponent } from '../app-tile/app-tile.component';
+import Script from '../../models/Script';
 
 @Component({
   selector: 'app-desktop',
@@ -99,6 +100,7 @@ export class DesktopComponent implements OnInit{
   readonly desktopHomePath = ["root", "Desktop"]; appMatrixIsSet = false;
   readonly experienceFolderPath = ["root", "Desktop", "Experience"]; experienceIsSet = false;
   readonly experienceData = "./experience.json"; experience : Map<string, any> = new Map<string, any>();
+  readonly scriptData = "./script.json"; script : Map<string, Script> = new Map<string, Script>();
 
   constructor(private renderer : Renderer2) {
     this.gridColumns = Math.floor(window.innerWidth / 100);
@@ -127,6 +129,20 @@ export class DesktopComponent implements OnInit{
         this.insertAppData(jsonData, this.contentTreeStructure, 0, 0);
       }
     );
+    fetch(this.scriptData).then(res => res.json()).then(
+      jsonData=> {
+        for(let item of jsonData) {
+          this.script.set(item.script, {
+            name : item.script,
+            script_code : item.script_code,
+            permission : "r-x",
+            author : "oussama errazi",
+            version : "1.0.0"
+          });
+        }
+        
+      }
+    )
   }
 
   insertAppData(jsonData : any, treeNode : Map<number, ContentTreeStructure> | undefined, desktopDepthIndex : number, experienceDepthIndex : number) {

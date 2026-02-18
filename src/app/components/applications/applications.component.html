@@ -34,7 +34,12 @@
 
             <ng-container *ngSwitchCase="AppType.File.toString()">
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-file-reader class="application-body" [experience]="experience.get(instance.name)" />
+                    @if(experience.has(instance.name)) {
+                        <app-file-reader class="application-body" [experience]="experience.get(instance.name)" />
+                    } @else {
+                        <app-file-reader class="application-body" [script]="script.get(instance.name)" />
+                    }
+                    
                 </app-window>
             </ng-container>
             

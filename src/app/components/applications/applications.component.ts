@@ -11,6 +11,7 @@ import { TrashComponent } from "../trash/trash.component";
 import { FileReaderComponent } from "../file-reader/file-reader.component";
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 import { Application } from '../../models/Application';
+import Script from '../../models/Script';
 
 @Component({
   selector: 'app-applications',
@@ -28,6 +29,7 @@ export class ApplicationsComponent {
   @Input() deleteDraggedItem !: () => void;
   @Input() experience !: any;
   @Input() contentTreeStructure !: Map<number, ContentTreeStructure>;
+  @Input() script !: Map<string, Script>;
 
   @Input() openedFolders !: Map<string, ContentTreeStructure>;
   AppType = AppType;

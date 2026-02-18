@@ -1,9 +1,12 @@
 .container{
     width: 100%;
     height: 100%;
+}
+
+.experience{
+    color: var(--bg-color-1);
     background-color: var(--color-silver);
     opacity: .8;
-    color: var(--bg-color-1);
 
     .header{
         display: flex; flex-direction: row;
@@ -144,5 +147,41 @@
 
     .isUnderline{
         text-decoration: underline;
+    }
+}
+
+.script{
+    background-color: var(--bg-color-1);
+    color: var(--color-green);
+    backdrop-filter: blur(2px);
+    overflow-y: scroll;
+    display: flex; flex-direction: column;
+    font-weight: bold;
+
+    .line{
+        height: max-content;
+        width: 100%;
+        display: flex; flex-direction: row;
+        
+        .line-number{
+            padding: 4px;
+            display: inline-block;
+            color: var(--color-1);
+            width: 30px;
+            display: flex; align-items: start; justify-content: end;
+            background-color: var(--color-1-light);
+            border-bottom: 1px solid var(--color-1);
+        }
+
+        .line-instruction{
+            width: calc( 100% - 30px );
+            padding-left: 4px;
+            border-bottom: 1px solid var(--color-1-lighter);
+        }
+    }
+
+    .head{
+        color: var(--color-1);
+        letter-spacing: 2px;
     }
 }

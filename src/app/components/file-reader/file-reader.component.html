@@ -1,4 +1,4 @@
-<div class="container" *ngIf="experience">
+<div class="container experience" *ngIf="experience">
     <div class="header">
         <div class="left">{{experience?.company}}</div>
         <div class="center">
@@ -27,5 +27,26 @@
         <div class="tools-technologies">Tools & Technologies:&nbsp;
             <span *ngFor="let item of experience?.tools_technologies">{{item}}&nbsp;</span>
         </div>
+    </div>
+</div>
+<div class="container script" *ngIf="script">
+    <div class="line head">
+        <span class="line-number">{{1}}</span><span class="line-instruction">author : {{script.author}}</span>
+    </div>
+    <div class="line head">
+        <span class="line-number">{{2}}</span><span class="line-instruction">file : {{script.name}}</span>
+    </div>
+    <div class="line head">
+        <span class="line-number">{{3}}</span><span class="line-instruction">permission : {{script.permission}}</span>
+    </div>
+
+    <div class="line head">
+        <span class="line-number">{{4}}</span><span class="line-instruction">version : {{script.version}}</span>
+    </div>
+    <div class="line head">
+        <span class="line-number">{{5}}</span><span class="line-instruction">-------------------</span>
+    </div>
+    <div class="line" *ngFor="let line of script.script_code; index as i">
+        <span class="line-number">{{i+6}}</span><span class="line-instruction"><p>{{line}}</p></span>
     </div>
 </div>

@@ -1,6 +1,7 @@
 
 import { NgStyle, NgFor, NgIf } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
+import Script from '../../models/Script';
 
 @Component({
   selector: 'app-file-reader',
@@ -14,11 +15,12 @@ export class FileReaderComponent implements AfterViewInit{
   underline = false;
 
   @Input() experience !: any;
+  @Input() script !: Script | undefined;
 
   constructor(private el : ElementRef) {}
 
   ngAfterViewInit(): void {
-    this.el.nativeElement.querySelector(".wrapper").focus();
+    if(this.experience) this.el.nativeElement.querySelector(".wrapper").focus();
   }
 
   boldEffect() {

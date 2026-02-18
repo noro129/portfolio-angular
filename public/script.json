@@ -1,0 +1,98 @@
+[
+    {
+        "script" : "whoami",
+        "script_code" : [
+            "# Description: Display current system user profile and metadata",
+            "",
+            "$USER=\"Oussama Errazi\"",
+            "$ROLE=\"Software Engineer\"",
+            "$STACK=(\"Java\" \"Python\" \"Spring Boot\" \"Angular\" \"SQL\" \"Git\" \"Docker\")",
+            "",
+            "print_section --name \"USER\" -w 63",
+            "print_kv \"full_name\" $USER",
+            "print_kv \"profile\" $ROLE",
+            "",
+            "print_section --name \"EDUCATION\" -w 63",
+            "print_kv \"software engineering degree\" \"(ENSIAS, Rabat)\"",
+            "print_kv \"mathematics & physics branch\" \"(CPGE Reda Slaoui, Agadir)\"",
+            "",
+            "print_section --name \"SKILLS\" -w 63",
+            "print_array $STACK",
+            "",
+            "print_section --name \"LANGUAGES\" -w 63",
+            "print_kv --indented \"Arabic\" \"Native\"",
+            "print_kv --indented \"English\" \"Proficient\"",
+            "print_kv --indented \"French\" \"Fluent\"",
+            "echo \"use whoami app for more details.\""
+        ]
+    },
+    {
+        "script" : "help",
+        "script_code" : [
+            "# Description: Display available system commands",
+            "",
+            "echo \"Available commands:\"",
+            "echo \"\"",
+            "print_kv \"help\" \"Display this manual.\"",
+            "print_kv \"print <arg>\" \"Print user contact or profile information.\"",
+            "print_kv --indented \"arg\" \"github | email | phone | linkedin.\"",
+            "print_kv \"whoami\" \"Show user information (name, education, skills, languages).\"",
+            "print_kv \"clear\" \"Clear the terminal screen.\"",
+            "print_kv \"exit\" \"Exit the session.\"",
+            "echo \"\""
+        ]
+    },
+    {
+        "script" : "print",
+        "script_code" : [
+            "# Description: Print user contact or profile information",
+            "",
+            "if [ $# -eq 0 ]; then",
+            "   echo \\033[31mmissing arg for command print.\\033[0m",
+            "   return",
+            "fi",
+            "if [ $# -gt 1 ]; then",
+            "   echo \\033[31minvalid usage for print command — expected only one argument.\\033[0m",
+            "   return",
+            "fi",
+            "",
+            "if [ \"$1\" == \"github\" ]; then",
+            "   echo \"https://github.com/noro129\"",
+            "   return",
+            "fi",
+            "if [ \"$1\" == \"email\" ]; then",
+            "   echo errazi111@gmail.com",
+            "   return",
+            "fi",
+            "if [ \"$1\" == \"phone\" ]; then",
+            "   echo +212694105029",
+            "   return",
+            "fi",
+            "if [ \"$1\" == \"linkedin\" ]; then",
+            "   echo https://www.linkedin.com/in/oussama-errazi/",
+            "   return",
+            "fi",
+            "echo \\033[31minvalid argument for command print.\\033[0m"
+        ]
+    },
+    {
+        "script" : "exit",
+        "script_code" : [
+            "# Description: Terminate terminal session",
+            "",
+            "save_session_state",
+            "cleanup_resources",
+            "close_active_process"
+        ]
+    },
+    {
+        "script" : "clear",
+        "script_code" : [
+            "# Description: Clear terminal screen buffer",
+            "",
+            "reset_cursor_position",
+            "flush_output_buffer",
+            "render_empty_state"
+        ]
+    }
+]
