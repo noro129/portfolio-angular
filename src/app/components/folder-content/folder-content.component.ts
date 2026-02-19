@@ -19,18 +19,10 @@ export class FolderContentComponent {
   @Input() setDragDestination !: (input : ContentTreeStructure) => void;
   @Input() moveContentInTree !: () => void;
 
-
-  showContextMenu = false
-
   keepOrder = () => 0;
 
   trackByKey (index: number, item: { key: number; value: any }) : number {
     return item.key;
-  }
-
-  @HostListener('contextmenu', ['$event'])
-  onRightClick(event : MouseEvent) {
-    event.preventDefault();
   }
 
   openItem(item : ContentTreeStructure) {

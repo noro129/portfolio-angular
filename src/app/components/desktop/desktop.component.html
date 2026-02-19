@@ -9,7 +9,7 @@
         <path fill="#222" d="M0,240 C360,300 1080,100 1440,240 L1440,320 L0,320 Z"></path>
     </svg>
 </div>
-<div class="apps" #desktop>
+<div class="apps" #desktop (contextmenu)="onRightClick($event)">
     <div *ngFor="let column of arrayOfSize(gridColumns)" class="column">
         <div *ngFor="let row of arrayOfSize(gridRows)" 
                 class="row"
@@ -61,3 +61,6 @@
 
 <app-notification class="notification"
     [notifications]="notifications"/>
+
+
+<app-context-menu/>

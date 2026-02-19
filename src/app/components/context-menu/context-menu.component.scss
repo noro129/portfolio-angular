@@ -1,0 +1,41 @@
+.context-menu{
+    z-index: 9999999;
+    position: fixed;
+    display: flex; flex-direction: column;
+    width: 150px;
+    height: fit-content;
+    background-color: var(--bg-color-2);
+    color: var(--color-1);
+
+    .item{
+        cursor: pointer;
+        display: flex; flex-direction: row; justify-content: center; align-items: center;
+        height: 30px;
+        padding: 0 5px;
+        transition: background-color .1s;
+
+        &:hover{
+            background-color: var(--bg-color-3);
+        }
+
+        .action{
+            flex: 1;
+            padding-left: 5px;
+
+        }
+
+        .icon{
+            height: 100%;
+            display: flex; justify-content: center; align-items: center;
+
+            img{
+                height: 60%;
+            }
+        }
+    }
+
+    .disabled{
+        cursor: not-allowed;
+        opacity: .5;
+    }
+}

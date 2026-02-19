@@ -1,10 +1,4 @@
-<div class="container" draggable="true" (dragstart)="setIdDragged()" [ngClass]="{'focused' : focused}" (dblclick)="open()" title="{{app_name}}{{app_ext}}">
+<div class="container" draggable="true" (dragstart)="setIdDragged()" [ngClass]="{'focused' : focused}" (dblclick)="open()" title="{{app_name}}{{app_ext}}" (contextmenu)="onRightClick($event)">
     <div class="logo"><img src="{{app_icon}}" alt="app logo" class="logo-image"></div>
     <p class="app-name">{{app_name}}{{app_ext}}</p>
-
-    <div class="context-menu" [ngStyle]="{'scale' : showContextmenu ? '1': '0'}" #contextmenu>
-        <div class="action open" (click)="open()"><p class="action-name">open</p><div class="icon"><img src="./shortcut.png" alt="open action icon"></div></div>
-        <div class="action rename" (click)="open()"><p class="action-name">rename</p><div class="icon"><img src="./rename.png" alt="rename action icon"></div></div>
-        <div class="action delete"><p class="action-name">delete</p><div class="icon">X</div></div>
-    </div>
 </div>

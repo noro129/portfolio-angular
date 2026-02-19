@@ -20,9 +20,4 @@
         </div>
     </div>
     <ng-content></ng-content>
-
-    <div class="context-menu" *ngIf="showContextMenu" #contextmenu>
-        <div class="action hide" (click)="hide()"><p class="action-name">hide</p><div class="icon">&#9660;</div></div>
-        <div class="action close" (click)="close()"><p class="action-name">close</p><div class="icon">X</div></div>
-    </div>
 </div>

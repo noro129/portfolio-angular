@@ -11,11 +11,13 @@ import { Notification } from '../../models/Notification';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 import { AppTileComponent } from '../app-tile/app-tile.component';
 import Script from '../../models/Script';
+import { ContextMenuComponent } from '../context-menu/context-menu.component';
+import { ContextMenuService } from '../../services/context-menu.service';
 
 @Component({
   selector: 'app-desktop',
   imports: [NgFor, NgIf,
-    ActiveItemsPanelComponent, ApplicationsComponent, NotificationComponent, AppTileComponent],
+    ActiveItemsPanelComponent, ApplicationsComponent, NotificationComponent, AppTileComponent, ContextMenuComponent],
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })
@@ -102,7 +104,7 @@ export class DesktopComponent implements OnInit{
   readonly experienceData = "./experience.json"; experience : Map<string, any> = new Map<string, any>();
   readonly scriptData = "./script.json"; script : Map<string, Script> = new Map<string, Script>();
 
-  constructor(private renderer : Renderer2) {
+  constructor(private renderer : Renderer2, private contextmenuService : ContextMenuService) {
     this.gridColumns = Math.floor(window.innerWidth / 100);
     this.gridRows = Math.floor(window.innerHeight / 100);
     this.applicationsMatrix = [];
@@ -251,6 +253,12 @@ export class DesktopComponent implements OnInit{
       this.notifications.delete(uuid);
     },2500);
   }
+
+  onRightClick(event : MouseEvent) {
+    this.contextmenuService.open(event.clientX, event.clientY, [{label : "New Folder" , icon : './add.png', action : this.nothing, disabled : false}])
+  }
+
+  nothing = () => {}
 
   openItem = (id : number) => {
     this.openWithId(id);
