@@ -13,6 +13,7 @@ import { AppTileComponent } from '../app-tile/app-tile.component';
 import Script from '../../models/Script';
 import { ContextMenuComponent } from '../context-menu/context-menu.component';
 import { ContextMenuService } from '../../services/context-menu.service';
+import DeletedItem from '../../models/DeletedItem';
 
 @Component({
   selector: 'app-desktop',
@@ -93,7 +94,7 @@ export class DesktopComponent implements OnInit{
   // ];
   applicationsMatrix !: number[][] | null[][];
   notifications = new Map<string, Notification>();
-  deletedApplications = new Map<number, Application>();
+  deletedItems = new Map<number, DeletedItem>();
   stacksMap = new Map<string, OpenInstance[]>;
   draggedPosition = {row : -1, column : -1};draggedPositionEnd = {row : -1, column : -1}; draggedId : number | null = null; dragSource : ContentTreeStructure | null = null; dragDestination : ContentTreeStructure | null = null;
   AppType = AppType;
@@ -419,8 +420,7 @@ export class DesktopComponent implements OnInit{
 
   moveContentInTree = () => {
     if(this.draggedId === undefined || this.dragSource === undefined || this.dragDestination === undefined) {
-      this.draggedPosition = {'row' : -1, 'column' : -1}; this.draggedPositionEnd = {'row' : -1, 'column' : -1}; this.draggedId = null;
-      this.dragSource = null; this.dragDestination = null;
+      this.resetDrag();
       return;
     }
     const fromR = this.draggedPosition.row; const fromC = this.draggedPosition.column;
@@ -429,8 +429,12 @@ export class DesktopComponent implements OnInit{
     if(this.dragDestination === this.dragSource) {
       if(this.dragSource === this.desktopTreeObj) {
         const dragTo = this.applicationsMatrix[toR][toC];
-        this.applicationsMatrix[toR][toC] = this.draggedId;
-        this.applicationsMatrix[fromR][fromC] = dragTo;
+        if(dragTo !== null && this.applications.get(dragTo)?.name === 'recycle bin'){
+          this.draggedId!==null && this.deleteApp(this.draggedId);
+        } else {
+          this.applicationsMatrix[toR][toC] = this.draggedId;
+          this.applicationsMatrix[fromR][fromC] = dragTo;
+        }
       }
     } else {
       if (this.dragSource === this.desktopTreeObj) {
@@ -448,42 +452,82 @@ export class DesktopComponent implements OnInit{
       }
     }
 
+    this.resetDrag();
+  }
+
+  resetDrag() {
     this.draggedPosition = {'row' : -1, 'column' : -1};this.draggedPositionEnd = {'row' : -1, 'column' : -1}; this.draggedId = null;
     this.dragSource = null; this.dragDestination = null;
   }
 
   deleteDraggedItem = () => {
-    console.log("delete this item "+this.draggedPosition + "?");
-    const app_id = this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column];
-    if(app_id) this.deleteApp(app_id);
-    this.draggedPosition = {'row' : -1, 'column' : -1};
+    console.log("delete this item "+this.draggedId + "?");
+    if(this.draggedId != null) this.deleteApp(this.draggedId);
+    this.resetDrag();
   }
 
   deleteApp(app_id : number) {
     const app = this.applications.get(app_id);
+    let itemNodeRef : ContentTreeStructure | null = null;
+    let parentNodeRef : ContentTreeStructure | null = null;
     if(!app) return;
     if(!app.canDelete) {
-      this.addNotification("cannot delete "+app.name, NotifType.Error);
+      this.addNotification("cannot delete "+app.name+app.extension, NotifType.Error);
       return;
     } else if (app.type === AppType.Folder){
-      if(app.name === 'Experience' && this.stacksMap.has(AppType.File.toString())) {
+      if(this.isFolderUsed(app_id)) {
         this.addNotification("unable to delete '"+app.name+"', it is in use.", NotifType.Warning);
         return;
       }
-      for(let folder of this.stacksMap.get(AppType.Folder.toString()) || []) {
-        if(folder.name === app.name) {
-          this.addNotification("unable to delete '"+app.name+"', it is in use.", NotifType.Warning);
-          return;
-        }
+      
+    } else {
+      if(app.type === AppType.File && this.isFileOpen(app.id)) {
+        this.addNotification("cannot delete '"+app.name+"', it is open", NotifType.Warning);
+        return;
+      } else if(app.type !== AppType.File && this.stacksMap.has(app.name)) {
+        this.addNotification("cannot delete '"+app.name+"', it is open", NotifType.Warning);
+        return;
       }
-      // this.desktopFolders.delete(app.name);
-      this.deleteFolderFile(app.name);
-    } else if (this.stacksMap.has(app.name)) {
-      this.addNotification("cannot delete '"+app.name+"', it is open", NotifType.Warning);
-      return;
     }
-    // this.deletedApps.set(this.dagge, app);
-    // this.applicationsMatrix.delete(this.draggedIndex);
+    parentNodeRef = this.getParentNodeOf(app_id);
+    itemNodeRef = parentNodeRef?.content.get(app_id) || null;
+    if(itemNodeRef !== null && parentNodeRef !== null) {
+      parentNodeRef.content.delete(app_id);
+      this.deletedItems.set(app_id, {
+        id : app_id,
+        treeNodeRef : itemNodeRef,
+        parentNodeRef : parentNodeRef
+      })
+    }
+    if(this.draggedPosition.row !== -1) {
+      this.applicationsMatrix[this.draggedPosition.row][this.draggedPosition.column] = null;
+    }
+  }
+
+  isFolderUsed(folder_id : number) : boolean {
+    return false;
+  }
+
+  isFileOpen(file_id : number) : boolean {
+    return false;
+  }
+
+  getParentNodeOf(item_id : number) : ContentTreeStructure | null {
+    let stack : ContentTreeStructure[] = [];
+    this.contentTreeStructure.forEach(c=> {
+      stack.push(c);
+    })
+    while(stack.length !== 0) {
+      const node = stack.pop();
+      if(node?.content === null || node?.content.size === 0) continue;
+      else if (node?.content.has(item_id)) return node;
+      else {
+        node?.content.forEach(c=> {
+          stack.push(c);
+        })
+      }
+    }
+    return null;
   }
 
   deleteFolderFile(name : string) {
@@ -501,14 +545,14 @@ export class DesktopComponent implements OnInit{
   }
 
   restoreApp = (key : number) => {
-    const app = this.deletedApplications.get(key);
-    if(!app) return;
+    // const app = this.deletedApplications.get(key);
+    // if(!app) return;
     // if(app.type === AppType.Folder) this.desktopFolders.add(app.name);
     for(let c=0; c<this.gridColumns; c++) {
       for(let r =0; r<this.gridRows; r++) {
         if(!this.applicationsMatrix[r][c]) {
-          this.applicationsMatrix[r][c] = app.id;
-          this.deletedApplications.delete(key);
+          // this.applicationsMatrix[r][c] = app.id;
+          // this.deletedApplications.delete(key);
           return;
         }
       }

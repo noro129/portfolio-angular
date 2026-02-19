@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, ElementRef, HostListener, Input, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ContextMenuService } from '../../services/context-menu.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { ContextMenuService } from '../../services/context-menu.service';
   templateUrl: './app-tile.component.html',
   styleUrl: './app-tile.component.scss'
 })
-export class AppTileComponent {
+export class AppTileComponent implements OnInit {
 
   @Input() app_icon !: string;
   @Input() app_id !: number;
@@ -16,9 +16,27 @@ export class AppTileComponent {
   @Input() app_ext !: string;
   @Input() openWithId !: (id : number) => void;
   @Input() setDraggedId !: (id : number) => void;
+  @Input() type : number =1;
+  @Input() enable_self_focus : boolean = true;
   focused : boolean = false;
 
-  constructor(private el : ElementRef, private contextmenuService : ContextMenuService) {}
+  constructor(private el : ElementRef, private renderer : Renderer2, private contextmenuService : ContextMenuService) {}
+
+  ngOnInit(): void {
+    if(this.enable_self_focus) {
+      this.renderer.listen(
+        'document',
+        'click',
+        (event : MouseEvent) => {
+          const elRect = this.el.nativeElement.getBoundingClientRect();
+          const left = elRect.left; const right = elRect.right; const top = elRect.top; const bottom = elRect.bottom;
+          const x = event.clientX; const y = event.clientY;
+
+          this.focused = (left <= x && x <= right && top <= y && y <= bottom);
+        }
+      )
+    }
+  }
 
   @HostListener("document:keydown.enter")
   onenterkey() {
@@ -64,14 +82,5 @@ export class AppTileComponent {
 
   setIdDragged() {
     this.setDraggedId(this.app_id);
-  }
-
-  @HostListener("document:click", ["$event"])
-  onclick(event : MouseEvent) {
-    const elRect = this.el.nativeElement.getBoundingClientRect();
-    const left = elRect.left; const right = elRect.right; const top = elRect.top; const bottom = elRect.bottom;
-    const x = event.clientX; const y = event.clientY;
-
-    this.focused = (left <= x && x <= right && top <= y && y <= bottom);
   }
 }

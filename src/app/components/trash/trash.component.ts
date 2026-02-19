@@ -1,18 +1,18 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { KeyValuePipe, NgFor, NgClass } from '@angular/common';
 import { AppType } from '../../models/AppType';
-import { Application } from '../../models/Application';
+import DeletedItem from '../../models/DeletedItem';
+import { AppTileComponent } from '../app-tile/app-tile.component';
 
 @Component({
   selector: 'app-trash',
-  imports: [
-    // NgFor, KeyValuePipe, 
-    NgClass],
+  imports: [NgFor, KeyValuePipe, 
+    NgClass,AppTileComponent],
   templateUrl: './trash.component.html',
   styleUrl: './trash.component.scss'
 })
-export class TrashComponent implements OnDestroy {
-  @Input() deletedApplications !: Map<number, Application>;
+export class TrashComponent {
+  @Input() deletedItems !: Map<number, DeletedItem>;
   @Input() restoreApp !: (key : number) => void;
   focusedApps = 0;
   AppType = AppType;
@@ -23,49 +23,21 @@ export class TrashComponent implements OnDestroy {
     return item.key;
   }
 
+  restore() {}
 
-  onClick(key : number) {
-    const app = this.deletedApplications.get(key);
-    if(app) {
-      // app.focused = !app.focused;
-      // if(app.focused) this.focusedApps++;
-      // else this.focusedApps--;
-    }
-  }
-
-  restore() {
-    let keys : number[] = [];
-    for(let [key, value] of this.deletedApplications){
-      // if(value.focused) keys.push(key);
-    }
-    for(let key of keys) {
-      this.restoreApp(key);
-    }
-    this.focusedApps = 0;
-  }
-
-  delete() {
-    let keys : number[] = [];
-    for(let [key, value] of this.deletedApplications){
-      // if(value.focused) keys.push(key);
-    }
-    for(let key of keys) {
-      this.deletedApplications.delete(key);
-    }
-    this.focusedApps = 0;
-  }
+  delete() {}
 
   restoreItem(key : number) {
     this.restoreApp(key);
   }
 
-  deleteItem(key : number) {
-    this.deletedApplications.delete(key);
-  }
+  // deleteItem(key : number) {
+  //   this.deletedApplications.delete(key);
+  // }
 
-  ngOnDestroy(): void {
-    for(let [key, deletedApp] of this.deletedApplications){
-      // deletedApp.focused = false;
-    }
-  }
+  // ngOnDestroy(): void {
+  //   for(let [key, deletedApp] of this.deletedApplications){
+  //     // deletedApp.focused = false;
+  //   }
+  // }
 }

@@ -12,6 +12,7 @@ import { FileReaderComponent } from "../file-reader/file-reader.component";
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 import { Application } from '../../models/Application';
 import Script from '../../models/Script';
+import DeletedItem from '../../models/DeletedItem';
 
 @Component({
   selector: 'app-applications',
@@ -20,7 +21,7 @@ import Script from '../../models/Script';
   styleUrl: './applications.component.scss'
 })
 export class ApplicationsComponent {
-  @Input() deletedApplications !: Map<number, Application>;
+  @Input() deletedItems !: Map<number, DeletedItem>;
   @Input() openedAplications!: Map<string, OpenInstance[]>;
   @Input() removeOpenInstance !: (key: string, itemId: string)=> void;
   @Input() putOpenInstanceFront !: (key: string, itemId: string)=> void;

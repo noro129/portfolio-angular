@@ -1,14 +1,22 @@
 .container{
     cursor: pointer;
     width: 100%; height: 100%;
-    display: flex; flex-direction: column; align-items: center;
-    padding-top: 5px;
+    display: flex;
     border: 2px solid transparent;
     transition: all .1s linear;
 
     &:hover{
         background-color: var(--color-1-light);
     }
+}
+.focused{
+    background-color: var(--color-1-lighter);
+    border: 2px solid var(--color-1-light);
+}
+
+.type1{
+    flex-direction: column; align-items: center;
+    padding-top: 5px;
 
     .logo{
         width: 50%;
@@ -29,7 +37,27 @@
     }
 }
 
-.focused{
-    background-color: var(--color-1-lighter);
-    border: 2px solid var(--color-1-light);
+.type2{
+    flex-direction: row; column-gap: 10px; align-items: center;
+    padding: 0 5px;
+
+    .logo{
+        height: 90%;
+
+        .logo-image{
+            height: 100%;
+        }
+    }
+
+    .name-size{
+        flex: 1;
+
+        .app-size{
+            width: 100%;
+            padding-top: 2px;
+            text-align: end;
+            font-size: .8em;
+            opacity: .7;
+        }
+    }
 }

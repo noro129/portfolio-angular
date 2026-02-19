@@ -1,17 +1,17 @@
 <div class="container">
     <div class="control-buttons">
         <div class="restore-button" [ngClass]="{'disabled' : focusedApps === 0}" (click)="restore()">restore<img src="restore-icon.png" class="icon" alt="restore icon"/></div>
-        <div class="delete-button" [ngClass]="{'disabled' : focusedApps === 0}" (click)="delete()">delete<img src="delete-icon.png" class="icon" alt="delete icon"/></div>
+        <div class="delete-button" [ngClass]="{'disabled' : focusedApps === 0}" (click)="delete()">delete<img src="delete.png" class="icon" alt="delete icon"/></div>
     </div>
     <div class="deleted-apps">
-        <!-- <div class="deleted-app" *ngFor="let deletedApp of deletedApps | keyvalue : keepOrder; trackBy: trackByKey" draggable="true" title="{{deletedApp.value.name}}{{deletedApp.value.type === AppType.File ? '.txt' : ''}}" (click)="onClick(deletedApp.key)" [ngClass]="{'focused' : deletedApp.value.focused}">
-            <div class="app-icon"><img src="{{deletedApp.value.icon}}" alt="app icon" draggable="false"></div>
-            <div class="app-info">
-                <div class="app-title">{{deletedApp.value.name}}</div>
-                <div class="app-size">0Mb</div>
-            </div>
-            <div class="app-delete-button app-button" (click)="deleteItem(deletedApp.key)"><img src="delete-icon.png" class="icon" alt="delete icon"/></div>
-            <div class="app-restore-button app-button" (click)="restoreItem(deletedApp.key)"><img src="restore-icon.png" class="icon" alt="restore icon"/></div>
-        </div> -->
+        <app-app-tile 
+            *ngFor="let deletedItem of deletedItems | keyvalue : keepOrder; trackBy: trackByKey" 
+            [type]="2"
+            [enable_self_focus]="false"
+            [app_name]="deletedItem.value.treeNodeRef.name"
+            [app_id]="deletedItem.value.treeNodeRef.id"
+            [app_icon]="deletedItem.value.treeNodeRef.icon"
+            [app_ext]="deletedItem.value.treeNodeRef.extension"
+        />
     </div>
 </div>
