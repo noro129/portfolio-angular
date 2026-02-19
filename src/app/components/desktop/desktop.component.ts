@@ -234,10 +234,10 @@ export class DesktopComponent implements OnInit{
         this.stacksMap.set(AppType.Folder.toString(), [app]);
       }
     } else if (toOpen.type === AppType.File) {
-      if(this.stacksMap.has(AppType.File.toString())){
-        this.stacksMap.get(AppType.File.toString())?.unshift(app);
+      if(this.stacksMap.has(AppType.File.toString()+toOpen.extension)){
+        this.stacksMap.get(AppType.File.toString()+toOpen.extension)?.unshift(app);
       } else {
-        this.stacksMap.set(AppType.File.toString(), [app]);
+        this.stacksMap.set(AppType.File.toString()+toOpen.extension, [app]);
       }
     }
     else {

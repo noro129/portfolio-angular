@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
-import { NgFor, KeyValuePipe, NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgFor, KeyValuePipe, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { AppType } from '../../models/AppType';
 import { BlodestComponent } from "../blodest/blodest.component";
 import { WindowComponent } from "../window/window.component";
@@ -10,13 +10,12 @@ import { WhoamiComponent } from "../whoami/whoami.component";
 import { TrashComponent } from "../trash/trash.component";
 import { FileReaderComponent } from "../file-reader/file-reader.component";
 import ContentTreeStructure from '../../models/ContentTreeStructure';
-import { Application } from '../../models/Application';
 import Script from '../../models/Script';
 import DeletedItem from '../../models/DeletedItem';
 
 @Component({
   selector: 'app-applications',
-  imports: [NgFor, KeyValuePipe, NgSwitch, NgSwitchCase, BlodestComponent, WindowComponent, FolderComponent, CMDComponent, WhoamiComponent, TrashComponent, FileReaderComponent],
+  imports: [NgFor, KeyValuePipe, NgSwitch, NgSwitchCase, BlodestComponent, WindowComponent, FolderComponent, CMDComponent, WhoamiComponent, TrashComponent, FileReaderComponent, NgSwitchDefault],
   templateUrl: './applications.component.html',
   styleUrl: './applications.component.scss'
 })
