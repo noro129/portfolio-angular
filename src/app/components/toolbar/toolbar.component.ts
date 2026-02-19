@@ -30,7 +30,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   showMenu = false;
   private interval : any;
   menuItems!: MenuItem[];
-  cover = false; showConnectWindow = false; mouseLeft = true; connecting = false; emptyPassword = false;
+  cover = false; showConnectWindow = false; mouseLeft = true; connecting = false; emptyPassword = false; showCards = false;
   shuttingDown = false;
   info = '';
   musicIsPlaying = true; nextMusic = false; prevMusic = false; musicTrackLength = 203; musicElapsedTime = 0; dragSeekBar = false;
@@ -203,6 +203,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.showConnectWindow = false;
       this.mouseLeft = true;
       this.connecting = false;
+      this.showCards = false;
       clearInterval(this.WatchInterval);
     }, 2000);
   }
@@ -263,6 +264,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.menuToggle();
     this.setWatch();
     this.setWeather();
+    setTimeout(()=>{
+      this.showCards = true
+    }, 1000);
     if(!this.musicInterval) this.musicInterval = setInterval(()=> {
       this.playingMusic();
     },1000);

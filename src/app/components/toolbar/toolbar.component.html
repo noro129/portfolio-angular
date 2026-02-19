@@ -54,7 +54,7 @@
     </div>
     
 
-    <div class="watch-wrapper">
+    <div class="watch-wrapper" [ngStyle]="{'transform' : showCards ? 'translateX(0)' : 'translateX(110%)'}">
         <div class="watch" *ngIf="!shuttingDown" #watch>
             <div class="hours"></div>
             <div class="minutes"></div>
@@ -106,7 +106,7 @@
         <div class="close-connect-window" (click)="toggleConnectWindow(false)">X</div>
     </div>
 
-    <div class="side-cards" *ngIf="!shuttingDown">
+    <div class="side-cards" *ngIf="!shuttingDown" [ngStyle]="{'transform' : showCards ? 'translateX(0)' : 'translateX(-110%)'}">
         <div class="weather-card card"
         [class.sunny]="selectedWeather==='sunny'"
         [class.night-time]="selectedWeather==='night time'"
