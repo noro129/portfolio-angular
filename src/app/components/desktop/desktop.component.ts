@@ -31,67 +31,6 @@ export class DesktopComponent implements OnInit{
   gridRows = 10;
   appFocusEl !: HTMLElement;
   applications = new Map<number, Application>(); readonly applicationsData = "./applications.json";
-  //     {
-  //       'id' : 0,
-  //       'name' : 'Projects',
-  //       'type' : AppType.Folder,
-  //       'systemApp' : false,
-  //       'icon' : './folder.png',
-  //       'xPosition' : 0,
-  //       'yPosition' : 0,
-  //       'defaultHeight' : 450,
-  //       'defaultWidth' : 700,
-  //       'resizeable' : true
-  //     },
-  //     {
-  //       'id' : 1,
-  //       'name' : 'Experience',
-  //       'type' : AppType.Folder,
-  //       'systemApp' : false,
-  //       'icon' : './folder.png',
-  //       'xPosition' : 1,
-  //       'yPosition' : 0,
-  //       'defaultHeight' : 450,
-  //       'defaultWidth' : 700,
-  //       'resizeable' : true
-  //     },
-  //     {
-  //       'id' : 2,
-  //       'name' : 'WhoAmI',
-  //       'type' : AppType.Application,
-  //       'systemApp' : true,
-  //       'icon' : './question-mark.png',
-  //       'xPosition' : 2,
-  //       'yPosition' : 0,
-  //       'defaultHeight' : 600,
-  //       'defaultWidth' : 460,
-  //       'resizeable' : false
-  //     },
-  //     {
-  //       'id' : 3,
-  //       'name' : 'CMD',
-  //       'type' : AppType.Application,
-  //       'systemApp' : true,
-  //       'icon' : './command-line.png',
-  //       'xPosition' : 3,
-  //       'yPosition' : 0,
-  //       'defaultHeight' : 450,
-  //       'defaultWidth' : 800,
-  //       'resizeable' : true
-  //     },
-  //     {
-  //       'id' : 4,
-  //       'name' : 'bin',
-  //       'type' : AppType.Application,
-  //       'systemApp' : true,
-  //       'icon' : './trash-can.png',
-  //       'xPosition' : 4,
-  //       'yPosition' : 0,
-  //       'defaultHeight' : 450,
-  //       'defaultWidth' : 700,
-  //       'resizeable' : true
-  //     }
-  // ];
   applicationsMatrix !: number[][] | null[][];
   notifications = new Map<string, Notification>();
   deletedItems = new Map<number, DeletedItem>();
@@ -461,7 +400,6 @@ export class DesktopComponent implements OnInit{
   }
 
   deleteDraggedItem = () => {
-    console.log("delete this item "+this.draggedId + "?");
     if(this.draggedId != null) this.deleteApp(this.draggedId);
     this.resetDrag();
   }
@@ -530,33 +468,43 @@ export class DesktopComponent implements OnInit{
     return null;
   }
 
-  deleteFolderFile(name : string) {
-    if(name === 'Experience' && this.stacksMap.has(AppType.File.toString())) {
-      this.addNotification("unable to delete '"+name+"', it is in use.", NotifType.Warning);
-      return;
+  restoreApp = (id : number) => {
+    const parentNode = this.deletedItems.get(id)?.parentNodeRef;
+    const node = this.deletedItems.get(id)?.treeNodeRef;
+    if(parentNode === undefined || node === undefined) return;
+    if(this.nodeExists(parentNode)) {
+      parentNode.content.set(id, node);
     }
-    for(let folder of this.stacksMap.get(AppType.Folder.toString()) || []) {
-      if(folder.name === name) {
-        this.addNotification("unable to delete '"+name+"', it is in use.", NotifType.Warning);
-        return;
-      }
+    else {
+      this.desktopTreeObj.content.set(id, node);
     }
-    // this.desktopFolders.delete(name);
-  }
-
-  restoreApp = (key : number) => {
-    // const app = this.deletedApplications.get(key);
-    // if(!app) return;
-    // if(app.type === AppType.Folder) this.desktopFolders.add(app.name);
+    this.deletedItems.delete(id);
     for(let c=0; c<this.gridColumns; c++) {
       for(let r =0; r<this.gridRows; r++) {
-        if(!this.applicationsMatrix[r][c]) {
-          // this.applicationsMatrix[r][c] = app.id;
-          // this.deletedApplications.delete(key);
+        if(this.applicationsMatrix[r][c] === null) {
+          this.applicationsMatrix[r][c] = id;
           return;
         }
       }
     }
     
+  }
+
+  nodeExists(node : ContentTreeStructure) : boolean {
+    if(node === null) return false;
+    let stack : ContentTreeStructure[] = [];
+    this.contentTreeStructure.forEach(c=> {
+      stack.push(c);
+    })
+    while(stack.length !== 0) {
+      const n = stack.pop();
+      if(n === node) return true;
+      if(n !== undefined && n?.content !== null && n.content.size !== 0) {
+        n.content.forEach(c=> {
+          stack.push(c);
+        })
+      }
+    }
+    return false;
   }
 }
