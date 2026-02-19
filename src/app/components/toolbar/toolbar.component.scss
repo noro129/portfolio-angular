@@ -286,7 +286,7 @@
 
 .cover{
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%; transition: opacity .2s .8s linear;
+    top: 0; left: 0; width: 100%; height: 100%; transition: opacity 1s linear;
     z-index: 9999;
     opacity: 0;
 
@@ -299,227 +299,203 @@
         letter-spacing: 1px; font-style: italic;
     }
 
-    .watch{
-        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(1.5); opacity: .5;
-        width: 510px; aspect-ratio: 1 / 1; border-radius: 100%;
-        border: 10px solid var(--color-1-light); box-shadow: 0px 0px 0px 2px var(--color-1);
-        background-color: var(--color-1-lighter);
-        overflow: hidden;
-        filter: blur(1px);
-        
+    .bg{
+        position: absolute;
+        width: 100%; height: 100%;
 
-        &::before{
-            content: '';
+        .tree{
+            position: absolute; top: -50%; height: 150%; width: 150%;
+        }
+
+        .left-tree{
+            left: 0; transform: translateX(-70%);
+            animation: ltree 3s 1s forwards;
+        }
+
+        .right-tree{
+            right: 0; transform: translateX(70%);
+            animation: rtree 3s 1s forwards;
+        }
+
+        .image{
+            position: absolute; left: 0; top: 0;
+            object-fit: cover;
+            width: 100%; height: 100%; opacity: .6;
+            animation: bg 3s 1s forwards;
+        }
+
+        .title{
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            border-radius: 100%;
-            aspect-ratio: 1 / 1;
-            width: 100%;
-            border: 60px solid var(--bg-color-1);
-            border-left: none;
-            border-top: none;
-            z-index: -1;
-        }
+            opacity: .4;
 
-        .hours, .minutes, .seconds{
-            position: absolute; left: 50%; top: 50%; transform: unset;
-            width: 10px; height: 10px; border-radius: 100%; border: 4px solid var(--bg-color-1);
-            background-color: var(--color-1);
-        }
-
-        .hours::after, .minutes::after, .seconds::after {
-            content: '';
-            position: absolute; top: 5px; left: 50%; transform: translate(-50%, -80%);
-            border: 1px solid var(--bg-color-1);
-
-            corner-top-right-shape: bevel;
-            border-top-right-radius: 10px;
-
-            corner-top-left-shape: bevel;
-            border-top-left-radius: 10px;
-        }
-
-        .hours::after{
-            height: 100px; width: 10px;
-            background-color: var(--color-1);
-        }
-
-        .minutes::after{
-            height: 200px; width: 10px;
-            background-color: var(--color-1);
-        }
-
-        .seconds::after{
-            height: 230px; width: 5px;
-            background-color: var(--color-gold);
-            
-        }
-
-        .hours::before, .minutes::before, .seconds::before{
-            content: '';
-            border: 1px solid var(--bg-color-1);
-            background-color: var(--bg-color-1);
-
-            width: 40px; aspect-ratio: 1 / 1;
-            border-radius: 100%;
-            corner-shape: scoop;
-
-            position: absolute; top: 5px; left: 50%;
-        }
-
-        .seconds::before{
-            transform: translate(-50%, -180px);
-        }
-
-        .minutes::before{
-            transform: translate(-50%, -150px);
-        }
-
-        .hours::before{
-            transform: translate(-50%, -80px);
-        }
-
-
-        .one, .two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .eleven, .twelve{
-            position: absolute; width: 1px; height: 1px; left: 50%; top: 50%; transform: translate(-50%, -50%);
-        }
-
-        .three::after, .six::after, .nine::after, .twelve::after{
-            content: '';
-            height: 60px; width: 20px;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -240px);
-            background-color: var(--bg-color-1); border: 2px solid var(--color-silver);
-            corner-bottom-right-shape: bevel;
-            border-bottom-right-radius: 20px;
-
-            corner-bottom-left-shape: bevel;
-            border-bottom-left-radius: 20px;
-        }
-
-        .three{
-            transform: translate(-50%, -50%) rotateZ(90deg);
-        }
-
-        .six{
-            transform: translate(-50%, -50%) rotateZ(180deg);
-        }
-
-        .nine{
-            transform: translate(-50%, -50%) rotateZ(270deg);
-        }
-
-        .one::after, .two::after, .four::after, .five::after, .seven::after, .eight::after, .ten::after, .eleven::after{
-            content: '';
-            height: 30px; width: 10px;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -240px);
-            background-color: transparent; border: 3px solid var(--color-gold); opacity: .7;
-        }
-
-        .one{
-            transform: translate(-50%, -50%) rotateZ(30deg);
-        }
-
-        .two{
-            transform: translate(-50%, -50%) rotateZ(60deg);
-        }
-
-        .four{
-            transform: translate(-50%, -50%) rotateZ(120deg);
-        }
-
-        .five{
-            transform: translate(-50%, -50%) rotateZ(150deg);
-        }
-
-        .seven{
-            transform: translate(-50%, -50%) rotateZ(210deg);
-        }
-
-        .eight{
-            transform: translate(-50%, -50%) rotateZ(240deg);
-        }
-
-        .ten{
-            transform: translate(-50%, -50%) rotateZ(300deg);
-        }
-
-        .eleven{
-            transform: translate(-50%, -50%) rotateZ(330deg);
-        }
-
-
-        .wave-container{
-            position: absolute; width: 100%; height: 100%; z-index: -1;
-
-            .wave{
-                position: absolute; bottom: 0; left: -20%;
-                opacity: .3;
-            }
-
-            .wave2{
-                width: 150%; height: 150%;
-                animation: translation1 7s ease-in-out infinite alternate;
-            }
-
-            .wave1{
-                width: 180%; height: 100%;
-                animation: translation2 5s ease-in-out infinite alternate;
-            }
-        }
-
-
-        .brand{
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1;
-            width: 10px; height: 10px;
-
-            &>p{
-                position: absolute;
-                top: 50%; left: 50%; transform: translate(-50%, -50%);
-
-                &::after{
-                    content: attr(class);
-                    position: absolute; top: 0; left: 50%;
-                    transform: translate(-50%, 180px);
-                    font-size: 4em;
-                    font-weight: bolder;
-                    font-family: monospace;
-                    color: transparent;
-                    -webkit-text-stroke-width: 1px;
-                    -webkit-text-stroke-color: var(--bg-color-1);
-                }
-            }
-
-            .T{
-                transform: translate(-50%, -50px) rotateZ(26deg);
-                &::after{
-                    transform: translate(-50%, 125px);
-                    font-size: 6em;
-                    font-family: cursive, Arial, sans-serif;
-                    color: var(--color-silver);
-                }
-            }
-
-            .e{
-                transform: translate(-50%, -50px) rotateZ(15deg);
-            }
-            .a{
-                transform: translate(-50%, -50px) rotateZ(5deg);
-            }
-            .l{
-                transform: translate(-50%, -50px) rotateZ(-5deg);
-            }
-            .O{
-                transform: translate(-50%, -50px) rotateZ(-15deg);
-            }
-            .s{
-                transform: translate(-50%, -50px) rotateZ(-25deg);
+            path{
+                fill: transparent;
+                stroke: var(--color-1);
+                stroke-width: 0.1;
+                stroke-dasharray: 50;
+                stroke-dashoffset: 50;
+                animation: title 4s 1s linear forwards;
             }
         }
     }
 
-    .bg-watch{
-        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(3);
-        opacity: .2;
-        filter: blur(2px);
+    .watch-wrapper{
+        position: absolute; right: 2%; bottom: 5%; width: 20%; aspect-ratio: 1 / 1;
+        background-color: var(--bg-color-2);
+        border-radius: 20px; 
+        transform: translateX(110%);
+        animation: watch 2s 3s forwards;
+
+        &:hover{
+            .watch{
+                opacity: 1;
+            }
+        }
+
+        .watch{
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(.6); opacity: .5;
+            width: 510px; aspect-ratio: 1 / 1; border-radius: 100%;
+            border: 10px solid var(--color-1-light); box-shadow: 0px 0px 0px 2px var(--color-1);
+            background-color: var(--color-1-lighter);
+            overflow: hidden;
+            filter: blur(1px);
+            transition: opacity .2s;
+            
+
+            &::before{
+                content: '';
+                position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                border-radius: 100%;
+                aspect-ratio: 1 / 1;
+                width: 100%;
+                border: 60px solid var(--bg-color-1);
+                border-left: none;
+                border-top: none;
+                z-index: -1;
+            }
+
+            .hours, .minutes, .seconds{
+                position: absolute; left: 50%; top: 50%; transform: unset;
+                width: 10px; height: 10px; border-radius: 100%; border: 4px solid var(--bg-color-1);
+                background-color: var(--color-1);
+            }
+
+            .hours::after, .minutes::after, .seconds::after {
+                content: '';
+                position: absolute; top: 5px; left: 50%; transform: translate(-50%, -80%);
+                border: 1px solid var(--bg-color-1);
+
+                corner-top-right-shape: bevel;
+                border-top-right-radius: 10px;
+
+                corner-top-left-shape: bevel;
+                border-top-left-radius: 10px;
+            }
+
+            .hours::after{
+                height: 100px; width: 10px;
+                background-color: var(--color-1);
+            }
+
+            .minutes::after{
+                height: 200px; width: 10px;
+                background-color: var(--color-1);
+            }
+
+            .seconds::after{
+                height: 230px; width: 5px;
+                background-color: var(--color-gold);
+                
+            }
+
+
+            .one, .two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .eleven, .twelve{
+                position: absolute; width: 1px; height: 1px; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            }
+
+            .three::after, .six::after, .nine::after, .twelve::after{
+                content: '';
+                height: 60px; width: 20px;
+                position: absolute; top: 50%; left: 50%; transform: translate(-50%, -410%);
+                background-color: var(--bg-color-1); border: 2px solid var(--color-silver);
+                corner-bottom-right-shape: bevel;
+                border-bottom-right-radius: 20px;
+
+                corner-bottom-left-shape: bevel;
+                border-bottom-left-radius: 20px;
+            }
+
+            .three{
+                transform: translate(-50%, -50%) rotateZ(90deg);
+            }
+
+            .six{
+                transform: translate(-50%, -50%) rotateZ(180deg);
+            }
+
+            .nine{
+                transform: translate(-50%, -50%) rotateZ(270deg);
+            }
+
+            .one::after, .two::after, .four::after, .five::after, .seven::after, .eight::after, .ten::after, .eleven::after{
+                content: '';
+                height: 30px; width: 10px;
+                position: absolute; top: 50%; left: 50%; transform: translate(-50%, -800%);
+                background-color: transparent; border: 3px solid var(--color-1); opacity: .7;
+            }
+
+            .one{
+                transform: translate(-50%, -50%) rotateZ(30deg);
+            }
+
+            .two{
+                transform: translate(-50%, -50%) rotateZ(60deg);
+            }
+
+            .four{
+                transform: translate(-50%, -50%) rotateZ(120deg);
+            }
+
+            .five{
+                transform: translate(-50%, -50%) rotateZ(150deg);
+            }
+
+            .seven{
+                transform: translate(-50%, -50%) rotateZ(210deg);
+            }
+
+            .eight{
+                transform: translate(-50%, -50%) rotateZ(240deg);
+            }
+
+            .ten{
+                transform: translate(-50%, -50%) rotateZ(300deg);
+            }
+
+            .eleven{
+                transform: translate(-50%, -50%) rotateZ(330deg);
+            }
+
+
+            .wave-container{
+                position: absolute; width: 100%; height: 100%; z-index: -1;
+
+                .wave{
+                    position: absolute; bottom: 0; left: -20%;
+                    opacity: .3;
+                }
+
+                .wave2{
+                    width: 150%; height: 150%;
+                    animation: translation1 7s ease-in-out infinite alternate;
+                }
+
+                .wave1{
+                    width: 180%; height: 100%;
+                    animation: translation2 5s ease-in-out infinite alternate;
+                }
+            }
+        }
     }
 
     .connect-window-underlay{
@@ -642,10 +618,12 @@
         position: absolute;
         top: 5%; left: 2%;
         width: 25%; height: 90%;
-        background-color: var(--color-1-lighter);
+        background-color: var(--bg-color-2);
         border-radius: 20px;
         overflow: hidden;
         perspective: 800px;
+        transform: translateX(-110%);
+        animation: cards 2s 3s forwards;
 
         .card{
             position: absolute; left: 5%; width: 90%;
@@ -655,7 +633,6 @@
             transform: translateZ(-20px);
             transition: transform .3s;
             overflow: hidden;
-            opacity: .8;
 
             &:hover{
                 transform: translateZ(0px);
@@ -930,6 +907,21 @@
     }
 }
 
+@keyframes watch {
+    from{
+        transform: translateX(110%);
+    } to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes cards {
+    from{
+        transform: translateX(-110%);
+    } to {
+        transform: translateX(0);
+    }
+}
 
 @keyframes translation1 {
     100%{
@@ -1017,5 +1009,42 @@
         transform: translateX(-70%);
     } to {
         transform: translate(-75%, -2%) rotateZ(-2deg);
+    }
+}
+
+@keyframes bg {
+    from{
+        transform: scale(1);
+    } to{
+        transform: scale(1.1);
+    }
+}
+
+@keyframes title {
+    0%{
+        stroke-dashoffset: 50;
+        fill: transparent;
+    }50%{
+        fill: transparent;
+    }
+    100%{
+        fill: var(--color-1);
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes ltree {
+    from{
+        transform: translateX(-70%);
+    }to{
+        transform: translateX(-80%) rotateZ(-20deg);
+    }
+}
+
+@keyframes rtree {
+    from{
+        transform: translateX(70%);
+    }to{
+        transform: translateX(80%) rotateZ(20deg);
     }
 }

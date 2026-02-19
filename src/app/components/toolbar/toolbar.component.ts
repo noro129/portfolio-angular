@@ -14,7 +14,6 @@ import { ContextMenuService } from '../../services/context-menu.service';
 export class ToolbarComponent implements OnInit, OnDestroy {
   @ViewChild("menuItemsManager") menuItemsManager !: ElementRef<HTMLDivElement>;
   @ViewChild("watch", {static : false}) watch !: ElementRef<HTMLDivElement>;
-  @ViewChild("bgWatch", {static : false}) bgWatch !: ElementRef<HTMLDivElement>;
   @ViewChild("connectWindow", {static : false}) connectWindow !: ElementRef;
   @Output() openApp = new EventEmitter<number>();
   @Output() addNotification = new EventEmitter<{message : string, type : NotifType}>();
@@ -271,11 +270,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   setWatch() {
     this.setWatchHands(this.watch.nativeElement);
-    this.setWatchHands(this.bgWatch.nativeElement);
 
     this.WatchInterval = setInterval(()=> {
       this.setWatchHands(this.watch.nativeElement);
-      this.setWatchHands(this.bgWatch.nativeElement);
     }, 1000);
   }
 
