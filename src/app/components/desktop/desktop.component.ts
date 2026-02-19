@@ -380,7 +380,18 @@ export class DesktopComponent implements OnInit{
         this.applicationsMatrix[fromR][fromC] = null;
       }
       if (this.dragDestination === this.desktopTreeObj) {
-        this.applicationsMatrix[toR][toC] = this.draggedId;
+        const dragTo = this.applicationsMatrix[toR][toC];
+        if(dragTo !== null && this.applications.get(dragTo)?.name === 'recycle bin') {
+          this.draggedId!==null && this.deleteApp(this.draggedId);
+          this.resetDrag();
+          return;
+        } else if (dragTo !== null) {
+          this.moveAppDown(toR, toC);
+          this.applicationsMatrix[toR][toC] = this.draggedId;
+        } else {
+          this.applicationsMatrix[toR][toC] = this.draggedId;
+        }
+        
       }
       
       if (this.draggedId !== null && this.dragSource !== null && this.dragDestination !== null) {
@@ -392,6 +403,18 @@ export class DesktopComponent implements OnInit{
     }
 
     this.resetDrag();
+  }
+
+  moveAppDown(r : number , c : number) {
+    const nextR = (r+1)%this.gridRows;
+    const nextC = c + Math.floor((r+1)/this.gridRows);
+    if(this.applicationsMatrix[nextR][nextC] !== null) {
+      this.moveAppDown(nextR, nextC);
+      this.applicationsMatrix[nextR][nextC] = this.applicationsMatrix[r][c];
+    } else {
+      this.applicationsMatrix[nextR][nextC] = this.applicationsMatrix[r][c];
+      this.applicationsMatrix[r][c] = null;
+    }
   }
 
   resetDrag() {
@@ -474,19 +497,21 @@ export class DesktopComponent implements OnInit{
     if(parentNode === undefined || node === undefined) return;
     if(this.nodeExists(parentNode)) {
       parentNode.content.set(id, node);
+      this.deletedItems.delete(id);
     }
     else {
       this.desktopTreeObj.content.set(id, node);
-    }
-    this.deletedItems.delete(id);
-    for(let c=0; c<this.gridColumns; c++) {
-      for(let r =0; r<this.gridRows; r++) {
-        if(this.applicationsMatrix[r][c] === null) {
-          this.applicationsMatrix[r][c] = id;
-          return;
+      this.deletedItems.delete(id);
+      for(let c=0; c<this.gridColumns; c++) {
+        for(let r =0; r<this.gridRows; r++) {
+          if(this.applicationsMatrix[r][c] === null) {
+            this.applicationsMatrix[r][c] = id;
+            return;
+          }
         }
       }
     }
+    
     
   }
 
