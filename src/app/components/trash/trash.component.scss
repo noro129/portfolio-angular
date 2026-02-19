@@ -17,7 +17,7 @@
             color: var(--bg-color-1);
             display: flex; justify-content: start; align-items: center; padding-left: 10px;
             border-right: 2px solid var(--color-1);
-            transition: all .2s linear, color .1s .1s linear;
+            transition: all .1s linear, color .1s .1s linear;
             overflow: hidden;
             border-right: 2px solid var(--bg-color-1);
             z-index: 1;
@@ -32,7 +32,6 @@
                 .icon{
                     opacity: 1;
                     transform: translateX(-3px);
-                    filter: invert(100%);
                 }
             }
 
@@ -52,7 +51,7 @@
 
             &:active:not(.disabled){
                 opacity: .8;
-                scale: .8;
+                scale: .9;
             }
         }
 
@@ -66,11 +65,66 @@
         position: absolute; top: 10%; height: 90%; left: 0; width: 100%; padding: 20px;
         display: flex; flex-direction: row; flex-wrap: wrap; row-gap: 10px; column-gap: 10px;
         justify-content: start; align-content: start;
-
-        >*{
-            padding: 5px;
+        
+        .wrapper{
             width: 23%;
             height: 60px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+            transition: background-color .1s;
+
+            .app{
+                height: 100%;
+                width: 100%;
+            }
+
+            .action{
+                cursor: pointer;
+                position: absolute;
+                width: 20%; height: 40%; right: 0; transform: translateX(100%);
+                display: flex; justify-content: center; align-items: center;
+                transition: transform .1s, scale .1s;
+                background-color: var(--bg-color-3);
+
+                .icon{
+                    height: 60%;
+                    opacity: .6;
+                }
+
+                &:hover{
+                    scale: 1.2;
+                    opacity: 1;
+                }
+            }
+
+            .restore{
+                top: 0;
+
+                &:hover{
+                    background-color: var(--color-green);
+                }
+            }
+
+            .delete{
+                bottom: 0;
+
+                &:hover{
+                    background-color: var(--color-red);
+                }
+            }
+
+            &:not(.focused){
+                &:hover{
+                    .action{
+                        transform: translateX(0);
+                    }
+                }
+            }
+        }
+
+        .focused{
+            background-color: var(--color-1-light); border: 1px solid var(--color-1);
         }
     }
 }

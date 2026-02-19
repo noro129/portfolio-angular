@@ -14,8 +14,9 @@ import { AppTileComponent } from '../app-tile/app-tile.component';
 export class TrashComponent {
   @Input() deletedItems !: Map<number, DeletedItem>;
   @Input() restoreApp !: (key : number) => void;
-  focusedApps = 0;
+  focusTracker = new Set<number>();
   AppType = AppType;
+  actionPressed = false;
 
 
   keepOrder = ()=>0;
@@ -23,21 +24,38 @@ export class TrashComponent {
     return item.key;
   }
 
-  restore() {}
+  restore() {
+    for(let f of this.focusTracker) {
+      this.restoreItem(f);
+    }
+    this.focusTracker.clear();
+    this.actionPressed = false;
+  }
 
-  delete() {}
+  delete() {
+    for(let f of this.focusTracker) {
+      this.deletedItems.delete(f);
+    }
+    this.focusTracker.clear();
+  }
 
   restoreItem(key : number) {
+    this.actionPressed=true;
     this.restoreApp(key);
   }
 
-  // deleteItem(key : number) {
-  //   this.deletedApplications.delete(key);
-  // }
+  deleteItem(id : number) {
+    this.actionPressed=true;
+    this.deletedItems.delete(id);
+    if(this.focusTracker.has(id)) this.focusTracker.delete(id);
+  }
 
-  // ngOnDestroy(): void {
-  //   for(let [key, deletedApp] of this.deletedApplications){
-  //     // deletedApp.focused = false;
-  //   }
-  // }
+  onClick(id : number) {
+    if(this.actionPressed) {
+      this.actionPressed=false;
+      return;
+    }
+    if(this.focusTracker.has(id)) this.focusTracker.delete(id);
+    else this.focusTracker.add(id);
+  }
 }
