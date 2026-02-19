@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, Input, Renderer2, V
 import { OpenInstance } from '../../models/OpenInstance';
 import { NgStyle } from '@angular/common';
 import { AppFocusService } from '../../services/app-focus.service';
+import { ContextMenuService } from '../../services/context-menu.service';
 
 @Component({
   selector: 'app-window',
@@ -32,7 +33,7 @@ export class WindowComponent implements AfterViewInit{
     }
   }
 
-  constructor(private el : ElementRef, private appFocusService : AppFocusService) {}
+  constructor(private el : ElementRef, private appFocusService : AppFocusService, private contextmenuService : ContextMenuService) {}
 
   ngAfterViewInit(): void {
     document.addEventListener('mousemove', this.onMouseMove);
@@ -60,11 +61,31 @@ export class WindowComponent implements AfterViewInit{
     el.style.top = `${event.clientY - this.yOffset}px`;
   }
 
-  hide() {
+  hide = () => {
     this.openInstance.hidden = true;
   }
 
-  close() {
+  close = () => {
     this.removeOpenInstance(this.instanceType, this.openInstance.id);
+  }
+
+  onRightClick(event : MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.contextmenuService.open(event.clientX, event.clientY,
+      [
+        {
+          label : 'hide',
+          icon : './hide.png',
+          action : this.hide,
+          disabled : false
+        },
+        {
+          label : 'close',
+          icon : './delete.png',
+          action : this.close,
+          disabled : false
+        }
+    ]);
   }
 }

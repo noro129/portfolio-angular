@@ -35,4 +35,9 @@ export class ContextMenuComponent {
       event.preventDefault();
     }
   }
+
+  performAction(event : MouseEvent, item : ContextMenuItem) {
+    if(item.disabled) event.stopPropagation();
+    else item.action();
+  }
 }

@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input
 import { MenuItem } from '../../models/MenuItem';
 import { HttpClient } from '@angular/common/http';
 import { NotifType } from '../../models/NotifType';
+import { ContextMenuService } from '../../services/context-menu.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -36,7 +37,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   musicIsPlaying = true; nextMusic = false; prevMusic = false; musicTrackLength = 203; musicElapsedTime = 0; dragSeekBar = false;
   selectedWeather = ''; weatherIcon = ''; weatherDegree = 0; weatherCardDate = '';
   
-  constructor(private http : HttpClient, private renderer : Renderer2, private el : ElementRef) {}
+  constructor(private http : HttpClient, private renderer : Renderer2, private el : ElementRef, private contextmenuService : ContextMenuService) {}
 
   ngOnInit(): void {
     this.http.get<MenuItem[]>("./menu-items.json").subscribe({
@@ -237,7 +238,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     setTimeout(() => {this.nextMusic = false;}, 400);
   }
 
-  powerOff() {
+  powerOff = () => {
     this.cover = true;
     this.menuToggle();
     this.shuttingDown = true;
@@ -258,7 +259,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }, 900);
   }
 
-  sleepMode() {
+  sleepMode = () => {
     this.cover = true;
     this.menuToggle();
     this.setWatch();
@@ -358,5 +359,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.showConnectWindow = true;
       setTimeout(()=>this.connectWindow.nativeElement.value = "", 50);
     }
+  }
+
+  onRightClick(event : MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.contextmenuService.open(event.clientX, event.clientY, 
+      [
+        {
+          label : 'sleep',
+          icon : './sleep.png',
+          action : this.sleepMode,
+          disabled : false
+        },
+        {
+          label : 'power off',
+          icon : './poweroff.png',
+          action : this.powerOff,
+          disabled : false
+        }
+      ]
+    );
   }
 }

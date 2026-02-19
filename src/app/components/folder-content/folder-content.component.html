@@ -1,4 +1,4 @@
-<div class="container" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+<div class="container" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (contextmenu)="onRightClick($event)">
     <div class="item" *ngFor="let item of openedFolder?.content | keyvalue : keepOrder; trackBy: trackByKey">
         @if(item.value.isFolder) {
             <app-app-tile

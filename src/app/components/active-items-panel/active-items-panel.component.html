@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" (contextmenu)="onRightClick($event)">
     <ng-container *ngIf="stacksMap">
         <app-instances-stack 
         *ngFor="let stack of stacksMap | keyvalue : keepOrder" 

@@ -2,6 +2,7 @@ import { Component, HostListener, Input } from '@angular/core';
 import { KeyValuePipe, NgFor } from '@angular/common';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 import { AppTileComponent } from '../app-tile/app-tile.component';
+import { ContextMenuService } from '../../services/context-menu.service';
 
 @Component({
   selector: 'app-folder-content',
@@ -25,6 +26,8 @@ export class FolderContentComponent {
     return item.key;
   }
 
+  constructor(private contextmenuService : ContextMenuService) {}
+
   openItem(item : ContentTreeStructure) {
     if (item.isFolder) {
       this.switchToFolder(item);
@@ -47,4 +50,27 @@ export class FolderContentComponent {
     if(this.openedFolder) this.setDragDestination(this.openedFolder);
     this.moveContentInTree();
   }
+
+  onRightClick(event : MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.contextmenuService.open(event.clientX, event.clientY,
+      [
+        {
+          label : "New Folder" , icon : './add.png', action : this.addFolder, disabled : false
+        },
+        {
+          label : "New File" , icon : './add.png', action : this.addFile, disabled : false
+        },
+        {
+          label : 'paste', icon : './paste.png', action : this.paste, disabled : false
+        }
+      ])
+  }
+
+  addFolder() {}
+
+  addFile() {}
+
+  paste() {}
 }

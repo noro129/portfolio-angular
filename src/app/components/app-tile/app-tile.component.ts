@@ -40,7 +40,13 @@ export class AppTileComponent {
         },
         {
           label : "copy",
-          icon : "./shortcut.png",
+          icon : "./copy.png",
+          action : open,
+          disabled : false
+        },
+        {
+          label : "cut",
+          icon : "./cut.png",
           action : open,
           disabled : false
         },
@@ -54,7 +60,7 @@ export class AppTileComponent {
     )
   }
 
-  open() {this.openWithId(this.app_id); this.focused = false;}
+  open = () => {this.openWithId(this.app_id); this.focused = false;}
 
   setIdDragged() {
     this.setDraggedId(this.app_id);

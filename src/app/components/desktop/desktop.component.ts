@@ -255,7 +255,20 @@ export class DesktopComponent implements OnInit{
   }
 
   onRightClick(event : MouseEvent) {
-    this.contextmenuService.open(event.clientX, event.clientY, [{label : "New Folder" , icon : './add.png', action : this.nothing, disabled : false}])
+    event.preventDefault();
+    event.stopPropagation();
+    this.contextmenuService.open(event.clientX, event.clientY,
+      [
+        {
+          label : "New Folder" , icon : './add.png', action : this.nothing, disabled : false
+        },
+        {
+          label : "New File" , icon : './add.png', action : this.nothing, disabled : false
+        },
+        {
+          label : 'paste', icon : './paste.png', action : this.nothing, disabled : false
+        }
+      ])
   }
 
   nothing = () => {}

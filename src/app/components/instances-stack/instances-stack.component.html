@@ -1,6 +1,7 @@
 <div class="instances-container" #instancesStack
     (mouseenter)="hoverStart()"
     (mouseleave)="hoverEnd()"
+    (contextmenu)="onRightClick($event)"
     >
     <div 
         *ngFor="let item of stack; index as i" 

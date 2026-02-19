@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { OpenInstance } from '../../models/OpenInstance';
 import { NgClass, NgFor, NgStyle } from '@angular/common';
+import { ContextMenuService } from '../../services/context-menu.service';
 
 @Component({
   selector: 'app-instances-stack',
@@ -18,6 +19,8 @@ export class InstancesStackComponent {
   @Input() removeFocusOnWindow !: (key : string, itemId : string) => void;
   @Input() hideRevealItem !: (key : string, itemId : string) => void;
   expand = false;
+
+  constructor(private contextmenuService : ContextMenuService) {}
 
   hoverStart() {
     this.expand = true;
@@ -57,5 +60,20 @@ export class InstancesStackComponent {
 
   onMouseLeaveInstance(itemId : string) {
     this.removeFocusOnWindow(this.stackId, itemId);
+  }
+  
+  onRightClick(event : MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.contextmenuService.open(event.clientX, event.clientY, [{label : 'close all', icon : './delete.png', action : this.closeAll, disabled : false}]);
+  }
+
+  closeAll = () => {
+  let stackIdClone : string[] = [];
+  this.stack.forEach(s => stackIdClone.push(s.id));
+
+  stackIdClone.forEach(id => {
+    this.removeStackElement(this.stackId, id);
+  })
   }
 }
