@@ -1,4 +1,10 @@
-<div class="context-menu" *ngIf="state$ | async as state$" [ngStyle]="{'top' : state$.y+'px', 'left' : state$.x+'px'}">
+<div class="context-menu" *ngIf="state$ | async as state$" 
+        [ngStyle]="{
+                        'top' : windowHeight <= state$.y + 30*state$.items.length ? (state$.y - 30*state$.items.length) + 'px' : state$.y+'px', 
+                        'left' : windowWidth <= state$.x + 200 ? (state$.x - 200) + 'px' : state$.x+'px'
+                    }"
+    >
+    
     <div *ngFor="let item of state$.items" class="item" [class.disabled]="item.disabled" (click)="performAction($event, item)">
         <p class="action">{{item.label}}</p>
         <div class="icon"><img src="{{item.icon}}" alt="{{item.label}} action icon"></div>

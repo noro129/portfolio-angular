@@ -11,6 +11,8 @@ import { every } from 'rxjs';
   styleUrl: './context-menu.component.scss'
 })
 export class ContextMenuComponent {
+  windowWidth = window.innerWidth;
+  windowHeight = window.innerHeight;
 
 
   constructor(private contextmenuService : ContextMenuService) {}
