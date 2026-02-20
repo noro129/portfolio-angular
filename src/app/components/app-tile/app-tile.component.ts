@@ -9,6 +9,7 @@ import { ContextMenuService } from '../../services/context-menu.service';
   styleUrl: './app-tile.component.scss'
 })
 export class AppTileComponent implements OnInit {
+  @ViewChild("appName", {static : false}) appName !: ElementRef;
 
   @Input() app_icon !: string;
   @Input() app_id !: number;
@@ -21,7 +22,9 @@ export class AppTileComponent implements OnInit {
   @Input() type : number =1;
   @Input() enable_self_focus : boolean = true;
   @Input() enable_context_menu : boolean = true;
+  @Input() editAppName !: (app_id : number, new_name : string) => void;
   focused : boolean = false;
+  enable_rename : boolean = false;
 
   constructor(private el : ElementRef, private renderer : Renderer2, private contextmenuService : ContextMenuService) {}
 
@@ -36,6 +39,10 @@ export class AppTileComponent implements OnInit {
           const x = event.clientX; const y = event.clientY;
 
           this.focused = (left <= x && x <= right && top <= y && y <= bottom);
+          if(!this.focused && this.enable_rename) {
+            this.enable_rename=false;
+            this.editAppName(this.app_id, this.appName.nativeElement.textContent);
+          }
         }
       )
     }
@@ -90,11 +97,18 @@ export class AppTileComponent implements OnInit {
   @HostListener("document:keydown.enter")
   onenterkey() {
     if(this.focused) this.open();
+    if(this.enable_rename) {
+      this.enable_rename = false;
+      this.editAppName(this.app_id, this.appName.nativeElement.textContent);
+    }
   }
 
   nothing = () => {};
 
-  rename = () => {};
+  rename = () => {
+    this.enable_rename=true;
+    this.selectContentText();
+  };
 
   delete = () => {this.deleteWithId(this.app_id);}
 
@@ -102,5 +116,17 @@ export class AppTileComponent implements OnInit {
 
   setIdDragged() {
     this.setDraggedId(this.app_id);
+  }
+
+  selectContentText() {
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.selectNodeContents(this.appName.nativeElement);
+
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+    setTimeout(() => {
+      this.appName.nativeElement.focus();
+    }, 0); 
   }
 }

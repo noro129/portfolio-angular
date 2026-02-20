@@ -559,4 +559,15 @@ export class DesktopComponent implements OnInit{
     }
     return false;
   }
+
+  editAppName = (app_id : number, new_name : string) => {
+    const app = this.applications.get(app_id);
+    if(app === undefined) return;
+    if(this.existsAnother(this.dragSource, new_name, app.type, app_id)) {}
+    else app.name = new_name;
+  }
+
+  existsAnother(node : ContentTreeStructure | null, name : string, type : AppType, exclude_id : number) :boolean {
+    return false;
+  }
 }

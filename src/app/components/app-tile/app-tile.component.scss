@@ -34,6 +34,11 @@
         display: flex; justify-content: center;
         text-align: center;
         font-size: .8em;
+        flex: 1;
+
+        &:focus{
+            outline: unset;
+        }
     }
 }
 

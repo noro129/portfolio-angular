@@ -58,3 +58,8 @@ div::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: var(--color-1);
 }
+
+::selection{
+    background-color: var(--color-blue);
+    color: var(--color-1);
+}

@@ -1,7 +1,7 @@
 <div class="container" [class.type1]="type === 1" [class.type2]="type === 2" draggable="true" (dragstart)="setIdDragged()" [ngClass]="{'focused' : focused}" (dblclick)="open()" title="{{app_name}}{{app_ext}}">
     <div class="logo"><img src="{{app_icon}}" alt="app logo" class="logo-image"></div>
     @if(type === 1){
-        <p class="app-name">{{app_name}}{{app_ext}}</p>
+        <p class="app-name" [attr.contenteditable]="enable_rename" #appName>{{app_name}}{{app_ext}}</p>
     } @else if (type === 2) {
         <div class="name-size">
             <p class="app-name">{{app_name}}{{app_ext}}</p>
