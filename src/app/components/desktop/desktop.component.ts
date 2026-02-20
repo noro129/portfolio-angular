@@ -427,6 +427,23 @@ export class DesktopComponent implements OnInit{
     this.resetDrag();
   }
 
+  deleteWithId = (app_id : number) => {
+    const isInDesktop = this.desktopTreeObj.content.has(app_id);
+    this.deleteApp(app_id);
+    this.resetDrag();
+    if(isInDesktop) {
+      for(let r=0; r<this.gridRows; r++) {
+        for(let c=0; c<this.gridColumns; c++) {
+          if(this.applicationsMatrix[r][c] === app_id) {
+            this.applicationsMatrix[r][c]=null;
+            return;
+          }
+        }
+      }
+    }
+    
+  }
+
   deleteApp(app_id : number) {
     const app = this.applications.get(app_id);
     let itemNodeRef : ContentTreeStructure | null = null;
@@ -498,13 +515,23 @@ export class DesktopComponent implements OnInit{
     if(this.nodeExists(parentNode)) {
       parentNode.content.set(id, node);
       this.deletedItems.delete(id);
+      if(parentNode === this.desktopTreeObj) {
+        for(let c=0; c<this.gridColumns; c++) {
+          for(let r =0; r<this.gridRows; r++) {
+            if (this.applicationsMatrix[r][c] === null) {
+              this.applicationsMatrix[r][c] = id;
+              return;
+            }
+          }
+        }
+      }
     }
     else {
       this.desktopTreeObj.content.set(id, node);
       this.deletedItems.delete(id);
       for(let c=0; c<this.gridColumns; c++) {
         for(let r =0; r<this.gridRows; r++) {
-          if(this.applicationsMatrix[r][c] === null) {
+          if (this.applicationsMatrix[r][c] === null) {
             this.applicationsMatrix[r][c] = id;
             return;
           }

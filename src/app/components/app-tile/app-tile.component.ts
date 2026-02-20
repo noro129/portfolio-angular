@@ -14,7 +14,9 @@ export class AppTileComponent implements OnInit {
   @Input() app_id !: number;
   @Input() app_name !: string;
   @Input() app_ext !: string;
+  @Input() can_delete !: boolean;
   @Input() openWithId !: (id : number) => void;
+  @Input() deleteWithId !: (id : number) => void;
   @Input() setDraggedId !: (id : number) => void;
   @Input() type : number =1;
   @Input() enable_self_focus : boolean = true;
@@ -53,30 +55,34 @@ export class AppTileComponent implements OnInit {
         {
           label : "open",
           icon : "./shortcut.png",
-          action : open,
+          action : this.open,
           disabled : false
         },
         {
           label : "copy",
           icon : "./copy.png",
-          action : open,
+          action : this.open,
           disabled : false
         },
         {
           label : "cut",
           icon : "./cut.png",
-          action : open,
+          action : this.open,
           disabled : false
         },
         {
           label : "delete",
           icon : "./delete.png",
-          action : open,
-          disabled : true
+          action : this.delete,
+          disabled : !this.can_delete
         }
       ]
     )
   }
+
+  nothing = () => {};
+
+  delete = () => {this.deleteWithId(this.app_id);}
 
   open = () => {this.openWithId(this.app_id); this.focused = false;}
 
