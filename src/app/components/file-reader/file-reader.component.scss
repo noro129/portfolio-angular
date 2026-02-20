@@ -151,12 +151,11 @@
 }
 
 .script{
-    background-color: var(--bg-color-1);
+    background-color: var(--bg-color-3);
     color: var(--color-green);
     backdrop-filter: blur(2px);
     overflow-y: scroll;
     display: flex; flex-direction: column;
-    font-weight: bold;
 
     .line{
         height: max-content;
@@ -169,7 +168,7 @@
             color: var(--color-1);
             width: 30px;
             display: flex; align-items: start; justify-content: end;
-            background-color: var(--color-1-light);
+            background-color: var(--bg-color-1);
             border-bottom: 1px solid var(--color-1);
         }
 
@@ -177,6 +176,7 @@
             width: calc( 100% - 30px );
             padding-left: 4px;
             border-bottom: 1px solid var(--color-1-lighter);
+            display: flex; align-items: end;
         }
     }
 
