@@ -478,10 +478,18 @@ export class DesktopComponent implements OnInit{
   }
 
   isFolderUsed(folder_id : number) : boolean {
+
     return false;
   }
 
   isFileOpen(file_id : number) : boolean {
+    const file_ext = this.applications.get(file_id)?.extension;
+    if(!this.stacksMap.has(AppType.File.toString()+file_ext)) return false;
+    else {
+      for(let file of this.stacksMap.get(AppType.File.toString()+file_ext) || []) {
+        if(file.application.id === file_id) return true;
+      }
+    }
     return false;
   }
 
