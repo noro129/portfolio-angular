@@ -1,21 +1,21 @@
 <div class="container" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (contextmenu)="onRightClick($event)">
     <div class="item" *ngFor="let item of openedFolder?.content | keyvalue : keepOrder; trackBy: trackByKey">
-        @if(item.value.isFolder) {
+        @if(item.value.application.type === AppType.Folder) {
             <app-app-tile
-                [app_id]="item.value.id"
-                [app_name]="item.value.name"
-                [app_ext]="item.value.extension"
-                [app_icon]="item.value.icon"
+                [app_id]="item.value.application.id"
+                [app_name]="item.value.application.name"
+                [app_ext]="item.value.application.extension"
+                [app_icon]="item.value.application.icon"
                 [setDraggedId]="setDraggedId"
                 (dblclick)="openItem(item.value)"
                 (dragstart)="onDragStart()"
             />
         } @else {
             <app-app-tile 
-            [app_id]="item.value.id"
-            [app_name]="item.value.name"
-            [app_ext]="item.value.extension"
-            [app_icon]="item.value.icon"
+            [app_id]="item.value.application.id"
+            [app_name]="item.value.application.name"
+            [app_ext]="item.value.application.extension"
+            [app_icon]="item.value.application.icon"
             [openWithId]="open"
             [setDraggedId]="setDraggedId"
             (dragstart)="onDragStart()"

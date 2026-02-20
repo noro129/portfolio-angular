@@ -1,13 +1,13 @@
+import { Application } from "./Application";
+
 export interface OpenInstance {
     id : string;
-    name : string;
+    application : Application;
     hidden : boolean;
-    icon : string;
     positionX : number;
     positionY : number;
     positionZ : number;
     windowWidth : number;
     windowHeight : number;
     focusedOn : boolean;
-    resizeable : boolean;
 }

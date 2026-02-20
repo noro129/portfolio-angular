@@ -1,10 +1,11 @@
 import { KeyValuePipe, NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ProjectsComponent } from "../projects/projects.component";
 import { OpenInstance } from '../../models/OpenInstance';
 import { FoldersStructurePanelComponent } from '../folders-structure-panel/folders-structure-panel.component';
 import { FolderContentComponent } from '../folder-content/folder-content.component';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
+import { AppType } from '../../models/AppType';
 
 @Component({
   selector: 'app-folder',
@@ -27,15 +28,14 @@ export class FolderComponent{
   @Input() setDragDestination !: (input : ContentTreeStructure) => void;
   @Input() moveContentInTree !: () => void;
 
+  @Input() projectsObjRef !: ContentTreeStructure;
+
+  AppType = AppType;
+
   keepOrder = () => 0;
 
   trackByKey (index: number, item: { key: number; value: any }) : number {
     return item.key;
-  }
-
-  changeFolder = (folderName : string) => {
-    if(folderName === this.folder.name) return;
-    this.folder.name = folderName;
   }
 
   switchToFolder = (f : ContentTreeStructure) => {

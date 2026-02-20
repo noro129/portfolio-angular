@@ -3,6 +3,7 @@ import { KeyValuePipe, NgFor } from '@angular/common';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 import { AppTileComponent } from '../app-tile/app-tile.component';
 import { ContextMenuService } from '../../services/context-menu.service';
+import { AppType } from '../../models/AppType';
 
 @Component({
   selector: 'app-folder-content',
@@ -20,6 +21,8 @@ export class FolderContentComponent {
   @Input() setDragDestination !: (input : ContentTreeStructure) => void;
   @Input() moveContentInTree !: () => void;
 
+  AppType = AppType;
+
   keepOrder = () => 0;
 
   trackByKey (index: number, item: { key: number; value: any }) : number {
@@ -29,11 +32,11 @@ export class FolderContentComponent {
   constructor(private contextmenuService : ContextMenuService) {}
 
   openItem(item : ContentTreeStructure) {
-    if (item.isFolder) {
+    if (item.application.type === AppType.Folder) {
       this.switchToFolder(item);
     } else {
-      console.log(item.id);
-      this.open(item.id);
+      console.log(item.application.id);
+      this.open(item.application.id);
     }
   }
 

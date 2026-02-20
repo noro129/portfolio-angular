@@ -15,8 +15,8 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="AppType.Folder.toString()">
-                <app-window [openInstance]="instance" [icon]="openedFolders.get(instance.id)?.icon" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-folder [openedFolder]="openedFolders.get(instance.id)" [folder]="instance" class="application-body" [open]="open" [dragOver]="dragOver" [dropToMove]="dropToMove" [contentTreeStructure]="contentTreeStructure" [switchingToFolder]="switchingToFolder" [setDraggedId]="setDraggedId" [setDragSource]="setDragSource" [setDragDestination]="setDragDestination" [moveContentInTree]="moveContentInTree"/>
+                <app-window [openInstance]="instance" [icon]="openedFolders.get(instance.id)?.application?.icon" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
+                    <app-folder [openedFolder]="openedFolders.get(instance.id)" [folder]="instance" [projectsObjRef]="projectsObjRef" class="application-body" [open]="open" [dragOver]="dragOver" [dropToMove]="dropToMove" [contentTreeStructure]="contentTreeStructure" [switchingToFolder]="switchingToFolder" [setDraggedId]="setDraggedId" [setDragSource]="setDragSource" [setDragDestination]="setDragDestination" [moveContentInTree]="moveContentInTree"/>
                 </app-window>
             </ng-container>
 
@@ -34,10 +34,10 @@
 
             <ng-container *ngSwitchDefault>
                 <app-window [openInstance]="instance" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    @if(experience.has(instance.name)) {
-                        <app-file-reader class="application-body" [experience]="experience.get(instance.name)" />
+                    @if(experience.has(instance.application.name)) {
+                        <app-file-reader class="application-body" [experience]="experience.get(instance.application.name)" />
                     } @else {
-                        <app-file-reader class="application-body" [script]="script.get(instance.name)" />
+                        <app-file-reader class="application-body" [script]="script.get(instance.application.name)" />
                     }
                     
                 </app-window>

@@ -4,21 +4,20 @@
         <div class="delete-button" [ngClass]="{'disabled' : focusTracker.size === 0}" (click)="delete()">delete<img src="delete.png" class="icon" alt="delete icon"/></div>
     </div>
     <div class="deleted-apps">
-        <div class="wrapper" *ngFor="let deletedItem of deletedItems | keyvalue : keepOrder; trackBy: trackByKey" [class.focused]="focusTracker.has(deletedItem.value.treeNodeRef.id)" (click)="onClick(deletedItem.value.treeNodeRef.id)">
+        <div class="wrapper" *ngFor="let deletedItem of deletedItems | keyvalue : keepOrder; trackBy: trackByKey" [class.focused]="focusTracker.has(deletedItem.value.treeNodeRef.application.id)" (click)="onClick(deletedItem.value.treeNodeRef.application.id)">
             <app-app-tile 
                 [type]="2"
                 [enable_self_focus]="false"
                 [enable_context_menu]="false"
-                [app_name]="deletedItem.value.treeNodeRef.name"
-                [app_id]="deletedItem.value.treeNodeRef.id"
-                [app_icon]="deletedItem.value.treeNodeRef.icon"
-                [app_ext]="deletedItem.value.treeNodeRef.extension"
-
+                [app_name]="deletedItem.value.treeNodeRef.application.name"
+                [app_id]="deletedItem.value.treeNodeRef.application.id"
+                [app_icon]="deletedItem.value.treeNodeRef.application.icon"
+                [app_ext]="deletedItem.value.treeNodeRef.application.extension"
                 class="app"
             />
 
-            <div class="action restore" title="restore" (click)="restoreItem(deletedItem.value.treeNodeRef.id)"><img src="restore.png" class="icon"></div>
-            <div class="action delete" title="delete" (click)="deleteItem(deletedItem.value.treeNodeRef.id)"><img src="delete.png" class="icon"></div>
+            <div class="action restore" title="restore" (click)="restoreItem(deletedItem.value.treeNodeRef.application.id)"><img src="restore.png" class="icon"></div>
+            <div class="action delete" title="delete" (click)="deleteItem(deletedItem.value.treeNodeRef.application.id)"><img src="delete.png" class="icon"></div>
         </div>
     </div>
 </div>

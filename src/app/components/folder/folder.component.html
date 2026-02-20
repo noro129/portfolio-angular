@@ -2,17 +2,15 @@
     <div class="left-panel">
         <span class="fs">
             <ng-container *ngFor="let fsc of contentTreeStructure | keyvalue : keepOrder; trackBy: trackByKey">
-                <app-folders-structure-panel *ngIf="fsc.value.isFolder" [key]="fsc.key" [value]="fsc.value" [openedFolder]="openedFolder" [switchToFolder]="switchToFolder"/>
+                <app-folders-structure-panel *ngIf="fsc.value.application.type === AppType.Folder" [key]="fsc.key" [value]="fsc.value" [openedFolder]="openedFolder" [switchToFolder]="switchToFolder"/>
             </ng-container>
         </span>
     </div>
     <div class="content">
-        @if (folder.name === 'Projects') {
+        @if (folder.application.id  === projectsObjRef.application.id) {
             <app-projects></app-projects>
         } @else {
             <app-folder-content [openedFolder]="openedFolder" [switchToFolder]="switchToFolder" [open]="open" [setDraggedId]="setDraggedId" [setDragSource]="setDragSource" [setDragDestination]="setDragDestination" [moveContentInTree]="moveContentInTree"/>
         }
     </div>
 </div>
-
-<!-- [selectedFolder]="folder.name" [changeFolder]="changeFolder" -->

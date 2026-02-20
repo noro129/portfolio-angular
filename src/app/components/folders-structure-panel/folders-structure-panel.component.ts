@@ -1,6 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { KeyValuePipe, NgFor, NgIf, NgStyle } from '@angular/common';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
+import { AppType } from '../../models/AppType';
 
 @Component({
   selector: 'app-folders-structure-panel',
@@ -9,13 +10,13 @@ import ContentTreeStructure from '../../models/ContentTreeStructure';
   styleUrl: './folders-structure-panel.component.scss'
 })
 export class FoldersStructurePanelComponent implements OnInit {
-  @Input() selectedFolder : string = "Desktop";
-  @Input() changeFolder !: (name : string) => void;
   @Input() folderContentStructure !: Map<string, ContentTreeStructure>;
   @Input() key !: number;
   @Input() value !: ContentTreeStructure;
   @Input() openedFolder !: ContentTreeStructure | undefined;
   @Input() switchToFolder !: (f : ContentTreeStructure) => void;
+
+  AppType = AppType;
 
 
   hasSubFolders = false;
@@ -29,7 +30,7 @@ export class FoldersStructurePanelComponent implements OnInit {
 
   ngOnInit(): void {
     for(const v of this.value.content?.values() || []) {
-      if(v.isFolder) {
+      if(v.application.type === AppType.Folder) {
         this.hasSubFolders = true;
         break;
       }

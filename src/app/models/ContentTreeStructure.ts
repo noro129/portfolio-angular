@@ -1,9 +1,6 @@
+import { Application } from "./Application";
+
 export default interface ContentTreeStructure{
-    id : number;
-    name : string;
-    extension : string;
-    icon : string;
-    isFolder : boolean;
-    isFile : boolean;
+    application : Application;
     content : Map<number, ContentTreeStructure>;
 }

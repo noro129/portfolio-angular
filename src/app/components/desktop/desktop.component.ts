@@ -1,5 +1,5 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, HostListener, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 import { Application } from '../../models/Application';
 import { AppType } from '../../models/AppType';
 import { ActiveItemsPanelComponent } from "../active-items-panel/active-items-panel.component";
@@ -41,6 +41,7 @@ export class DesktopComponent implements OnInit{
   openedFolders : Map<string, ContentTreeStructure> = new Map<string, ContentTreeStructure>();
   readonly desktopHomePath = ["root", "Desktop"]; appMatrixIsSet = false; desktopTreeObj !: ContentTreeStructure;
   readonly experienceFolderPath = ["root", "Desktop", "Experience"]; experienceIsSet = false;
+  readonly projectsFolderPath = ["root", "Desktop", "Projects"]; projectsObjRef !: ContentTreeStructure; projectIsSet = false;
   readonly experienceData = "./experience.json"; experience : Map<string, any> = new Map<string, any>();
   readonly scriptData = "./script.json"; script : Map<string, Script> = new Map<string, Script>();
 
@@ -68,7 +69,7 @@ export class DesktopComponent implements OnInit{
   ngOnInit(): void {
     fetch(this.applicationsData).then(res=>res.json()).then(
       jsonData=> {
-        this.insertAppData(jsonData, this.contentTreeStructure, 0, 0);
+        this.insertAppData(jsonData, this.contentTreeStructure, 0, 0, 0);
       }
     );
     fetch(this.scriptData).then(res => res.json()).then(
@@ -87,30 +88,13 @@ export class DesktopComponent implements OnInit{
     )
   }
 
-  insertAppData(jsonData : any, treeNode : Map<number, ContentTreeStructure> | null, desktopDepthIndex : number, experienceDepthIndex : number) {
+  insertAppData(jsonData : any, treeNode : Map<number, ContentTreeStructure> | null, desktopDepthIndex : number, experienceDepthIndex : number, projectsDepthIndex : number) {
     if(!jsonData || treeNode===null) return;
     if (!this.appMatrixIsSet && desktopDepthIndex === this.desktopHomePath.length) this.setApplicationsMatrix(jsonData);
     if (!this.experienceIsSet && experienceDepthIndex === this.experienceFolderPath.length) this.setExperienceFolderContent(treeNode);
     for(let item of jsonData) {
       let content = new Map<number, ContentTreeStructure>();
-      let node : ContentTreeStructure = {
-        id : item.id,
-        name : item.name,
-        extension : item.extension,
-        icon : item.icon,
-        isFile : item.isFile,
-        isFolder : item.isFolder,
-        content : content
-      };
-      if(item.name === this.desktopHomePath[this.desktopHomePath.length - 1] && desktopDepthIndex === this.desktopHomePath.length - 1) this.desktopTreeObj = node;
-      treeNode.set(item.id, node);
-      if(item.content !== null) {
-        const desktopDepth = desktopDepthIndex + ( desktopDepthIndex < this.desktopHomePath.length && item.name === this.desktopHomePath[desktopDepthIndex] ? 1 : 0);
-        const experienceDepth = experienceDepthIndex + ( experienceDepthIndex < this.experienceFolderPath.length && item.name === this.experienceFolderPath[experienceDepthIndex] ? 1 : 0);
-        this.insertAppData(item.content, content, desktopDepth, experienceDepth);
-      }
-      this.applications.set(item.id,
-        {
+      const app = {
           id : item.id,
           name : item.name,
           icon : item.icon,
@@ -120,7 +104,22 @@ export class DesktopComponent implements OnInit{
           defaultHeight : item.defaultHeight,
           defaultWidth : item.defaultWidth,
           resizeable : item.resizeable
-        }
+      };
+      let node : ContentTreeStructure = {
+        application : app,
+        content : content
+      };
+      if(item.name === this.desktopHomePath[this.desktopHomePath.length - 1] && desktopDepthIndex === this.desktopHomePath.length - 1) this.desktopTreeObj = node;
+      if(item.name === this.projectsFolderPath[this.projectsFolderPath.length - 1] && projectsDepthIndex === this.projectsFolderPath.length - 1) this.projectsObjRef = node;
+      treeNode.set(item.id, node);
+      if(item.content !== null) {
+        const desktopDepth = desktopDepthIndex + ( desktopDepthIndex < this.desktopHomePath.length && item.name === this.desktopHomePath[desktopDepthIndex] ? 1 : 0);
+        const experienceDepth = experienceDepthIndex + ( experienceDepthIndex < this.experienceFolderPath.length && item.name === this.experienceFolderPath[experienceDepthIndex] ? 1 : 0);
+        const projectDepth = projectsDepthIndex + ( projectsDepthIndex < this.projectsFolderPath.length && item.name === this.projectsFolderPath[projectsDepthIndex] ? 1 : 0);
+        this.insertAppData(item.content, content, desktopDepth, experienceDepth, projectDepth);
+      }
+      this.applications.set(item.id,
+        app
       );
     }
   }
@@ -143,20 +142,7 @@ export class DesktopComponent implements OnInit{
       let id =20;
       for(let item of json) {
         this.experience.set(item.company, item);
-        content.set(
-          id,
-          {
-            id : id,
-            name : item.company,
-            extension : ".txt",
-            icon : "./file.png",
-            isFolder : false,
-            isFile : true,
-            content : new Map<number, ContentTreeStructure>()
-          }
-        );
-        this.applications.set(id,
-          {
+        const app = {
             id : id,
             name : item.company,
             icon : "./file.png",
@@ -166,7 +152,16 @@ export class DesktopComponent implements OnInit{
             defaultHeight : 700,
             defaultWidth : 600,
             resizeable : true
+        }
+        content.set(
+          id,
+          {
+            application : app,
+            content : new Map<number, ContentTreeStructure>()
           }
+        );
+        this.applications.set(id,
+          app
         );
         id++;
       }
@@ -221,7 +216,7 @@ export class DesktopComponent implements OnInit{
     const toOpen = this.applications.get(id);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
-    const app : OpenInstance = {id : uuid, name : toOpen.name, hidden : false, icon : toOpen.icon, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false, resizeable : toOpen.resizeable};
+    const app : OpenInstance = {id : uuid, application : toOpen,hidden : false, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
     this.XOffsetPosition = this.XOffsetPosition + 10;
     this.YOffsetPosition = this.YOffsetPosition + 10;
     this.ZOffsetPosition++;
@@ -241,10 +236,10 @@ export class DesktopComponent implements OnInit{
       }
     }
     else {
-      if(this.stacksMap.has(app.name)){
-        this.stacksMap.get(app.name)?.unshift(app);
+      if(this.stacksMap.has(app.application.name)){
+        this.stacksMap.get(app.application.name)?.unshift(app);
       } else {
-        this.stacksMap.set(app.name, [app]);
+        this.stacksMap.set(app.application.name, [app]);
       }
     }
   }
@@ -252,12 +247,12 @@ export class DesktopComponent implements OnInit{
   getDesktopFolderNode(treeNode : Map<number, ContentTreeStructure> | undefined, name : string, depth : number) : ContentTreeStructure | undefined {
     if (!treeNode) return undefined;
     for(let v of treeNode.values()) {
-      if (depth === this.desktopHomePath.length-1 && v.name === this.desktopHomePath[depth]) {
+      if (depth === this.desktopHomePath.length-1 && v.application.name === this.desktopHomePath[depth]) {
         for(let v2 of v.content?.values() || []) {
-          if (v2.name === name) return v2;
+          if (v2.application.name === name) return v2;
         }
       }
-      if(v.name === this.desktopHomePath[depth]) {
+      if(v.application.name === this.desktopHomePath[depth]) {
         return this.getDesktopFolderNode(v.content, name, depth+1);
       }
     }

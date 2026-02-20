@@ -37,6 +37,7 @@ export class ApplicationsComponent {
   @Input() moveContentInTree !: () => void;
 
   @Input() openedFolders !: Map<string, ContentTreeStructure>;
+  @Input() projectsObjRef !: ContentTreeStructure;
   AppType = AppType;
   keepOrder = () => 0;
 
@@ -67,7 +68,7 @@ export class ApplicationsComponent {
     this.openedAplications.get(AppType.Folder.toString())?.forEach(
       (f) => {
         if(f.id === key) {
-          f.name = newF.name;
+          f.application = newF.application;
         }
       }
     )
