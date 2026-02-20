@@ -39,7 +39,10 @@ export class ContextMenuComponent {
   }
 
   performAction(event : MouseEvent, item : ContextMenuItem) {
-    if(item.disabled) event.stopPropagation();
-    else item.action();
+    event.stopPropagation();
+    if(!item.disabled) {
+      item.action();
+      this.contextmenuService.close();
+    }
   }
 }
