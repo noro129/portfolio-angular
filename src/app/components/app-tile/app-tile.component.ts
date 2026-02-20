@@ -20,6 +20,7 @@ export class AppTileComponent implements OnInit {
   @Input() setDraggedId !: (id : number) => void;
   @Input() type : number =1;
   @Input() enable_self_focus : boolean = true;
+  @Input() enable_context_menu : boolean = true;
   focused : boolean = false;
 
   constructor(private el : ElementRef, private renderer : Renderer2, private contextmenuService : ContextMenuService) {}
@@ -38,6 +39,52 @@ export class AppTileComponent implements OnInit {
         }
       )
     }
+    if(this.enable_context_menu) {
+      this.renderer.listen(
+        this.el.nativeElement,
+        'contextmenu',
+        (event : MouseEvent) => {
+          event.preventDefault();
+          event.stopPropagation();
+          this.contextmenuService.open(
+            event.clientX,
+            event.clientY,
+            [
+              {
+                label : "open",
+                icon : "./shortcut.png",
+                action : this.open,
+                disabled : false
+              },
+              {
+                label : "copy",
+                icon : "./copy.png",
+                action : this.open,
+                disabled : false
+              },
+              {
+                label : "cut",
+                icon : "./cut.png",
+                action : this.open,
+                disabled : false
+              },
+              {
+                label : "rename",
+                icon : "./rename.png",
+                action : this.rename,
+                disabled : false
+              },
+              {
+                label : "delete",
+                icon : "./delete.png",
+                action : this.can_delete ? this.delete : this.nothing,
+                disabled : !this.can_delete
+              }
+            ]
+          )
+        }
+      )
+    }
   }
 
   @HostListener("document:keydown.enter")
@@ -45,42 +92,9 @@ export class AppTileComponent implements OnInit {
     if(this.focused) this.open();
   }
 
-  onRightClick(event : MouseEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.contextmenuService.open(
-      event.clientX,
-      event.clientY,
-      [
-        {
-          label : "open",
-          icon : "./shortcut.png",
-          action : this.open,
-          disabled : false
-        },
-        {
-          label : "copy",
-          icon : "./copy.png",
-          action : this.open,
-          disabled : false
-        },
-        {
-          label : "cut",
-          icon : "./cut.png",
-          action : this.open,
-          disabled : false
-        },
-        {
-          label : "delete",
-          icon : "./delete.png",
-          action : this.delete,
-          disabled : !this.can_delete
-        }
-      ]
-    )
-  }
-
   nothing = () => {};
+
+  rename = () => {};
 
   delete = () => {this.deleteWithId(this.app_id);}
 
