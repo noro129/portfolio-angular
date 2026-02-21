@@ -20,6 +20,7 @@ export class FolderContentComponent {
   @Input() setDragSource !: (input : ContentTreeStructure) => void;
   @Input() setDragDestination !: (input : ContentTreeStructure) => void;
   @Input() moveContentInTree !: () => void;
+  @Input() editAppName !: (app_id : number, new_name : string) => boolean;
 
   AppType = AppType;
 
@@ -76,4 +77,9 @@ export class FolderContentComponent {
   addFile() {}
 
   paste() {}
+
+  editAppNameHandler = (app_id : number, new_name : string) => {
+    if(this.openedFolder) this.setDragSource(this.openedFolder);
+    return this.editAppName(app_id, new_name);
+  }
 }

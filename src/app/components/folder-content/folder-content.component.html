@@ -7,6 +7,7 @@
                 [app_ext]="item.value.application.extension"
                 [app_icon]="item.value.application.icon"
                 [setDraggedId]="setDraggedId"
+                [editAppName]="editAppNameHandler"
                 (dblclick)="openItem(item.value)"
                 (dragstart)="onDragStart()"
             />
@@ -18,6 +19,7 @@
             [app_icon]="item.value.application.icon"
             [openWithId]="open"
             [setDraggedId]="setDraggedId"
+            [editAppName]="editAppNameHandler"
             (dragstart)="onDragStart()"
             />
         }

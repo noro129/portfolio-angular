@@ -27,6 +27,7 @@ export class ApplicationsComponent {
   @Input() restoreApp !: (key : number)=> void;
   @Input() open !: (id : number) => void;
   @Input() deleteDraggedItem !: () => void;
+  @Input() editAppName !: (app_id : number, new_name : string) => boolean;
   @Input() experience !: any;
   @Input() contentTreeStructure !: Map<number, ContentTreeStructure>;
   @Input() script !: Map<string, Script>;

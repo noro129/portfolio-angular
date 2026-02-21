@@ -22,7 +22,7 @@ export class AppTileComponent implements OnInit {
   @Input() type : number =1;
   @Input() enable_self_focus : boolean = true;
   @Input() enable_context_menu : boolean = true;
-  @Input() editAppName !: (app_id : number, new_name : string) => void;
+  @Input() editAppName !: (app_id : number, new_name : string) => boolean;
   focused : boolean = false;
   enable_rename : boolean = false;
 
@@ -41,7 +41,9 @@ export class AppTileComponent implements OnInit {
           this.focused = (left <= x && x <= right && top <= y && y <= bottom);
           if(!this.focused && this.enable_rename) {
             this.enable_rename=false;
-            this.editAppName(this.app_id, this.appName.nativeElement.textContent);
+            if(!this.editAppName(this.app_id, this.appName.nativeElement.textContent)){
+              this.appName.nativeElement.textContent = this.app_name;
+            }
           }
         }
       )
@@ -99,7 +101,9 @@ export class AppTileComponent implements OnInit {
     if(this.focused) this.open();
     if(this.enable_rename) {
       this.enable_rename = false;
-      this.editAppName(this.app_id, this.appName.nativeElement.textContent);
+      if(!this.editAppName(this.app_id, this.appName.nativeElement.textContent)){
+        this.appName.nativeElement.textContent = this.app_name;
+      }
     }
   }
 

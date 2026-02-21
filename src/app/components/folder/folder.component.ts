@@ -22,6 +22,7 @@ export class FolderComponent{
   @Input() contentTreeStructure !: Map<number, ContentTreeStructure>;
   @Input() openedFolder !: ContentTreeStructure | undefined;
   @Input() switchingToFolder !: (key : string, f : ContentTreeStructure) => void;
+  @Input() editAppName !: (app_id : number, new_name : string) => boolean;
   
   @Input() setDraggedId !: (input : number) => void;
   @Input() setDragSource !: (input : ContentTreeStructure) => void;
