@@ -1,0 +1,9 @@
+<div class="overlay" *ngIf="confirmationWindowService.question">
+    <div class="window">
+        <p class="question">{{confirmationWindowService.question}}</p>
+        <div class="buttons">
+            <div class="answer yes" (click)="onYes()">yes</div>
+            <div class="answer no" (click)="onNo()">no</div>
+        </div>
+    </div>
+</div>

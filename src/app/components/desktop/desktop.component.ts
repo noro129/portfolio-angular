@@ -14,11 +14,13 @@ import Script from '../../models/Script';
 import { ContextMenuComponent } from '../context-menu/context-menu.component';
 import { ContextMenuService } from '../../services/context-menu.service';
 import DeletedItem from '../../models/DeletedItem';
+import { ConfirmationWindowComponent } from '../confirmation-window/confirmation-window.component';
+import { ConfirmationWindowService } from '../../services/confirmation-window.service';
 
 @Component({
   selector: 'app-desktop',
   imports: [NgFor, NgIf,
-    ActiveItemsPanelComponent, ApplicationsComponent, NotificationComponent, AppTileComponent, ContextMenuComponent],
+    ActiveItemsPanelComponent, ApplicationsComponent, NotificationComponent, AppTileComponent, ContextMenuComponent, ConfirmationWindowComponent],
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.scss'
 })
@@ -45,7 +47,7 @@ export class DesktopComponent implements OnInit{
   readonly experienceData = "./experience.json"; experience : Map<number, any> = new Map<number, any>();
   readonly scriptData = "./script.json"; script : Map<number, Script> = new Map<number, Script>();
 
-  constructor(private renderer : Renderer2, private contextmenuService : ContextMenuService) {
+  constructor(private renderer : Renderer2, private contextmenuService : ContextMenuService, private confirmationWindowService : ConfirmationWindowService) {
     this.gridColumns = Math.floor(window.innerWidth / 100);
     this.gridRows = Math.floor(window.innerHeight / 100);
     this.applicationsMatrix = [];
@@ -565,11 +567,14 @@ export class DesktopComponent implements OnInit{
     return false;
   }
 
-  editAppName = (app_id : number, new_name : string) : boolean => {
+  editAppName = async (app_id : number, new_name : string) : Promise<boolean> => {
     const app = this.applications.get(app_id);
     if(app === undefined) return false;
-    if(this.existsAnother(this.dragSource, new_name, app.type, app_id)) {
-      return false;
+    const res = this.existsAnother(this.dragSource, new_name, app.type, app_id);
+    if( res !== 0) {
+      const answer = await this.confirmationWindowService.ask((app.type === AppType.Folder ? 'folder' : 'file') +' \'' +new_name+ '\' exists, rename to \''+new_name+' '+res+'\' ?');
+      if(answer) app.displayName = new_name + ' '+res;
+      return answer;
     }
     else {
       app.displayName = new_name;
@@ -577,10 +582,28 @@ export class DesktopComponent implements OnInit{
     }
   }
 
-  existsAnother(node : ContentTreeStructure | null, name : string, type : AppType, exclude_id : number) :boolean {
-    for(let v of node?.content.values() || this.desktopTreeObj.content.values()){
-      if(v.application.id !== exclude_id && v.application.displayName === name && v.application.type === type) return true;
+  existsAnother(node : ContentTreeStructure | null, name : string, type : AppType, exclude_id : number) :number {
+    let name_set = new Set<string>();
+    if(node) {
+      for( let v of node.content.values()) {
+        if(v.application.type === type && v.application.id !== exclude_id) {
+          name_set.add(v.application.displayName);
+        }
+      }
+    } else {
+      for( let v of this.desktopTreeObj.content.values()) {
+        if(v.application.type === type && v.application.id !== exclude_id) {
+          name_set.add(v.application.displayName);
+        }
+      }
     }
-    return false;
+
+    if(!name_set.has(name)) return 0;
+    
+    let count = 1;
+    while(name_set.has(name + ' ' + count)) {
+      count++;
+    }
+    return count;
   }
 }

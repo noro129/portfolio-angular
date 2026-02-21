@@ -20,7 +20,7 @@ export class FolderContentComponent {
   @Input() setDragSource !: (input : ContentTreeStructure) => void;
   @Input() setDragDestination !: (input : ContentTreeStructure) => void;
   @Input() moveContentInTree !: () => void;
-  @Input() editAppName !: (app_id : number, new_name : string) => boolean;
+  @Input() editAppName !: (app_id : number, new_name : string) => Promise<boolean>;
 
   AppType = AppType;
 

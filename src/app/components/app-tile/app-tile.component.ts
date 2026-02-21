@@ -22,7 +22,7 @@ export class AppTileComponent implements OnInit {
   @Input() type : number =1;
   @Input() enable_self_focus : boolean = true;
   @Input() enable_context_menu : boolean = true;
-  @Input() editAppName !: (app_id : number, new_name : string) => boolean;
+  @Input() editAppName !: (app_id : number, new_name : string) => Promise<boolean>;
   focused : boolean = false;
   enable_rename : boolean = false;
 
@@ -41,9 +41,13 @@ export class AppTileComponent implements OnInit {
           this.focused = (left <= x && x <= right && top <= y && y <= bottom);
           if(!this.focused && this.enable_rename) {
             this.enable_rename=false;
-            if(!this.editAppName(this.app_id, this.appName.nativeElement.textContent)){
-              this.appName.nativeElement.textContent = this.app_name+this.app_ext;
-            }
+            this.editAppName(this.app_id, this.appName.nativeElement.textContent).then(
+              res => {
+                if(!res) {
+                  this.appName.nativeElement.textContent = this.app_name+this.app_ext;
+                }
+              }
+            );
           }
         }
       )
@@ -97,11 +101,12 @@ export class AppTileComponent implements OnInit {
   }
 
   @HostListener("document:keydown.enter")
-  onenterkey() {
+  async onenterkey() {
     if(this.focused) this.open();
     if(this.enable_rename) {
       this.enable_rename = false;
-      if(!this.editAppName(this.app_id, this.appName.nativeElement.textContent)){
+      const res = await this.editAppName(this.app_id, this.appName.nativeElement.textContent);
+      if(!res){
         this.appName.nativeElement.textContent = this.app_name+this.app_ext;
       }
     }
