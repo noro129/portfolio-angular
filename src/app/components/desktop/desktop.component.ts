@@ -16,6 +16,7 @@ import { ContextMenuService } from '../../services/context-menu.service';
 import DeletedItem from '../../models/DeletedItem';
 import { ConfirmationWindowComponent } from '../confirmation-window/confirmation-window.component';
 import { ConfirmationWindowService } from '../../services/confirmation-window.service';
+import { Experience } from '../../models/Experience';
 
 @Component({
   selector: 'app-desktop',
@@ -44,7 +45,7 @@ export class DesktopComponent implements OnInit{
   readonly desktopHomePath = ["root", "Desktop"]; appMatrixIsSet = false; desktopTreeObj !: ContentTreeStructure;
   readonly experienceFolderPath = ["root", "Desktop", "Experience"]; experienceIsSet = false;
   readonly projectsFolderPath = ["root", "Desktop", "Projects"]; projectsObjRef !: ContentTreeStructure; projectIsSet = false;
-  readonly experienceData = "./experience.json"; experience : Map<number, any> = new Map<number, any>();
+  readonly experienceData = "./experience.json"; experience : Map<number, Experience> = new Map<number, Experience>();
   readonly scriptData = "./script.json"; script : Map<number, Script> = new Map<number, Script>();
   id = 50;
 
@@ -145,7 +146,20 @@ export class DesktopComponent implements OnInit{
     fetch(this.experienceData).then(res => res.json()).then(json => {
       let id =20;
       for(let item of json) {
-        this.experience.set(id, item);
+        let body = `company : ${item.company}\t\t${item.location}\n\n`+
+        `from :   ${item.startDate}\n`+
+        `to   :   ${item.endDate}\n\nDescription: \n`;
+        item.description.forEach((el : string) => {
+          body = body + ' - ' + el + '\n\n';
+        });
+        body = body + '\n\n\ntools & technologies :';
+        item.tools_technologies.forEach((el : string) => {
+          body = body + '  ' + el +',';
+        });
+        this.experience.set(id, {
+          header : item.role.trim(),
+          body : body+'\n'
+        });
         const app = {
             id : id,
             displayName : item.company,
