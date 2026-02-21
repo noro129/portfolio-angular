@@ -46,6 +46,7 @@ export class DesktopComponent implements OnInit{
   readonly projectsFolderPath = ["root", "Desktop", "Projects"]; projectsObjRef !: ContentTreeStructure; projectIsSet = false;
   readonly experienceData = "./experience.json"; experience : Map<number, any> = new Map<number, any>();
   readonly scriptData = "./script.json"; script : Map<number, Script> = new Map<number, Script>();
+  id = 50;
 
   constructor(private renderer : Renderer2, private contextmenuService : ContextMenuService, private confirmationWindowService : ConfirmationWindowService) {
     this.gridColumns = Math.floor(window.innerWidth / 100);
@@ -199,10 +200,10 @@ export class DesktopComponent implements OnInit{
     this.contextmenuService.open(event.clientX, event.clientY,
       [
         {
-          label : "New Folder" , icon : './add.png', action : this.nothing, disabled : false
+          label : "New Folder" , icon : './add.png', action : this.addFolder, disabled : false
         },
         {
-          label : "New File" , icon : './add.png', action : this.nothing, disabled : false
+          label : "New File" , icon : './add.png', action : this.addFile, disabled : false
         },
         {
           label : 'paste', icon : './paste.png', action : this.nothing, disabled : false
@@ -211,6 +212,55 @@ export class DesktopComponent implements OnInit{
   }
 
   nothing = () => {}
+
+  addFolder = () => {
+    this.addFolferFile(AppType.Folder, this.desktopTreeObj);
+  }
+
+  addFile = () => {
+    this.addFolferFile(AppType.File, this.desktopTreeObj);
+  }
+
+  addFolferFile = (type : AppType, node : ContentTreeStructure) => {
+    while(this.applications.has(this.id)) this.id++;
+    const count = this.existsAnother(node, 'New '+(type === AppType.Folder ? 'Folder' : 'File'), type, this.id);
+    const app = {
+          id : this.id,
+          displayName : 'New '+(type === AppType.Folder ? 'Folder' : 'File')+(count === 0 ? '' : ' '+count),
+          name : 'New '+(type === AppType.Folder ? 'Folder' : 'File')+(count === 0 ? '' : ' '+count),
+          icon : type === AppType.Folder ? "./folder.png" : "./file.png",
+          type : type,
+          canDelete : true,
+          extension : type === AppType.Folder ? "" : ".txt",
+          defaultHeight : type === AppType.Folder ? 450 : 700,
+          defaultWidth : type === AppType.Folder ? 700 : 600,
+          resizeable : true
+    };
+    this.applications.set(this.id, app);
+    const subNode = {
+      application : app,
+      content : new Map<number, ContentTreeStructure>()
+    }
+    node.content.set(this.id, subNode);
+    if(node === this.desktopTreeObj) {
+      let added = false;
+      for(let c=0; c<this.gridColumns; c++){
+        for(let r=0; r<this.gridRows; r++){
+          if(this.applicationsMatrix[r][c] === null) {
+            this.applicationsMatrix[r][c] = this.id;
+            added = true;
+            break;
+          }
+        }
+        if(added) break
+      }
+    }
+
+    if(type === AppType.File) {
+      this.experience.set(this.id, {header : '', body : ''});
+    }
+    this.id++;
+  }
 
   openItem = (id : number) => {
     this.openWithId(id);
