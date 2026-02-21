@@ -36,6 +36,7 @@ export class ApplicationsComponent {
   @Input() setDragSource !: (input : ContentTreeStructure) => void;
   @Input() setDragDestination !: (input : ContentTreeStructure) => void;
   @Input() moveContentInTree !: () => void;
+  @Input() addFolderFile !: (type : AppType,node : ContentTreeStructure) => void;
 
   @Input() openedFolders !: Map<string, ContentTreeStructure>;
   @Input() projectsObjRef !: ContentTreeStructure;

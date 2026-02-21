@@ -16,7 +16,7 @@
 
             <ng-container *ngSwitchCase="AppType.Folder.toString()">
                 <app-window [openInstance]="instance" [icon]="openedFolders.get(instance.id)?.application?.icon" [instanceType]="appInstances.key" [putFront]="putOpenInstanceFront" [removeOpenInstance]="removeOpenInstance">
-                    <app-folder [openedFolder]="openedFolders.get(instance.id)" [folder]="instance" [projectsObjRef]="projectsObjRef" class="application-body" [open]="open" [dragOver]="dragOver" [dropToMove]="dropToMove" [contentTreeStructure]="contentTreeStructure" [switchingToFolder]="switchingToFolder" [editAppName]="editAppName" [setDraggedId]="setDraggedId" [setDragSource]="setDragSource" [setDragDestination]="setDragDestination" [moveContentInTree]="moveContentInTree"/>
+                    <app-folder [openedFolder]="openedFolders.get(instance.id)" [folder]="instance" [projectsObjRef]="projectsObjRef" class="application-body" [open]="open" [addFolderFile]="addFolderFile" [dragOver]="dragOver" [dropToMove]="dropToMove" [contentTreeStructure]="contentTreeStructure" [switchingToFolder]="switchingToFolder" [editAppName]="editAppName" [setDraggedId]="setDraggedId" [setDragSource]="setDragSource" [setDragDestination]="setDragDestination" [moveContentInTree]="moveContentInTree"/>
                 </app-window>
             </ng-container>
 

@@ -214,14 +214,14 @@ export class DesktopComponent implements OnInit{
   nothing = () => {}
 
   addFolder = () => {
-    this.addFolferFile(AppType.Folder, this.desktopTreeObj);
+    this.addFolderFile(AppType.Folder, this.desktopTreeObj);
   }
 
   addFile = () => {
-    this.addFolferFile(AppType.File, this.desktopTreeObj);
+    this.addFolderFile(AppType.File, this.desktopTreeObj);
   }
 
-  addFolferFile = (type : AppType, node : ContentTreeStructure) => {
+  addFolderFile = (type : AppType, node : ContentTreeStructure) => {
     while(this.applications.has(this.id)) this.id++;
     const count = this.existsAnother(node, 'New '+(type === AppType.Folder ? 'Folder' : 'File'), type, this.id);
     const app = {

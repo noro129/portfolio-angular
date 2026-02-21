@@ -21,6 +21,7 @@ export class FolderContentComponent {
   @Input() setDragDestination !: (input : ContentTreeStructure) => void;
   @Input() moveContentInTree !: () => void;
   @Input() editAppName !: (app_id : number, new_name : string) => Promise<boolean>;
+  @Input() addFolderFile !: (type : AppType,node : ContentTreeStructure) => void;
 
   AppType = AppType;
 
@@ -72,9 +73,13 @@ export class FolderContentComponent {
       ])
   }
 
-  addFolder() {}
+  addFolder = () => {
+    if(this.openedFolder) this.addFolderFile(AppType.Folder ,this.openedFolder);
+  }
 
-  addFile() {}
+  addFile = () => {
+    if(this.openedFolder) this.addFolderFile(AppType.File ,this.openedFolder);
+  }
 
   paste() {}
 
