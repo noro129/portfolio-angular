@@ -60,7 +60,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.time = now.getHours()+this.time;
         if(this.time.length===4) this.time="0"+this.time;
         
-        const days = ["Sun", "Mon", "Tues", "Wed", "thur", "Fri", "Sat"];
+        const days = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
         this.day = days[now.getDay()];
       },
       1000
