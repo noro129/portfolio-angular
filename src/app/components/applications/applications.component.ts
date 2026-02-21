@@ -30,7 +30,7 @@ export class ApplicationsComponent {
   @Input() editAppName !: (app_id : number, new_name : string) => boolean;
   @Input() experience !: any;
   @Input() contentTreeStructure !: Map<number, ContentTreeStructure>;
-  @Input() script !: Map<string, Script>;
+  @Input() script !: Map<number, Script>;
 
   @Input() setDraggedId !: (input : number) => void;
   @Input() setDragSource !: (input : ContentTreeStructure) => void;

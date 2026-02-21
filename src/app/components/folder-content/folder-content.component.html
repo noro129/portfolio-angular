@@ -3,7 +3,7 @@
         @if(item.value.application.type === AppType.Folder) {
             <app-app-tile
                 [app_id]="item.value.application.id"
-                [app_name]="item.value.application.name"
+                [app_name]="item.value.application.displayName"
                 [app_ext]="item.value.application.extension"
                 [app_icon]="item.value.application.icon"
                 [setDraggedId]="setDraggedId"
@@ -14,7 +14,7 @@
         } @else {
             <app-app-tile 
             [app_id]="item.value.application.id"
-            [app_name]="item.value.application.name"
+            [app_name]="item.value.application.displayName"
             [app_ext]="item.value.application.extension"
             [app_icon]="item.value.application.icon"
             [openWithId]="open"

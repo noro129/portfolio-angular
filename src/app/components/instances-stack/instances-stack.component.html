@@ -12,7 +12,7 @@
         (mouseleave)="onMouseLeaveInstance(item.id)"
         >
             <img src="{{item.application.icon}}" alt="icon" class="icon" (click)="putFront(item.id)"/>
-            <p class="instance-name" (click)="putFront(item.id)">{{item.application.name}}</p>
+            <p class="instance-name" (click)="putFront(item.id)">{{item.application.displayName}}</p>
             <div class="hide" (click)="hideReveal(item.id)">{{item.hidden ? '&#9652;' : '&#9662;'}}</div>
             <div class="close" (click)="close(item.id)">X</div>
     </div>

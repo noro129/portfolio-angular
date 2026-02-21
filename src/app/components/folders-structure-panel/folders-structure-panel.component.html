@@ -1,5 +1,5 @@
 <div class="folder">
-    <p class="folder-name" [class.selected]="openedFolder && openedFolder === value" (click)="openFolder()">{{value.application.name}}</p>
+    <p class="folder-name" [class.selected]="openedFolder && openedFolder === value" (click)="openFolder()">{{value.application.displayName}}</p>
     <div class="show-sub-folders" *ngIf="hasSubFolders" (click)="hideReveal()">{{ showSubFolders ? '&#9655;' : '&#9665;' }}</div>
 </div>
 <div class="sub-folders" *ngIf="value.content && showSubFolders && hasSubFolders" [ngStyle]="{'padding-left' : '10px'}">

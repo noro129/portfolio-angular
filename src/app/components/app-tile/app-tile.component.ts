@@ -42,7 +42,7 @@ export class AppTileComponent implements OnInit {
           if(!this.focused && this.enable_rename) {
             this.enable_rename=false;
             if(!this.editAppName(this.app_id, this.appName.nativeElement.textContent)){
-              this.appName.nativeElement.textContent = this.app_name;
+              this.appName.nativeElement.textContent = this.app_name+this.app_ext;
             }
           }
         }
@@ -102,7 +102,7 @@ export class AppTileComponent implements OnInit {
     if(this.enable_rename) {
       this.enable_rename = false;
       if(!this.editAppName(this.app_id, this.appName.nativeElement.textContent)){
-        this.appName.nativeElement.textContent = this.app_name;
+        this.appName.nativeElement.textContent = this.app_name+this.app_ext;
       }
     }
   }

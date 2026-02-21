@@ -2,6 +2,7 @@ import { AppType } from "./AppType";
 
 export interface Application{
     id : number;
+    displayName : string;
     name : string;
     icon : string;
     type : AppType;

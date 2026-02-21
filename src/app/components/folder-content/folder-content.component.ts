@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { KeyValuePipe, NgFor } from '@angular/common';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 import { AppTileComponent } from '../app-tile/app-tile.component';

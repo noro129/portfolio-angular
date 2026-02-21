@@ -20,7 +20,7 @@
             <app-app-tile *ngIf="getApplication(applicationsMatrix[row][column]) as app"
                 (dragstart)="onDragStart(app.id, row, column)"
                 [app_id]="app.id"
-                [app_name]="app.name"
+                [app_name]="app.displayName"
                 [app_ext]="app.extension"
                 [app_icon]="app.icon"
                 [can_delete]="app.canDelete"

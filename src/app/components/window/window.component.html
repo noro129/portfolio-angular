@@ -11,7 +11,7 @@
     <div class="header" (contextmenu)="onRightClick($event)" #header>
         <div class="title">
             <img src="{{icon || openInstance.application.icon}}" alt="logo" class="icon-logo">
-            <p class="name" title="{{openInstance.application.name}}">{{openInstance.application.name}}</p>
+            <p class="name" title="{{openInstance.application.displayName}}">{{openInstance.application.displayName}}</p>
         </div>
         <span class="dragging-bar" (mousedown)="startDrag($event)" (mouseup)="endDrag()"></span>
         <div class="control-buttons">

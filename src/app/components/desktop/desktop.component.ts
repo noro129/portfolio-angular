@@ -42,8 +42,8 @@ export class DesktopComponent implements OnInit{
   readonly desktopHomePath = ["root", "Desktop"]; appMatrixIsSet = false; desktopTreeObj !: ContentTreeStructure;
   readonly experienceFolderPath = ["root", "Desktop", "Experience"]; experienceIsSet = false;
   readonly projectsFolderPath = ["root", "Desktop", "Projects"]; projectsObjRef !: ContentTreeStructure; projectIsSet = false;
-  readonly experienceData = "./experience.json"; experience : Map<string, any> = new Map<string, any>();
-  readonly scriptData = "./script.json"; script : Map<string, Script> = new Map<string, Script>();
+  readonly experienceData = "./experience.json"; experience : Map<number, any> = new Map<number, any>();
+  readonly scriptData = "./script.json"; script : Map<number, Script> = new Map<number, Script>();
 
   constructor(private renderer : Renderer2, private contextmenuService : ContextMenuService) {
     this.gridColumns = Math.floor(window.innerWidth / 100);
@@ -96,6 +96,7 @@ export class DesktopComponent implements OnInit{
       let content = new Map<number, ContentTreeStructure>();
       const app = {
           id : item.id,
+          displayName : item.name,
           name : item.name,
           icon : item.icon,
           type : item.isFile ? AppType.File : (item.isFolder ? AppType.Folder : AppType.Application),
@@ -141,9 +142,10 @@ export class DesktopComponent implements OnInit{
     fetch(this.experienceData).then(res => res.json()).then(json => {
       let id =20;
       for(let item of json) {
-        this.experience.set(item.company, item);
+        this.experience.set(id, item);
         const app = {
             id : id,
+            displayName : item.company,
             name : item.company,
             icon : "./file.png",
             type : AppType.File,
@@ -216,7 +218,7 @@ export class DesktopComponent implements OnInit{
     const toOpen = this.applications.get(id);
     if(!toOpen) return;
     const uuid = crypto.randomUUID();
-    const app : OpenInstance = {id : uuid, application : toOpen,hidden : false, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
+    const app : OpenInstance = {id : uuid, application : toOpen, hidden : false, windowWidth : toOpen.defaultWidth, windowHeight : toOpen.defaultHeight, positionX : this.XOffsetPosition, positionY : this.YOffsetPosition, positionZ : this.ZOffsetPosition, focusedOn : false};
     this.XOffsetPosition = this.XOffsetPosition + 10;
     this.YOffsetPosition = this.YOffsetPosition + 10;
     this.ZOffsetPosition++;
@@ -445,20 +447,20 @@ export class DesktopComponent implements OnInit{
     let parentNodeRef : ContentTreeStructure | null = null;
     if(!app) return;
     if(!app.canDelete) {
-      this.addNotification("cannot delete "+app.name+app.extension, NotifType.Error);
+      this.addNotification("cannot delete "+app.displayName+app.extension, NotifType.Error);
       return;
     } else if (app.type === AppType.Folder){
       if(this.isFolderUsed(app_id)) {
-        this.addNotification("unable to delete '"+app.name+"', it is in use.", NotifType.Warning);
+        this.addNotification("unable to delete '"+app.displayName+"', it is in use.", NotifType.Warning);
         return;
       }
       
     } else {
       if(app.type === AppType.File && this.isFileOpen(app.id)) {
-        this.addNotification("cannot delete '"+app.name+"', it is open", NotifType.Warning);
+        this.addNotification("cannot delete '"+app.displayName+"', it is open", NotifType.Warning);
         return;
       } else if(app.type !== AppType.File && this.stacksMap.has(app.name)) {
-        this.addNotification("cannot delete '"+app.name+"', it is open", NotifType.Warning);
+        this.addNotification("cannot delete '"+app.displayName+"', it is open", NotifType.Warning);
         return;
       }
     }
@@ -570,14 +572,14 @@ export class DesktopComponent implements OnInit{
       return false;
     }
     else {
-      app.name = new_name;
+      app.displayName = new_name;
       return true;
     }
   }
 
   existsAnother(node : ContentTreeStructure | null, name : string, type : AppType, exclude_id : number) :boolean {
     for(let v of node?.content.values() || this.desktopTreeObj.content.values()){
-      if(v.application.id !== exclude_id && v.application.name === name && v.application.type === type) return true;
+      if(v.application.id !== exclude_id && v.application.displayName === name && v.application.type === type) return true;
     }
     return false;
   }
