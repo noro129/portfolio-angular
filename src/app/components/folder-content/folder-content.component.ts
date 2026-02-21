@@ -21,6 +21,7 @@ export class FolderContentComponent {
   @Input() setDragDestination !: (input : ContentTreeStructure) => void;
   @Input() moveContentInTree !: () => void;
   @Input() editAppName !: (app_id : number, new_name : string) => Promise<boolean>;
+  @Input() deleteWithId !: (app_id : number) => void;
   @Input() addFolderFile !: (type : AppType,node : ContentTreeStructure) => void;
 
   AppType = AppType;

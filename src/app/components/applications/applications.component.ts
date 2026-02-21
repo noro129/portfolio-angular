@@ -31,6 +31,7 @@ export class ApplicationsComponent {
   @Input() experience !: any;
   @Input() contentTreeStructure !: Map<number, ContentTreeStructure>;
   @Input() script !: Map<number, Script>;
+  @Input() deleteApp !: (id: number) => void;
 
   @Input() setDraggedId !: (input : number) => void;
   @Input() setDragSource !: (input : ContentTreeStructure) => void;

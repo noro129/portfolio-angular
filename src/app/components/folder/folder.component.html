@@ -10,7 +10,7 @@
         @if (folder.application.id  === projectsObjRef.application.id) {
             <app-projects></app-projects>
         } @else {
-            <app-folder-content [addFolderFile]="addFolderFile" [editAppName]="editAppName" [openedFolder]="openedFolder" [switchToFolder]="switchToFolder" [open]="open" [setDraggedId]="setDraggedId" [setDragSource]="setDragSource" [setDragDestination]="setDragDestination" [moveContentInTree]="moveContentInTree"/>
+            <app-folder-content [deleteWithId]="deleteWithId" [addFolderFile]="addFolderFile" [editAppName]="editAppName" [openedFolder]="openedFolder" [switchToFolder]="switchToFolder" [open]="open" [setDraggedId]="setDraggedId" [setDragSource]="setDragSource" [setDragDestination]="setDragDestination" [moveContentInTree]="moveContentInTree"/>
         }
     </div>
 </div>

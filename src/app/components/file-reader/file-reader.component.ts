@@ -3,6 +3,7 @@ import { NgStyle, NgFor, NgIf } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
 import Script from '../../models/Script';
 import { Experience } from '../../models/Experience';
+import { ConfirmationWindowService } from '../../services/confirmation-window.service';
 
 @Component({
   selector: 'app-file-reader',
@@ -15,12 +16,13 @@ export class FileReaderComponent implements AfterViewInit{
   @Input() experience !: Experience;
   @Input() script !: Script | undefined;
 
-  constructor(private el : ElementRef) {}
+  constructor(private el : ElementRef, private confirmationWindowService : ConfirmationWindowService) {}
 
   ngAfterViewInit(): void {
     if(this.experience) {
-      requestAnimationFrame(() => this.el.nativeElement.querySelector(".wrapper").focus());
-      requestAnimationFrame(() => this.placeCaretAtEnd(this.el.nativeElement.querySelector(".wrapper")));
+      const desc = this.el.nativeElement.querySelector(".description");
+      requestAnimationFrame(() => desc.focus());
+      requestAnimationFrame(() => this.placeCaretAtEnd(desc));
     }
   }
 

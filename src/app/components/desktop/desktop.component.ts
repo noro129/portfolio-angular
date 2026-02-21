@@ -510,7 +510,7 @@ export class DesktopComponent implements OnInit{
     
   }
 
-  deleteApp(app_id : number) {
+  deleteApp = (app_id : number) => {
     const app = this.applications.get(app_id);
     let itemNodeRef : ContentTreeStructure | null = null;
     let parentNodeRef : ContentTreeStructure | null = null;

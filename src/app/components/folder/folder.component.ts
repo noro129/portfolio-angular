@@ -24,6 +24,7 @@ export class FolderComponent{
   @Input() switchingToFolder !: (key : string, f : ContentTreeStructure) => void;
   @Input() editAppName !: (app_id : number, new_name : string) => Promise<boolean>;
   @Input() addFolderFile !: (type : AppType,node : ContentTreeStructure) => void;
+  @Input() deleteWithId !: (app_id : number) => void;
   
   @Input() setDraggedId !: (input : number) => void;
   @Input() setDragSource !: (input : ContentTreeStructure) => void;

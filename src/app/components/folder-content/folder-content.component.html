@@ -6,6 +6,8 @@
                 [app_name]="item.value.application.displayName"
                 [app_ext]="item.value.application.extension"
                 [app_icon]="item.value.application.icon"
+                [can_delete]="item.value.application.canDelete"
+                [deleteWithId]="deleteWithId"
                 [setDraggedId]="setDraggedId"
                 [editAppName]="editAppNameHandler"
                 (dblclick)="openItem(item.value)"
@@ -13,14 +15,16 @@
             />
         } @else {
             <app-app-tile 
-            [app_id]="item.value.application.id"
-            [app_name]="item.value.application.displayName"
-            [app_ext]="item.value.application.extension"
-            [app_icon]="item.value.application.icon"
-            [openWithId]="open"
-            [setDraggedId]="setDraggedId"
-            [editAppName]="editAppNameHandler"
-            (dragstart)="onDragStart()"
+                [app_id]="item.value.application.id"
+                [app_name]="item.value.application.displayName"
+                [app_ext]="item.value.application.extension"
+                [app_icon]="item.value.application.icon"
+                [can_delete]="item.value.application.canDelete"
+                [deleteWithId]="deleteWithId"
+                [openWithId]="open"
+                [setDraggedId]="setDraggedId"
+                [editAppName]="editAppNameHandler"
+                (dragstart)="onDragStart()"
             />
         }
     </div>
