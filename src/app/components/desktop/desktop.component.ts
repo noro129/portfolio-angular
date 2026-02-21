@@ -158,7 +158,10 @@ export class DesktopComponent implements OnInit{
         });
         this.experience.set(id, {
           header : item.role.trim(),
-          body : body+'\n'
+          body : body+'\n',
+          isBold : false,
+          isItalic : false,
+          isUnderlined : false
         });
         const app = {
             id : id,
@@ -271,7 +274,7 @@ export class DesktopComponent implements OnInit{
     }
 
     if(type === AppType.File) {
-      this.experience.set(this.id, {header : '', body : ''});
+      this.experience.set(this.id, {header : '', body : '', isBold : false, isItalic : false, isUnderlined : false});
     }
     this.id++;
   }

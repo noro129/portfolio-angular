@@ -11,9 +11,6 @@ import { Experience } from '../../models/Experience';
   styleUrl: './file-reader.component.scss'
 })
 export class FileReaderComponent implements AfterViewInit{
-  bold = false;
-  italic = false;
-  underline = false;
 
   @Input() experience !: Experience;
   @Input() script !: Script | undefined;
@@ -40,14 +37,6 @@ export class FileReaderComponent implements AfterViewInit{
     }
   }
 
-  // onKeyDown(event : KeyboardEvent) {
-  //   if(event.key === 'Enter') {
-  //     event.preventDefault();
-  //     const el = event.target as HTMLElement;
-  //     el.innerText = el.innerText + '\n';
-  //   }
-  // }
-
   placeCaretAtEnd(el : HTMLElement) {
     const range = document.createRange();
     const selection = window.getSelection();
@@ -60,14 +49,14 @@ export class FileReaderComponent implements AfterViewInit{
   }
 
   boldEffect() {
-    this.bold = !this.bold;
+    this.experience.isBold = !this.experience.isBold;
   }
 
   italicEffect() {
-    this.italic = !this.italic;
+    this.experience.isItalic = !this.experience.isItalic;
   }
 
   underlineEffect() {
-    this.underline = !this.underline;
+    this.experience.isUnderlined = !this.experience.isUnderlined;
   }
 }

@@ -1,16 +1,13 @@
 <div class="container experience" *ngIf="experience">
     <div class="header">
         <div class="text-effect">
-            <div class="effect bold" [ngStyle]="{'opacity' : bold ? '1' : '.4', 'scale' : bold ? '1' : '.9', 'color' : bold ? 'var(--color-2)' : 'var(--bg-color-1)'}" (click)="boldEffect()">B</div>
-            <div class="effect italic" [ngStyle]="{'opacity' : italic ? '1' : '.4', 'scale' : italic ? '1' : '.9', 'color' : italic ? 'var(--color-2)' : 'var(--bg-color-1)'}" (click)="italicEffect()">I</div>
-            <div class="effect underline" [ngStyle]="{'opacity' : underline ? '1' : '.4', 'scale' : underline ? '1' : '.9', 'color' : underline ? 'var(--color-2)' : 'var(--bg-color-1)'}" (click)="underlineEffect()">U</div>
+            <div class="effect bold" [ngStyle]="{'opacity' : experience.isBold ? '1' : '.4', 'scale' : experience.isBold ? '1' : '.9', 'color' : experience.isBold ? 'var(--color-2)' : 'var(--bg-color-1)'}" (click)="boldEffect()">B</div>
+            <div class="effect italic" [ngStyle]="{'opacity' : experience.isItalic ? '1' : '.4', 'scale' : experience.isItalic ? '1' : '.9', 'color' : experience.isItalic ? 'var(--color-2)' : 'var(--bg-color-1)'}" (click)="italicEffect()">I</div>
+            <div class="effect underline" [ngStyle]="{'opacity' : experience.isUnderlined ? '1' : '.4', 'scale' : experience.isUnderlined ? '1' : '.9', 'color' : experience.isUnderlined ? 'var(--color-2)' : 'var(--bg-color-1)'}" (click)="underlineEffect()">U</div>
         </div>
     </div>
-    <div class="body" [class.isBold]="bold" [class.isItalic]="italic" [class.isUnderline]="underline">
+    <div class="body" [class.isBold]="experience.isBold" [class.isItalic]="experience.isItalic" [class.isUnderline]="experience.isUnderlined">
         <h1 class="title" contenteditable="true" (keydown)="preventNewLine($event)">{{experience.header}}</h1>
-        <!-- <div class="description">
-            <p class="wrapper" contenteditable="true" [class.isUnderline]="underline" style="white-space: pre-wrap;">{{experience.body}}</p>
-        </div> -->
         <p class="description" contenteditable="true" style="white-space: pre-wrap;" (input)="onInput($event)">{{experience.body}}</p>
     </div>
 </div>
