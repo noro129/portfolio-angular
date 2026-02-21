@@ -106,9 +106,6 @@ export class AppTileComponent implements OnInit {
     if(this.enable_rename) {
       this.enable_rename = false;
       const res = await this.editAppName(this.app_id, this.appName.nativeElement.textContent);
-      if(!res){
-        this.appName.nativeElement.textContent = this.app_name+this.app_ext;
-      }
     }
   }
 
@@ -119,7 +116,10 @@ export class AppTileComponent implements OnInit {
     this.selectContentText();
   };
 
-  delete = () => {this.deleteWithId(this.app_id);}
+  delete = () => {
+    console.log(this.app_id);
+    this.deleteWithId(this.app_id);
+  }
 
   open = () => {this.openWithId(this.app_id); this.focused = false;}
 
