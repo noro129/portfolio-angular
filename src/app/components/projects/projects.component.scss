@@ -1,101 +1,37 @@
 .container{
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: row;
-    column-gap: 0;
     position: relative;
     overflow: hidden;
+    perspective: 1000px;
+
+    &:hover{
+
+        .wrapper{
+            animation-play-state: paused;
+        }
+    }
 
     .wrapper{
-        position: relative;
-        min-width: 100%;
-        height: 100%;
-        transform: translateX(-100%);
+        position: absolute;
+        top: 50%; left: 50%; transform: translate(-50%, -50%); height: 240px; width: 300px;
+        transform-style: preserve-3d;
+        animation: rotation 15s linear infinite;
 
         .project{
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            height: 100%;
-            min-width: 100%;
-        }
-    }
-    
-    .slide-left, .slide-right{
-        transition: transform .3s linear;
-    }
-
-    .slide-left{
-        transform: translateX(-200%);
-    }
-
-    .slide-right{
-        transform: translateX(0);
-    }
-
-    .slide{
-        position: absolute; bottom: 10px; height: 70px; width: 70px;
-        text-align: center;
-        line-height: 1.5;
-        font-size: 3em;
-        color: var(--bg-color-1);
-        opacity: .1;
-        cursor: pointer;
-        background-color: var(--color-1);
-
-        &:hover{
-            opacity: .7;
-        }
-    }
-
-    .toRight{
-        right: 0;
-    }
-
-    .toLeft{
-        left: 0;
-    }
-
-    
-    .pagination-pointers{
-        position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-        width: 60%; height: 70px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        background-color: var(--color-1-light);
-        border: 2px solid var(--color-1-light); border-bottom: unset;
-        display: flex;
-        flex-direction: row;
-        column-gap: 2px;
-        overflow: hidden;
-        justify-content: center; align-items: center;
-        padding: 0 5px;
-
-        .wrap{
-            position: relative;
-            flex: 1; height: 90%;
-            border-radius: 10px;
-            overflow: hidden;
-            scale: .8;
-            transition: all .3s linear;
-            opacity: .2;
-            background-color: var(--bg-color-1);
-        
-            .pointer{
-                cursor: pointer;
-                position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                display: block;
-                overflow: hidden;
-            }
-
-            
-        }
-
-        .current-project{
-            opacity: 1;
-            scale: 1;
-            box-shadow: 0 0 5px var(--color-1);
+            position: absolute;
+            inset: 0 0 0 0;
+            transform: rotateY( calc( (360/var(--l)) * var(--i) * 1deg) ) translateZ(-500px);
         }
     }
 
     
+}
+
+@keyframes rotation {
+    from{
+        transform: translate(-50%, -50%) translateZ(500px);
+    } to{
+        transform:translate(-50%, -50%) translateZ(500px) rotateY(360deg);
+    }
 }

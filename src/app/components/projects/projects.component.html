@@ -1,29 +1,6 @@
 <div class="container">
-    <div class="wrapper" [ngClass]="{'slide-right' : slideRight}">
-        <div class="project" [ngStyle]="{'scale' : slideRight ? 1 : .8, 'transition' : slideRight ? 'scale .3s linear' : ''}">
-            <app-project [projectName]="projects && projects[projectBeforeIndex].project" [projectDescription]="projects && projects[projectBeforeIndex].description"/>
-        </div>
-    </div>
-    <div class="wrapper" [ngClass]="{'slide-left' : slideLeft, 'slide-right' : slideRight}">
-        <div class="project" [ngStyle]="{'scale' : slideLeft || slideRight ? .8 : 1, 'transition' : slideLeft || slideRight ? 'scale .3s linear' : ''}">
-            <app-project [projectName]="projects && projects[projectIndex].project" [projectDescription]="projects && projects[projectIndex].description"/>
-        </div>
-    </div>
-    
-    <div class="wrapper" [ngClass]="{'slide-left' : slideLeft}">
-        <div class="project" [ngStyle]="{'scale' : slideLeft ? 1 : .8, 'transition' : slideLeft ? 'scale .3s linear' : ''}">
-            <app-project [projectName]="projects && projects[projectAfterIndex].project" [projectDescription]="projects && projects[projectAfterIndex].description"/>
-        </div>
-    </div>
-    <span class="slide toLeft" (click)="toRight()">&lt;</span>
-    <span class="slide toRight" (click)="toLeft()">&gt;</span>
-
-    <div class="pagination-pointers" [ngStyle]="{'max-width' : projects && (projects.length * 100) + 'px'}">
-        <div class="wrap" *ngFor="let project of projects;let i = index" [ngClass]="{'current-project' : i === projectCarouselIndex}">
-            <app-project class="pointer"
-                [projectName]="project.project" [projectDescription]="project.description" [carousel]="true"
-                (click)="goto(i)"
-            />
-        </div>
+    <div class="wrapper">
+        <app-project class="project" *ngFor="let project of projects; index as i"[projectName]="project.project" [projectDescription]="project.description" style="--i : {{i}}; --l : {{2*projects.length}}" />
+        <app-project class="project" *ngFor="let project of projects; index as i"[projectName]="project.project" [projectDescription]="project.description" style="--i : {{projects.length+i}}; --l : {{2*projects.length}}" />
     </div>
 </div>

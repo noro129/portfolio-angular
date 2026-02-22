@@ -1,7 +1,4 @@
-<div class="container" [ngClass]="{'carousel' : carousel}" [ngStyle]="{ 'width' : carousel ? '100%' : '90%',
-                                    'height' : carousel ? '100%' : '70%',
-                                    'top' : carousel ? '0%' : '5%',
-                                    'left' : carousel ? '0%' : '5%'}">
-    <h1 class="project-title" [ngStyle]="{'font-size' : carousel ? '0.2vw' : '', 'padding' : carousel ? '5px' : '10px'}">{{projectName}}</h1>
-    <p class="project-description" [ngStyle]="{'font-size' : carousel ? '0.09vw' : ''}">{{projectDescription}}</p>
+<div class="container">
+    <h1 class="project-title">{{projectName}}</h1>
+    <p class="project-description">{{projectDescription}}</p>
 </div>
