@@ -12,6 +12,7 @@ import { FileReaderComponent } from "../file-reader/file-reader.component";
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 import Script from '../../models/Script';
 import DeletedItem from '../../models/DeletedItem';
+import CopyCutPaste from '../../models/CopyCutPaste';
 
 @Component({
   selector: 'app-applications',
@@ -41,6 +42,8 @@ export class ApplicationsComponent {
 
   @Input() openedFolders !: Map<string, ContentTreeStructure>;
   @Input() projectsObjRef !: ContentTreeStructure;
+  @Input() copyCutPasteObj !: CopyCutPaste;
+  @Input() copyCutPasteAction !: () => void;
   AppType = AppType;
   keepOrder = () => 0;
 

@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ContextMenuService } from '../../services/context-menu.service';
+import CopyCutPaste from '../../models/CopyCutPaste';
 
 @Component({
   selector: 'app-app-tile',
@@ -23,6 +24,8 @@ export class AppTileComponent implements OnInit {
   @Input() enable_self_focus : boolean = true;
   @Input() enable_context_menu : boolean = true;
   @Input() editAppName !: (app_id : number, new_name : string) => Promise<boolean>;
+  @Input() copy !: (id : number) => void;
+  @Input() cut !: (id : number) => void;
   focused : boolean = false;
   enable_rename : boolean = false;
 
@@ -72,13 +75,13 @@ export class AppTileComponent implements OnInit {
               {
                 label : "copy",
                 icon : "./copy.png",
-                action : this.open,
+                action : this.copyAction,
                 disabled : false
               },
               {
                 label : "cut",
                 icon : "./cut.png",
-                action : this.open,
+                action : this.cutAction,
                 disabled : false
               },
               {
@@ -122,6 +125,14 @@ export class AppTileComponent implements OnInit {
   }
 
   open = () => {this.openWithId(this.app_id); this.focused = false;}
+
+  copyAction = () => {
+    this.copy(this.app_id);
+  }
+
+  cutAction = () => {
+    this.cut(this.app_id);
+  }
 
   setIdDragged() {
     this.setDraggedId(this.app_id);

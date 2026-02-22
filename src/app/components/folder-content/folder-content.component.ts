@@ -4,6 +4,7 @@ import ContentTreeStructure from '../../models/ContentTreeStructure';
 import { AppTileComponent } from '../app-tile/app-tile.component';
 import { ContextMenuService } from '../../services/context-menu.service';
 import { AppType } from '../../models/AppType';
+import CopyCutPaste from '../../models/CopyCutPaste';
 
 @Component({
   selector: 'app-folder-content',
@@ -23,6 +24,8 @@ export class FolderContentComponent {
   @Input() editAppName !: (app_id : number, new_name : string) => Promise<boolean>;
   @Input() deleteWithId !: (app_id : number) => void;
   @Input() addFolderFile !: (type : AppType,node : ContentTreeStructure) => void;
+  @Input() copyCutPasteObj !: CopyCutPaste;
+  @Input() copyCutPasteAction !: () => void;
 
   AppType = AppType;
 
@@ -69,7 +72,7 @@ export class FolderContentComponent {
           label : "New File" , icon : './add.png', action : this.addFile, disabled : false
         },
         {
-          label : 'paste', icon : './paste.png', action : this.paste, disabled : false
+          label : 'paste', icon : './paste.png', action : this.paste, disabled : this.copyCutPasteObj.app_id === null
         }
       ])
   }
@@ -82,7 +85,22 @@ export class FolderContentComponent {
     if(this.openedFolder) this.addFolderFile(AppType.File ,this.openedFolder);
   }
 
-  paste() {}
+  copy = (id : number) => {
+    this.copyCutPasteObj.app_id = id;
+    this.copyCutPasteObj.type = 'copy';
+    if(this.openedFolder) this.copyCutPasteObj.source = this.openedFolder;
+  }
+
+  cut = (id : number) =>{
+    this.copyCutPasteObj.app_id = id;
+    this.copyCutPasteObj.type = 'cut';
+    if(this.openedFolder) this.copyCutPasteObj.source = this.openedFolder;
+  }
+
+  paste = () => {
+    if(this.openedFolder) this.copyCutPasteObj.destination = this.openedFolder;
+    this.copyCutPasteAction();
+  }
 
   editAppNameHandler = (app_id : number, new_name : string) => {
     if(this.openedFolder) this.setDragSource(this.openedFolder);

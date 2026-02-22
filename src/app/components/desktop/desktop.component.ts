@@ -17,6 +17,7 @@ import DeletedItem from '../../models/DeletedItem';
 import { ConfirmationWindowComponent } from '../confirmation-window/confirmation-window.component';
 import { ConfirmationWindowService } from '../../services/confirmation-window.service';
 import { Experience } from '../../models/Experience';
+import CopyCutPaste from '../../models/CopyCutPaste';
 
 @Component({
   selector: 'app-desktop',
@@ -48,6 +49,12 @@ export class DesktopComponent implements OnInit{
   readonly experienceData = "./experience.json"; experience : Map<number, Experience> = new Map<number, Experience>();
   readonly scriptData = "./script.json"; script : Map<number, Script> = new Map<number, Script>();
   id = 50;
+  readonly copyCutPasteObj : CopyCutPaste = {
+    app_id : null,
+    source : null,
+    destination : null,
+    type : null
+  }
 
   constructor(private renderer : Renderer2, private contextmenuService : ContextMenuService, private confirmationWindowService : ConfirmationWindowService) {
     this.gridColumns = Math.floor(window.innerWidth / 100);
@@ -223,7 +230,7 @@ export class DesktopComponent implements OnInit{
           label : "New File" , icon : './add.png', action : this.addFile, disabled : false
         },
         {
-          label : 'paste', icon : './paste.png', action : this.nothing, disabled : false
+          label : 'paste', icon : './paste.png', action : this.copyCutPasteObj.app_id === null ? this.nothing : this.paste, disabled : this.copyCutPasteObj.app_id === null
         }
       ])
   }
@@ -236,6 +243,116 @@ export class DesktopComponent implements OnInit{
 
   addFile = () => {
     this.addFolderFile(AppType.File, this.desktopTreeObj);
+  }
+
+  desktopCopyAction = (id : number) => {
+    this.copyCutPasteObj.app_id = id;
+    this.copyCutPasteObj.source = this.desktopTreeObj;
+    this.copyCutPasteObj.type = 'copy';
+  }
+
+  desktopCutAction = (id : number) => {
+    this.copyCutPasteObj.app_id = id;
+    this.copyCutPasteObj.source = this.desktopTreeObj;
+    this.copyCutPasteObj.type = 'cut';
+  }
+
+  paste = () => {
+    this.copyCutPasteObj.destination = this.desktopTreeObj;
+    this.copyCutPasteAction();
+  }
+
+  copyCutPasteAction = async () => {
+    if(this.copyCutPasteObj.app_id === null || this.copyCutPasteObj.source === null || this.copyCutPasteObj.destination === null || this.copyCutPasteObj.type === null) {
+      this.resetCopyPasteObj();
+      return;
+    }
+    if(this.copyCutPasteObj.source !== this.copyCutPasteObj.destination) {
+      const id = this.copyCutPasteObj.app_id;
+      const source = this.copyCutPasteObj.source;
+      const destination = this.copyCutPasteObj.destination;
+      if(this.copyCutPasteObj.type === 'cut') {
+        const app = source.content.get(id);
+        if(!app) return;
+        if(app.application.type !== AppType.Application) {
+          const count = this.existsAnother(destination, app.application.displayName, app.application.type, id);
+          if(count !== 0) {
+            const answer = await this.confirmationWindowService.ask((app.application.type === AppType.Folder ? 'Folder' : 'File' ) + ' exists in destination, want to replace it?');
+            if(answer) {
+              this.deleteAppWithName(destination, app.application.displayName);
+            } else {
+              const asnwer2 = await this.confirmationWindowService.ask((app.application.type === AppType.Folder ? 'Folder' : 'File' ) + ' exists in destination, rename to '+app.application.displayName +' '+ count + ' ?');
+              if(asnwer2) {
+                app.application.displayName = app.application.displayName+' '+count;
+              } else {
+                this.resetCopyPasteObj();
+                return;
+              }
+            }
+          }
+        }
+        source.content.delete(id);
+        if(source === this.desktopTreeObj) {
+          let found = false;
+          for(let r=0; r<this.gridRows; r++) {
+            for(let c=0; c<this.gridColumns; c++) {
+              if(this.applicationsMatrix[r][c] === id) {
+                this.applicationsMatrix[r][c] = null;
+                found = true;
+                break;
+              }
+            }
+            if(found) break;
+          }
+        }
+        if(app) destination.content.set(id, app);
+        if(destination === this.desktopTreeObj) {
+          let found = false;
+          for(let c=0; c<this.gridColumns; c++) {
+            for(let r=0; r<this.gridRows; r++) {
+              if(this.applicationsMatrix[r][c] === null) {
+                this.applicationsMatrix[r][c] = id;
+                found = true;
+                break;
+              }
+            }
+            if(found) break;
+          }
+        }
+      }
+    }
+
+    this.resetCopyPasteObj();
+  }
+
+  resetCopyPasteObj() {
+    this.copyCutPasteObj.app_id = null;
+    this.copyCutPasteObj.source = null;
+    this.copyCutPasteObj.destination = null;
+    this.copyCutPasteObj.type = null;
+  }
+
+  deleteAppWithName(node : ContentTreeStructure, name : string) {
+    if(node === this.desktopTreeObj) {
+      let found =false;
+      for(let c=0; c<this.gridColumns; c++){
+        for(let r=0; r<this.gridRows; r++) {
+          const id = this.applicationsMatrix[r][c];
+          if(id!== null && this.applications.get(id)?.displayName === name) {
+            this.applicationsMatrix[r][c] = null;
+            found = true;
+            break;
+          }
+        }
+        if(found) break;
+      }
+    }
+    for(let [k, v] of node.content) {
+      if(v.application.displayName === name) {
+        node.content.delete(k);
+        return;
+      }
+    }
   }
 
   addFolderFile = (type : AppType, node : ContentTreeStructure) => {

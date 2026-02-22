@@ -6,6 +6,7 @@ import { FoldersStructurePanelComponent } from '../folders-structure-panel/folde
 import { FolderContentComponent } from '../folder-content/folder-content.component';
 import ContentTreeStructure from '../../models/ContentTreeStructure';
 import { AppType } from '../../models/AppType';
+import CopyCutPaste from '../../models/CopyCutPaste';
 
 @Component({
   selector: 'app-folder',
@@ -30,6 +31,8 @@ export class FolderComponent{
   @Input() setDragSource !: (input : ContentTreeStructure) => void;
   @Input() setDragDestination !: (input : ContentTreeStructure) => void;
   @Input() moveContentInTree !: () => void;
+  @Input() copyCutPasteObj !: CopyCutPaste;
+  @Input() copyCutPasteAction !: () => void;
 
   @Input() projectsObjRef !: ContentTreeStructure;
 
