@@ -312,7 +312,7 @@
                     position: absolute; top: 5%; left: 5%;
                     z-index: 13;
                     width: 90%; height: 90%;
-                    filter: invert(37%) sepia(8%) saturate(1917%) hue-rotate(67deg) brightness(97%) contrast(85%);
+                    filter: invert(36%) sepia(13%) saturate(1143%) hue-rotate(71deg) brightness(60%) contrast(88%);
                     animation: flactuationsText 4s infinite;
                 }
 
@@ -321,7 +321,7 @@
                     transform: rotateZ(-10deg);
 
                     img{
-                        filter: unset;
+                        filter: invert(100%);
                     }
                 }
             }
