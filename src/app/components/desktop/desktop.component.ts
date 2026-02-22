@@ -271,9 +271,9 @@ export class DesktopComponent implements OnInit{
       const id = this.copyCutPasteObj.app_id;
       const source = this.copyCutPasteObj.source;
       const destination = this.copyCutPasteObj.destination;
+      const app = source.content.get(id);
+      if(!app) return;
       if(this.copyCutPasteObj.type === 'cut') {
-        const app = source.content.get(id);
-        if(!app) return;
         if(app.application.type !== AppType.Application) {
           const count = this.existsAnother(destination, app.application.displayName, app.application.type, id);
           if(count !== 0) {
@@ -319,6 +319,39 @@ export class DesktopComponent implements OnInit{
             if(found) break;
           }
         }
+      } else {
+        const deepCopy = this.createDeepCopyOf(app);
+        if(deepCopy.application.type !== AppType.Application) {
+          const count = this.existsAnother(destination, deepCopy.application.displayName, deepCopy.application.type, deepCopy.application.id);
+          if(count!==0) {
+            const answer = await this.confirmationWindowService.ask((deepCopy.application.type === AppType.Folder ? 'Folder' : 'File' ) + ' exists in destination, want to replace it?');
+            if(answer) {
+              this.deleteAppWithName(destination, deepCopy.application.displayName);
+            } else {
+              const asnwer2 = await this.confirmationWindowService.ask((deepCopy.application.type === AppType.Folder ? 'Folder' : 'File' ) + ' exists in destination, rename to '+deepCopy.application.displayName +' '+ count + ' ?');
+              if(asnwer2) {
+                deepCopy.application.displayName = deepCopy.application.displayName + ' ' + count;
+              } else{
+                this.resetCopyPasteObj();
+                return;
+              }
+            }
+          }
+        }
+        destination.content.set(deepCopy.application.id, deepCopy);
+        if(destination === this.desktopTreeObj) {
+          let found = false;
+          for(let c=0; c<this.gridColumns; c++) {
+            for(let r=0; r<this.gridRows; r++) {
+              if(this.applicationsMatrix[r][c] === null) {
+                this.applicationsMatrix[r][c] = deepCopy.application.id;
+                found = true;
+                break;
+              }
+            }
+            if(found) break;
+          }
+        }
       }
     }
 
@@ -353,6 +386,43 @@ export class DesktopComponent implements OnInit{
         return;
       }
     }
+  }
+
+  createDeepCopyOf(node : ContentTreeStructure) : ContentTreeStructure {
+    while(this.applications.has(this.id)) this.id++;
+    
+    const subContentCopy = new Map<number, ContentTreeStructure>();
+    for(let v of node.content.values()) {
+      const n = this.createDeepCopyOf(v);
+      subContentCopy.set(n.application.id, n);
+    }
+    const app = {
+                  id: this.id,
+                  displayName : node.application.displayName,
+                  name : node.application.name,
+                  icon : node.application.icon,
+                  type : node.application.type,
+                  canDelete : node.application.canDelete,
+                  extension : node.application.extension,
+                  defaultWidth : node.application.defaultWidth,
+                  defaultHeight : node.application.defaultHeight,
+                  resizeable : node.application.resizeable
+                };
+    if(node.application.type === AppType.File) {
+      if(node.application.extension === '.txt') {
+        const exp = this.experience.get(node.application.id);
+        if(exp) this.experience.set(this.id, {...exp});
+      } else {
+        const scr = this.script.get(node.application.id);
+        if(scr) this.script.set(this.id, {...scr});
+      }
+    }
+    this.applications.set(this.id, app);
+    return {
+              application : app
+              ,
+              content : subContentCopy
+            }
   }
 
   addFolderFile = (type : AppType, node : ContentTreeStructure) => {
