@@ -8,13 +8,21 @@
         height: max-content;
         display: flex;
         align-items: center;
-        color: var(--color-1);
-        border-radius: 20px;
+        color: var(--c); background-color: var(--color-1);
         opacity: 0;
         padding: 10px;
         font-weight: bolder;
-        border: 1px solid var(--color-1);
         animation: up .3s linear forwards, down .5s 2s linear forwards;
+        position: relative;
+
+        &::before{
+            content: attr(symbol);
+            position: absolute; top: 0; left: 0; height: 100%; aspect-ratio: 1 / 1;
+            transform: translateX(-100%);
+            background-color: var(--c);
+            display: flex; justify-content: center; align-items: center; font-size: 2em;
+            color: var(--color-1);
+        }
     }
 }
 
