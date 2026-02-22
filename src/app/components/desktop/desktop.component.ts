@@ -267,12 +267,13 @@ export class DesktopComponent implements OnInit{
       this.resetCopyPasteObj();
       return;
     }
-    if(this.copyCutPasteObj.source !== this.copyCutPasteObj.destination) {
-      const id = this.copyCutPasteObj.app_id;
-      const source = this.copyCutPasteObj.source;
-      const destination = this.copyCutPasteObj.destination;
-      const app = source.content.get(id);
-      if(!app) return;
+    const id = this.copyCutPasteObj.app_id;
+    const source = this.copyCutPasteObj.source;
+    const destination = this.copyCutPasteObj.destination;
+    const app = source.content.get(id);
+    if(!app) return;
+    const isSubF = app.application.type === AppType.Folder && this.isSubFolder(app, destination);
+    if(this.copyCutPasteObj.source !== this.copyCutPasteObj.destination && ! isSubF) {
       if(this.copyCutPasteObj.type === 'cut') {
         if(app.application.type !== AppType.Application) {
           const count = this.existsAnother(destination, app.application.displayName, app.application.type, id);
@@ -353,9 +354,26 @@ export class DesktopComponent implements OnInit{
           }
         }
       }
+    } else if(isSubF) {
+      this.addNotification("destination folder is a sub folder of source folder", NotifType.Error);
     }
 
     this.resetCopyPasteObj();
+  }
+
+  isSubFolder(folder : ContentTreeStructure, subFolder : ContentTreeStructure) {
+    let stack : ContentTreeStructure[] = [];
+    stack.push(folder);
+    while(stack.length !== 0) {
+      const f = stack.pop();
+      if(f === subFolder) return true;
+      if(f !== undefined) {
+        for(let v of f.content.values()) {
+          stack.push(v);
+        }
+      }
+    }
+    return false;
   }
 
   resetCopyPasteObj() {
