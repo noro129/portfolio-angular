@@ -840,6 +840,8 @@ export class DesktopComponent implements OnInit{
   }
 
   editAppName = async (app_id : number, new_name : string) : Promise<boolean> => {
+    new_name = new_name.trim();
+    if(new_name.length === 0) return false;
     const app = this.applications.get(app_id);
     if(app === undefined) return false;
     const res = this.existsAnother(this.dragSource, new_name, app.type, app_id);
